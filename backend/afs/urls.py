@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path, path, include
 
 urlpatterns = [
-    path('api/', include("akvo.core_forms.urls"), name="core_forms"),
-    path('api/', include("akvo.core_data.urls"), name="core_data"),
-    path('api/', include("akvo.core_node.urls"), name="core_node"),
+    path('api/forms', include("akvo.core_forms.urls"), name="core_forms"),
+    path('api/data', include("akvo.core_data.urls"), name="core_data"),
+    path('api/node', include("akvo.core_node.urls"), name="core_node"),
 ]
