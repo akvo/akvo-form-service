@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from datetime import timedelta
+from os import path, environ
 from pathlib import Path
+
+# Application definition
+APP_NAME = "afs"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,33 +25,85 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-siw=u(i5(#q*x5-h*8r%!%xvs5$@h*26%lk&_9c*w8fw8!w%xk'
+SECRET_KEY = environ["DJANGO_SECRET"]
+LOG_FILE = environ.get("LOG_FILE") or "error.log"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if "DEBUG" in environ else False
+PROD = True if "PROD" in environ else False
 
-ALLOWED_HOSTS = []
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+        "file": {
+            "class": "logging.handlers.WatchedFileHandler",
+            "filename": f"./{LOG_FILE}",
+            "level": "ERROR",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "nwmis": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+    "formatters": {
+        "verbose": {"format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s"},
+    },
+}
+
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+# Default django apps
+DJANGO_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
 
+# Add third party apps below
+EXTERNAL_APPS = [
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "drf_spectacular",
+    "django_dbml",
+    "django_extensions",
+    "django_q",
+    "cli",
+]
+
+# Add API apps below
+API_APPS = []
+
+INSTALLED_APPS = DJANGO_APPS + API_APPS + EXTERNAL_APPS
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "middleware.user_activity.UserActivity",
+    "middleware.logger.ErrorLoggingMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'afs.urls'
@@ -54,7 +111,7 @@ ROOT_URLCONF = 'afs.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": [Path.joinpath(BASE_DIR, "afs/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +126,35 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'afs.wsgi.application'
 
+# Rest Settings
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=3 * 365),
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
+    "DATE_FORMAT": "%d-%m-%Y",
+    "DEFAULT_VERSION": "v1",
+    "DATETIME_FORMAT": "%d-%m-%Y %H:%M:%S",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "PDHA",
+    "DESCRIPTION": "",
+    "VERSION": "1.0.0",
+    "SORT_OPERATIONS": False,
+    "COMPONENT_SPLIT_REQUEST": True,
+}
+# JWT Config
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=3 * 365),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3 * 365),
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -86,18 +172,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation"
+        ".UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation" ".MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation" ".CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation" ".NumericPasswordValidator",
     },
 ]
+
 
 
 # Internationalization
@@ -111,13 +199,35 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = 'static/'
+# For Caching API call
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/var/tmp/cache",
+        "TIMEOUT": 300,
+    }
+}
+CACHE_FOLDER = "/tmp/cache/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "v1_users.SystemUser"
+
+INSTANCE = environ["AFS_INSTANCE"]
+MASTER_DATA = f"./source/{INSTANCE}"
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+STATIC_URL = "/static-files/"
+
+STATICFILES_DIRS = [f"{MASTER_DATA}/assets/"]
+
+# Static files whitenoise
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# STORAGE_PATH
+STORAGE_PATH = environ.get("STORAGE_PATH", "./storage")
