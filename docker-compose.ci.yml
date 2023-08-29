@@ -1,0 +1,31 @@
+---
+version: "3.9"
+services:
+  backend:
+    image: python:3.8.5
+    working_dir: /app/backend
+    command: ["./test.sh"]
+    volumes:
+      - ./backend:/app:delegated
+    environment:
+      - DB_SCHEMA=afs
+      - DB_USER=akvo
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DEBUG=True
+      - DJANGO_SECRET=local-secret
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
+volumes:
+  pg-data:
