@@ -8,13 +8,12 @@ services:
     volumes:
       - ./backend:/app:delegated
     environment:
+      - DB_SCHEMA=afs
       - DB_USER=akvo
       - DB_PASSWORD=password
       - DB_HOST=db
       - DEBUG=True
       - DJANGO_SECRET=local-secret
-      - AFS_INSTANCE
-      - STORAGE_PATH
     depends_on:
       - db
   frontend:
