@@ -89,7 +89,10 @@ EXTERNAL_APPS = [
 ]
 
 # Add API apps below
-API_APPS = []
+API_APPS = [
+    "api.core.core_forms",
+    "api.core.core_data",
+]
 
 INSTALLED_APPS = DJANGO_APPS + API_APPS + EXTERNAL_APPS
 
@@ -101,8 +104,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "middleware.user_activity.UserActivity",
-    "middleware.logger.ErrorLoggingMiddleware",
+    # "middleware.user_activity.UserActivity",
+    # "middleware.logger.ErrorLoggingMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
@@ -214,7 +217,7 @@ CACHE_FOLDER = "/tmp/cache/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "v1_users.SystemUser"
+# AUTH_USER_MODEL = "v1_users.SystemUser"
 
 INSTANCE = environ["AFS_INSTANCE"]
 MASTER_DATA = f"./source/{INSTANCE}"
@@ -228,6 +231,16 @@ STATICFILES_DIRS = [f"{MASTER_DATA}/assets/"]
 
 # Static files whitenoise
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+Q_CLUSTER = {
+    "name": "DjangORM",
+    "workers": 4,
+    "timeout": 90,
+    "retry": 120,
+    "queue_limit": 50,
+    "bulk": 10,
+    "orm": "default",
+}
 
 # STORAGE_PATH
 STORAGE_PATH = environ.get("STORAGE_PATH", "./storage")
