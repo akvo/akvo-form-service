@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CoreFormsConfig(AppConfig):
+class CoreNodeConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'api.core.core_forms'
+    name = 'akvo.core_node'

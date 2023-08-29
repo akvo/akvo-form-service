@@ -1,10 +1,10 @@
 from django.db import models
 
 # Create your models here.
-from api.core.core_forms.constants import QuestionTypes
+from akvo.core_forms.constants import QuestionTypes
 
 
-class Form(models.Model):
+class Forms(models.Model):
     name = models.TextField()
     description = models.TextField()
     version = models.IntegerField(default=1)
@@ -15,14 +15,14 @@ class Form(models.Model):
         return self.name
 
     class Meta:
-        db_table = "form"
+        db_table = "forms"
 
 
-class QuestionGroup(models.Model):
+class QuestionGroups(models.Model):
     form = models.ForeignKey(
-        to=Form,
+        to=Forms,
         on_delete=models.CASCADE,
-        related_name="form_question_group"
+        related_name="question_groups"
     )
     name = models.TextField()
     description = models.TextField()
@@ -34,19 +34,19 @@ class QuestionGroup(models.Model):
         return self.name
 
     class Meta:
-        db_table = "question_group"
+        db_table = "question_groups"
 
 
-class Question(models.Model):
+class Questions(models.Model):
     form = models.ForeignKey(
-        to=Form,
+        to=Forms,
         on_delete=models.CASCADE,
-        related_name="form_question"
+        related_name="questions"
     )
     question_group = models.ForeignKey(
-        to=QuestionGroup,
+        to=QuestionGroups,
         on_delete=models.CASCADE,
-        related_name="question_group_question",
+        related_name="question_group_questions",
     )
     name = models.TextField()
     order = models.BigIntegerField(null=True, default=None)
@@ -58,6 +58,7 @@ class Question(models.Model):
     dependency = models.JSONField(default=None, null=True)
     api = models.JSONField(default=None, null=True)
     extra = models.JSONField(default=None, null=True)
+    autofield = models.JSONField(default=None, null=True)
     translations = models.JSONField(default=None, null=True)
 
     def __str__(self):
@@ -89,15 +90,16 @@ class Question(models.Model):
         return f"{self.id}|{self.name}"
 
     class Meta:
-        db_table = "question"
+        db_table = "questions"
 
 
-class Option(models.Model):
+class Options(models.Model):
     question = models.ForeignKey(
-        to=Question,
+        to=Questions,
         on_delete=models.CASCADE,
-        related_name="question_question_option"
+        related_name="question_options"
     )
+    code = models.CharField(max_length=255)
     name = models.TextField()
     order = models.BigIntegerField(null=True, default=None)
     translations = models.JSONField(default=None, null=True)
@@ -106,4 +108,4 @@ class Option(models.Model):
         return self.name
 
     class Meta:
-        db_table = "option"
+        db_table = "options"
