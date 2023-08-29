@@ -6,7 +6,7 @@ services:
     working_dir: /app/backend
     command: ["./test.sh"]
     volumes:
-      - ./backend:/app:delegated
+      - ./:/app:delegated
     environment:
       - DB_SCHEMA=afs
       - DB_USER=akvo
