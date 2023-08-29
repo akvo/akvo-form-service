@@ -1,0 +1,9 @@
+---
+version: "3.9"
+services:
+  frontend:
+    volumes:
+      - afs-docker-sync:/app/node_modules:nocopy
+volumes:
+  afs-docker-sync:
+    external: true

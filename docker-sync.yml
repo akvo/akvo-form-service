@@ -1,0 +1,5 @@
+---
+version: "3.9"
+syncs:
+  afs-docker-sync:
+    src: "./frontend/node_modules"
