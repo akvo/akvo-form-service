@@ -29,7 +29,9 @@ class SubmitDataAnswerSerializer(serializers.ModelSerializer):
         question_id = attrs.get("question").id
 
         def raise_validation_error(message):
-            raise serializers.ValidationError(f"{message} for Question:{question_id}")
+            raise serializers.ValidationError(
+                f"{message} for Question:{question_id}"
+            )
 
         if value == "" or (isinstance(value, list) and len(value) == 0):
             raise_validation_error("Value is required")

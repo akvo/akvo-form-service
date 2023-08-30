@@ -21,7 +21,10 @@ class TestFormSerializers(TestCase):
         data = self.serializer.data
         self.assertEqual(
             set(data.keys()),
-            {"id", "name", "description", "version", "languages", "translations"},
+            {
+                "id", "name", "description",
+                "version", "languages", "translations"
+            },
         )
 
     def test_list_form_serializer_return_expected_data(self):
