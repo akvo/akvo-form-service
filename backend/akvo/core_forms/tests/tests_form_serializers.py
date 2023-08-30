@@ -4,7 +4,7 @@ from akvo.core_forms.models import Forms
 from akvo.core_forms.serializers import ListFormSerializer
 
 
-class FormSerializersTestCase(TestCase):
+class TestFormSerializers(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.data = {
@@ -17,5 +17,12 @@ class FormSerializersTestCase(TestCase):
         self.instance = Forms.objects.create(**self.data)
         self.serializer = ListFormSerializer(instance=self.instance)
 
-    def test_serializer_valid(self):
-        self.assertTrue(self.serializer.is_valid())
+    def test_serializer_contains_expected_fields(self):
+        data = self.serializer.data
+        self.assertEqual(
+            set(data.keys()), 
+            {
+                'id', 'name', 'description', 
+                'version', 'languages', 'translations'
+            }
+        )
