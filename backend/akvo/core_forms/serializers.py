@@ -18,7 +18,10 @@ class ListOptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Options
-        fields = ['id', 'code', 'name', 'order', 'translations']
+        fields = [
+            'id', 'code', 'name', 
+            'order', 'translations'
+        ]
 
 
 class ListQuestionSerializer(serializers.ModelSerializer):
@@ -28,6 +31,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     rule = serializers.SerializerMethodField()
     extra = serializers.SerializerMethodField()
+    fn = serializers.SerializerMethodField()
 
     @extend_schema_field(ListOptionSerializer(many=True))
     def get_option(self, instance: Questions):
@@ -85,6 +89,18 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     )
     def get_extra(self, instance: Questions):
         return instance.extra
+    
+    @extend_schema_field(
+        inline_serializer(
+            'QuestionAutofieldFormat',
+            fields={
+                'multiline': serializers.BooleanField(),
+                'fnString': serializers.CharField()
+            }
+        )
+    )
+    def get_fn(self, instance: Questions):
+        return instance.autofield
 
     def to_representation(self, instance):
         result = super(
@@ -98,8 +114,10 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questions
         fields = [
-            'id', 'name', 'order', 'type', 'required', 'dependency', 'option',
-            'api', 'meta', 'rule', 'extra', 'translations'
+            'id', 'name', 'order', 'type', 
+            'tooltip', 'required', 'dependency', 'meta',
+            'rule', 'api', 'extra', 'translations',
+            'fn', 'option'
         ]
 
 
@@ -115,13 +133,16 @@ class ListQuestionGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = QuestionGroups
-        fields = ['name', 'question', 'translations']
+        fields = [
+            'id', 'name', 'description', 'order',
+            'repeatable', 'question', 'translations'
+        ]
 
 
 class ListFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = Forms
         fields = [
-            'id', 'name', 'description', 'languages', 
-            'version', 'translations'
+            'id', 'name', 'description', 
+            'languages', 'version', 'translations'
         ]
