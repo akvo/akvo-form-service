@@ -6,11 +6,7 @@ from akvo.core_forms.models import Forms, Questions
 
 
 class Data(models.Model):
-    form = models.ForeignKey(
-        to=Forms, 
-        on_delete=models.CASCADE, 
-        related_name="data"
-    )
+    form = models.ForeignKey(to=Forms, on_delete=models.CASCADE, related_name="data")
     name = models.TextField()
     geo = models.JSONField(null=True, default=None)
     submitter = models.CharField()
@@ -41,14 +37,10 @@ class Data(models.Model):
 
 class Answers(models.Model):
     data = models.ForeignKey(
-        to=Data, 
-        on_delete=models.CASCADE, 
-        related_name="data_answers"
+        to=Data, on_delete=models.CASCADE, related_name="data_answers"
     )
     question = models.ForeignKey(
-        to=Questions, 
-        on_delete=models.CASCADE, 
-        related_name="question_answers"
+        to=Questions, on_delete=models.CASCADE, related_name="question_answers"
     )
     name = models.TextField(null=True, default=None)
     value = models.FloatField(null=True, default=None)

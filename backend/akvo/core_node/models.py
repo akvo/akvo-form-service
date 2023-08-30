@@ -8,7 +8,7 @@ class Node(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         db_table = "node"
 
@@ -19,6 +19,6 @@ class NodeDetail(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         db_table = "node_detail"
