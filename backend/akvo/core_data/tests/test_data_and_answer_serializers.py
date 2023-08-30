@@ -1,5 +1,6 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
+from rest_framework import serializers
 from akvo.core_forms.models import Forms, QuestionGroups, Questions
 from akvo.core_forms.constants import QuestionTypes
 from akvo.core_data.serializers.data import (
@@ -52,10 +53,20 @@ class TestDataAndAnswerSerializers(TestCase):
         self.question = Questions.objects.create(**question_data)
 
     def test_submit_data_serializer_validation(self):
+        invalid_post_data = {
+            'name': 'John',
+            'geo': {'lat': 40.7128, 'lng': -74.0060},
+            'submitter': None
+        }
+        serializer = SubmitDataSerializer(data=invalid_post_data)
+        self.assertFalse(serializer.is_valid())
+        with self.assertRaises(serializers.ValidationError):
+            serializer.is_valid(raise_exception=True)
+
         post_data = {
             'name': 'John',
             'geo': {'lat': 40.7128, 'lng': -74.0060},
             'submitter': 'Akvo'
         }
-        serializer = SubmitDataSerializer(**post_data)
+        serializer = SubmitDataSerializer(data=post_data)
         self.assertTrue(serializer.is_valid())

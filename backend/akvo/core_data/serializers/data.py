@@ -18,17 +18,12 @@ from akvo.core_data.serializers.answer import (
 
 
 class SubmitDataSerializer(serializers.ModelSerializer):
-    name = CustomCharField()
     submitter = CustomCharField(allow_null=False)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def validate(self, attrs):
-        if not attrs.get("submitter") or attrs.get("submitter") == "":
-            raise serializers.ValidationError(
-                "Submitter is required"
-            )
+    def validate_submitter(self, value):
+        if not value or value == "":
+            raise serializers.ValidationError("Submitter is required")
+        return value
 
     class Meta:
         model = Data
