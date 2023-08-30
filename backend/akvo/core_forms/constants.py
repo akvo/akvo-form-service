@@ -8,15 +8,17 @@ class QuestionTypes:
     cascade = 7
     photo = 8
     date = 9
+    autofield = 10
 
     FieldStr = {
-        input: 'input',
-        text: 'text',
-        number: 'number',
-        geo: 'geo',
-        option: 'option',
-        multiple_option: 'multiple_pption',
-        cascade: 'cascade',
-        photo: 'photo',
-        date: 'date',
+        input: "input",
+        text: "text",
+        number: "number",
+        geo: "geo",
+        option: "option",
+        multiple_option: "multiple_pption",
+        cascade: "cascade",
+        photo: "photo",
+        date: "date",
+        autofield: "autofield",
     }
