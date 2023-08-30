@@ -2,7 +2,6 @@ import requests
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
 from akvo.core_data.models import (
     Data,
@@ -12,7 +11,7 @@ from akvo.core_forms.constants import QuestionTypes
 from akvo.utils.custom_serializer_fields import (
     CustomCharField,
 )
-from utils.functions import update_date_time_format
+from akvo.utils.functions import update_date_time_format
 from akvo.core_data.serializers.answer import (
     SubmitDataAnswerSerializer
 )
@@ -27,7 +26,7 @@ class SubmitDataSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if not attrs.get("submitter") or attrs.get("submitter") == "":
-            raise ValidationError(
+            raise serializers.ValidationError(
                 "Submitter is required"
             )
 

@@ -1,7 +1,6 @@
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
 from akvo.core_data.models import Answers
 from akvo.core_forms.constants import QuestionTypes
@@ -10,7 +9,7 @@ from akvo.utils.custom_serializer_fields import (
     CustomPrimaryKeyRelatedField,
     UnvalidatedField,
 )
-from utils.functions import get_answer_value
+from akvo.utils.functions import get_answer_value
 
 
 class SubmitDataAnswerSerializer(serializers.ModelSerializer):
@@ -56,9 +55,9 @@ class SubmitDataAnswerSerializer(serializers.ModelSerializer):
 
         return attrs
 
-        class Meta:
-            model = Answers
-            fields = ["question", "value"]
+    class Meta:
+        model = Answers
+        fields = ["question", "value"]
 
 
 class ListAnswerSerializer(serializers.ModelSerializer):
