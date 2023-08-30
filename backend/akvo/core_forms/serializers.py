@@ -28,7 +28,6 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     option = serializers.SerializerMethodField()
     type = serializers.SerializerMethodField()
     api = serializers.SerializerMethodField()
-    name = serializers.SerializerMethodField()
     rule = serializers.SerializerMethodField()
     extra = serializers.SerializerMethodField()
     fn = serializers.SerializerMethodField()
@@ -62,9 +61,6 @@ class ListQuestionSerializer(serializers.ModelSerializer):
         if instance.type == QuestionTypes.cascade:
             return instance.api
         return None
-
-    def get_name(self, instance: Questions):
-        return instance.text
 
     @extend_schema_field(
         inline_serializer(
