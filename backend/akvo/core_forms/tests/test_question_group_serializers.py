@@ -1,7 +1,9 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from akvo.core_forms.models import Forms, QuestionGroups
-from akvo.core_forms.serializers import ListQuestionGroupSerializer
+from akvo.core_forms.serializers.question_group import (
+    ListQuestionGroupSerializer
+)
 
 
 class TestQuestionGroupSerializers(TestCase):

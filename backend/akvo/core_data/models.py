@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from akvo.core_forms.constants import QuestionTypes
 from akvo.core_forms.models import Forms, Questions
 
 
@@ -15,21 +14,6 @@ class Data(models.Model):
 
     def __str__(self):
         return self.name
-
-    @property
-    def to_data_frame(self):
-        data = {
-            "id": self.id,
-            "datapoint_name": self.name,
-            "geolocation": f"{self.geo[0]}, {self.geo[1]}" if self.geo else None,
-            "created_at": self.created.strftime("%B %d, %Y"),
-            "updated_at": self.updated.strftime("%B %d, %Y") if self.updated else None,
-        }
-        for a in self.data_answer.order_by(
-            "question__question_group_id", "question__order"
-        ).all():
-            data.update(a.to_data_frame)
-        return data
 
     class Meta:
         db_table = "data"
@@ -50,22 +34,6 @@ class Answers(models.Model):
 
     def __str__(self):
         return self.data.name
-
-    @property
-    def to_data_frame(self) -> dict:
-        q = self.question
-        qname = f"{self.question.id}|{self.question.name}"
-        if q.type in [
-            QuestionTypes.geo,
-            QuestionTypes.option,
-            QuestionTypes.multiple_option,
-        ]:
-            answer = "|".join(map(str, self.options))
-        elif q.type in [QuestionTypes.text, QuestionTypes.photo, QuestionTypes.date]:
-            answer = self.name
-        else:
-            answer = self.value
-        return {qname: answer}
 
     class Meta:
         db_table = "answers"

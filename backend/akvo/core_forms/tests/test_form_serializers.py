@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from akvo.core_forms.models import Forms
-from akvo.core_forms.serializers import ListFormSerializer
+from akvo.core_forms.serializers.form import ListFormSerializer
 
 
 class TestFormSerializers(TestCase):

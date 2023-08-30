@@ -2,9 +2,11 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from akvo.core_forms.models import Forms, QuestionGroups, Questions
 from akvo.core_forms.constants import QuestionTypes
-from akvo.core_forms.serializers import (
-    ListQuestionGroupSerializer,
-    ListQuestionSerializer,
+from akvo.core_forms.serializers.question_group import (
+    ListQuestionGroupSerializer
+)
+from akvo.core_forms.serializers.question import (
+    ListQuestionSerializer
 )
 
 

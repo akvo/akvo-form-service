@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from akvo.core_forms.models import Forms
-from akvo.core_forms.serializers import ListFormSerializer
+from akvo.core_forms.serializers.form import ListFormSerializer
 
 
 @extend_schema(
