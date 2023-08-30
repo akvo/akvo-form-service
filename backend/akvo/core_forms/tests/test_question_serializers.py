@@ -2,8 +2,9 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from akvo.core_forms.models import Forms, QuestionGroups, Questions
 from akvo.core_forms.constants import QuestionTypes
-from akvo.core_forms.serializers import ListQuestionSerializer
-
+from akvo.core_forms.serializers import (
+    ListQuestionGroupSerializer, ListQuestionSerializer
+)
 
 class TestQuestionGroupSerializers(TestCase):
     def setUp(self):
@@ -43,6 +44,9 @@ class TestQuestionGroupSerializers(TestCase):
         }
         self.instance = Questions.objects.create(**self.data)
         self.serializer = ListQuestionSerializer(instance=self.instance)
+        self.question_group_serializer = ListQuestionGroupSerializer(
+            instance=self.question_group
+        )
 
     def test_list_question_serializer_contains_expected_fields(self):
         data = self.serializer.data
@@ -66,3 +70,17 @@ class TestQuestionGroupSerializers(TestCase):
             'meta': True,
         }
         self.assertEqual(data, expected_data)
+
+    def test_list_question_group_serializer_return_question(self):
+        question_data = self.serializer.data
+        question_group_data = self.question_group_serializer.data
+        expected_data = {
+            'id': question_group_data.get('id'),
+            'name': 'Group 1',
+            'description': 'Lorem ipsum sit dolor',
+            'order': 1,
+            'repeatable': False,
+            'translations': None,
+            'question': [question_data]
+        }
+        self.assertEqual(question_group_data, expected_data)
