@@ -6,4 +6,7 @@ from akvo.core_forms.models import Forms
 class ListFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = Forms
-        fields = ["id", "name", "description", "languages", "version", "translations"]
+        fields = [
+            "id", "name", "description", "default_language",
+            "languages", "version", "translations"
+        ]

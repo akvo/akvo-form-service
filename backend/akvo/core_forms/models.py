@@ -6,9 +6,12 @@ from akvo.core_forms.constants import QuestionTypes
 
 class Forms(models.Model):
     name = models.TextField()
-    description = models.TextField()
+    description = models.TextField(default=None, null=True)
     version = models.IntegerField(default=1)
     languages = models.JSONField(default=None, null=True)
+    default_language = models.CharField(
+        max_length=255, null=True, default=None
+    )
     translations = models.JSONField(default=None, null=True)
 
     def __str__(self):
@@ -25,7 +28,7 @@ class QuestionGroups(models.Model):
         related_name="question_groups"
     )
     name = models.TextField()
-    description = models.TextField()
+    description = models.TextField(default=None, null=True)
     order = models.BigIntegerField(null=True, default=None)
     repeatable = models.BooleanField(default=False)
     translations = models.JSONField(default=None, null=True)
@@ -99,7 +102,7 @@ class Options(models.Model):
         on_delete=models.CASCADE,
         related_name="question_options"
     )
-    code = models.CharField(max_length=255)
+    code = models.CharField(max_length=255, null=True, default=None)
     name = models.TextField()
     order = models.BigIntegerField(null=True, default=None)
     translations = models.JSONField(default=None, null=True)

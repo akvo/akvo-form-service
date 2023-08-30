@@ -18,6 +18,7 @@ class TestQuestionGroupSerializers(TestCase):
             "description": "Lorem ipsum sit dolor",
             "version": 1,
             "languages": ["en"],
+            "default_language": "en",
             "translations": None,
         }
         self.form = Forms.objects.create(**form_data)
@@ -29,7 +30,9 @@ class TestQuestionGroupSerializers(TestCase):
             "repeatable": False,
             "translations": None,
         }
-        self.question_group = QuestionGroups.objects.create(**question_group_data)
+        self.question_group = QuestionGroups.objects.create(
+            **question_group_data
+        )
         self.data = {
             "form": self.form,
             "question_group": self.question_group,

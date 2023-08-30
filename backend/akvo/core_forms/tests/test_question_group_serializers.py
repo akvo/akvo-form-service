@@ -14,6 +14,7 @@ class TestQuestionGroupSerializers(TestCase):
             "description": "Lorem ipsum sit dolor",
             "version": 1,
             "languages": ["en"],
+            "default_language": "en",
             "translations": None,
         }
         self.form = Forms.objects.create(**form_data)

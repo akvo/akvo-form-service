@@ -12,6 +12,7 @@ class TestFormSerializers(TestCase):
             "description": "Lorem ipsum sit dolor",
             "version": 1,
             "languages": ["en"],
+            "default_language": "en",
             "translations": None,
         }
         self.instance = Forms.objects.create(**self.data)
@@ -22,7 +23,7 @@ class TestFormSerializers(TestCase):
         self.assertEqual(
             set(data.keys()),
             {
-                "id", "name", "description",
+                "id", "name", "description", "default_language",
                 "version", "languages", "translations"
             },
         )
@@ -35,6 +36,7 @@ class TestFormSerializers(TestCase):
             "description": "Lorem ipsum sit dolor",
             "version": 1,
             "languages": ["en"],
+            "default_language": "en",
             "translations": None,
         }
         self.assertEqual(data, expected_data)
