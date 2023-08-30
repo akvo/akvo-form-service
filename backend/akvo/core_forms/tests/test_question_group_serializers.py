@@ -6,6 +6,7 @@ from akvo.core_forms.serializers import ListQuestionGroupSerializer
 
 class TestQuestionGroupSerializers(TestCase):
     def setUp(self):
+        self.client = APIClient()
         form_data = {
             'name': 'Test Form',
             'description': 'Lorem ipsum sit dolor',
@@ -14,7 +15,6 @@ class TestQuestionGroupSerializers(TestCase):
             'translations': None
         }
         self.form = Forms.objects.create(**form_data)
-        self.client = APIClient()
         self.data = {
             'form': self.form,
             'name': 'Group 1',
@@ -37,7 +37,7 @@ class TestQuestionGroupSerializers(TestCase):
             }
         )
 
-    def test_list_form_serializer_return_expected_data(self):
+    def test_list_question_group_serializer_return_expected_data(self):
         data = self.serializer.data
         expected_data = {
             'id': data.get('id'),

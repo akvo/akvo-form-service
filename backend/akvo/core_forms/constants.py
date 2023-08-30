@@ -10,9 +10,10 @@ class QuestionTypes:
     date = 9
 
     FieldStr = {
-        geo: 'geo',
+        input: 'input',
         text: 'text',
         number: 'number',
+        geo: 'geo',
         option: 'option',
         multiple_option: 'multiple_pption',
         cascade: 'cascade',
