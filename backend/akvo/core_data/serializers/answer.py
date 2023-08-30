@@ -25,53 +25,40 @@ class SubmitDataAnswerSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, attrs):
-        if attrs.get("value") == "":
-            raise ValidationError(
-                "Value is required for Question:{0}".format(attrs.get("question").id)
-            )
+        value = attrs.get("value")
+        question_type = attrs.get("question").type
+        question_id = attrs.get("question").id
 
-        if isinstance(attrs.get("value"), list) and len(attrs.get("value")) == 0:
-            raise ValidationError(
-                "Value is required for Question:{0}".format(attrs.get("question").id)
-            )
+        def raise_validation_error(message):
+            raise serializers.ValidationError(f"{message} for Question:{question_id}")
 
-        if not isinstance(attrs.get("value"), list) and attrs.get("question").type in [
+        if value == "" or (isinstance(value, list) and len(value) == 0):
+            raise_validation_error("Value is required")
+
+        if question_type in [
             QuestionTypes.geo,
             QuestionTypes.option,
             QuestionTypes.multiple_option,
         ]:
-            raise ValidationError(
-                "Valid list value is required for Question:{0}".format(
-                    attrs.get("question").id
-                )
-            )
-        elif not isinstance(attrs.get("value"), str) and attrs.get("question").type in [
+            if not isinstance(value, list):
+                raise_validation_error("Valid list value is required")
+        elif question_type in [
             QuestionTypes.input,
             QuestionTypes.text,
             QuestionTypes.photo,
             QuestionTypes.date,
         ]:
-            raise ValidationError(
-                "Valid string value is required for Question:{0}".format(
-                    attrs.get("question").id
-                )
-            )
-        elif not (
-            isinstance(attrs.get("value"), int) or isinstance(attrs.get("value"), float)
-        ) and attrs.get("question").type in [
-            QuestionTypes.number,
-            QuestionTypes.cascade,
-        ]:
-            raise ValidationError(
-                "Valid number value is required for Question:{0}".format(
-                    attrs.get("question").id
-                )
-            )
+            if not isinstance(value, str):
+                raise_validation_error("Valid string value is required")
+        elif question_type in [QuestionTypes.number, QuestionTypes.cascade]:
+            if not (isinstance(value, int) or isinstance(value, float)):
+                raise_validation_error("Valid number value is required")
+
         return attrs
 
-    class Meta:
-        model = Answers
-        fields = ["question", "value"]
+        class Meta:
+            model = Answers
+            fields = ["question", "value"]
 
 
 class ListAnswerSerializer(serializers.ModelSerializer):
