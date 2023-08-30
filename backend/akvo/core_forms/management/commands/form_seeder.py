@@ -26,7 +26,7 @@ class Command(BaseCommand):
         TEST = options.get("test")
         JSON_FILE = options.get("file")
         # Form source
-        source_folder = "source/forms"
+        source_folder = "source/forms/"
         source_files = [
             f"{source_folder}/{json_file}"
             for json_file in os.listdir(source_folder)
@@ -44,7 +44,7 @@ class Command(BaseCommand):
             if not form:
                 form = Forms.objects.create(
                     id=json_form["id"],
-                    name=json_form["form"],
+                    name=json_form["name"],
                     description=json_form.get("description"),
                     version=json_form.get("form") or 1,
                     languages=json_form.get("languages"),
@@ -56,7 +56,7 @@ class Command(BaseCommand):
                     self.stdout.write(
                         f"Form Created | {form.name} V{form.version}")
             else:
-                form.name = json_form["form"]
+                form.name = json_form["name"]
                 form.version = json_form.get("form") or form.version + 1
                 form.description = json_form.get("description")
                 form.languages = json_form.get("languages")
@@ -70,7 +70,7 @@ class Command(BaseCommand):
                     self.stdout.write(
                         f"Form Updated | {form.name} V{form.version}")
             # question group loop
-            for qg in enumerate(json_form["question_group"]):
+            for qg in json_form["question_group"]:
                 # TODO:: USE QG ID FROM JSON?
                 question_group, created = QG.objects.update_or_create(
                     form=form,
@@ -89,7 +89,7 @@ class Command(BaseCommand):
                     })
                 if created:
                     question_group.save()
-                for q in enumerate(qg["question"]):
+                for q in qg["question"]:
                     question = Questions.objects.filter(pk=q["id"]).first()
                     if not question:
                         question = Questions.objects.create(
@@ -99,9 +99,9 @@ class Command(BaseCommand):
                             name=q.get("name"),
                             tooltip=q.get("tooltip"),
                             order=q["order"],
-                            meta=q.get("meta"),
+                            meta=q.get("meta") or False,
                             rule=q.get("rule"),
-                            required=q.get("required"),
+                            required=q.get("required") or False,
                             dependency=q.get("dependency"),
                             api=q.get("api"),
                             type=getattr(QuestionTypes, q["type"]),
@@ -113,9 +113,9 @@ class Command(BaseCommand):
                         question.name = q.get("name")
                         question.tooltip = q.get("tooltip")
                         question.order = q["order"]
-                        question.meta = q.get("meta")
+                        question.meta = q.get("meta") or False
                         question.rule = q.get("rule")
-                        question.required = q.get("required")
+                        question.required = q.get("required") or False
                         question.dependency = q.get("dependency")
                         question.type = getattr(QuestionTypes, q["type"])
                         question.api = q.get("api")
@@ -135,7 +135,7 @@ class Command(BaseCommand):
                                 name=o["name"].strip(),
                                 order=o["order"],
                                 translations=o.get("translations")
-                            ) for o in enumerate(q.get("options"))
+                            ) for o in q.get("options")
                         ])
         # DELETE CACHES AND REFRESH MATERIALIZED DATA
         cache.clear()
