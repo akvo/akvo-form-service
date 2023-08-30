@@ -4,7 +4,7 @@ services:
   backend:
     image: python:3.8.5
     working_dir: /app/backend
-    command: ["./test.sh"]
+    command: ["./run-qc.sh"]
     volumes:
       - ./:/app:delegated
     environment:
