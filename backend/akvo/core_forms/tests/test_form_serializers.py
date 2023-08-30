@@ -29,14 +29,12 @@ class TestFormSerializers(TestCase):
 
     def test_list_form_serializer_return_expected_data(self):
         data = self.serializer.data
-        self.assertEqual(
-            data, 
-            {
-                'id': data.get('id'),
-                'name': 'Test Form',
-                'description': 'Lorem ipsum sit dolor',
-                'version': 1,
-                'languages': ['en'],
-                'translations': None
-            }
-        )
+        expected_data = {
+            'id': data.get('id'),
+            'name': 'Test Form',
+            'description': 'Lorem ipsum sit dolor',
+            'version': 1,
+            'languages': ['en'],
+            'translations': None
+        }
+        self.assertEqual(data, expected_data)
