@@ -1,3 +1,7 @@
-# from django.urls import re_path
+from django.urls import path
 
-urlpatterns = []
+from akvo.core_node.views.node import NodeView
+
+urlpatterns = [
+    path("node", NodeView.as_view()),
+]

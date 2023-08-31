@@ -16,6 +16,7 @@ class AddNodeDetailSerializer(serializers.ModelSerializer):
     def validate_code(self, value):
         if not value or value == "":
             raise serializers.ValidationError("Node detail code is required")
+        return value
 
     def validate_name(self, value):
         if not value or value == "":
