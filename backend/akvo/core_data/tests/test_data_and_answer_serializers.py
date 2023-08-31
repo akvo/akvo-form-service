@@ -60,20 +60,8 @@ class TestDataAndAnswerSerializers(TestCase):
         self.question = Questions.objects.create(**question_data)
 
     def test_submit_data_serializer(self):
-        # wrong form id
-        invalid_post_data = {
-            'form': 100,
-            'name': 'Datapoint name',
-            'geo': {'lat': 40.7128, 'lng': -74.0060},
-            'submitter': 'Akvo'
-        }
-        serializer = SubmitDataSerializer(data=invalid_post_data)
-        self.assertFalse(serializer.is_valid())
-        with self.assertRaises(serializers.ValidationError):
-            serializer.is_valid(raise_exception=True)
         # no submitter
         invalid_post_data = {
-            'form': self.form.id,
             'name': 'Datapoint name',
             'geo': {'lat': 40.7128, 'lng': -74.0060},
             'submitter': None
@@ -84,7 +72,6 @@ class TestDataAndAnswerSerializers(TestCase):
             serializer.is_valid(raise_exception=True)
         # correct value
         post_data = {
-            'form': self.form.id,
             'name': 'Datapoint name',
             'geo': {'lat': 40.7128, 'lng': -74.0060},
             'submitter': 'Akvo'
@@ -131,7 +118,6 @@ class TestDataAndAnswerSerializers(TestCase):
     def test_submit_form_serializer_and_get_data_answer(self):
         # submit
         post_data = {
-            'form': self.form.id,
             'name': 'Datapoint name',
             'geo': {'lat': 40.7128, 'lng': -74.0060},
             'submitter': 'Akvo'
@@ -144,7 +130,9 @@ class TestDataAndAnswerSerializers(TestCase):
             'data': post_data,
             'answer': [post_answer]
         }
-        serializer = SubmitFormSerializer(data=submit_data)
+        serializer = SubmitFormSerializer(
+            data=submit_data, context={'form': self.form}
+        )
         self.assertTrue(serializer.is_valid())
         serializer.save()
         # get data

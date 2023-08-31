@@ -2,7 +2,6 @@ from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
-from akvo.core_forms.models import Forms
 from akvo.core_data.models import (
     Data,
     Answers,
@@ -21,7 +20,6 @@ class SubmitDataSerializer(serializers.ModelSerializer):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.fields.get("form").queryset = Forms.objects.all()
 
     def validate_submitter(self, value):
         if not value or value == "":
@@ -30,7 +28,7 @@ class SubmitDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Data
-        fields = ["form", "name", "geo", "submitter"]
+        fields = ["name", "geo", "submitter"]
 
 
 class SubmitFormSerializer(serializers.Serializer):
@@ -45,6 +43,7 @@ class SubmitFormSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         data = validated_data.get("data")
+        data["form"] = self.context.get("form")
         obj_data = self.fields.get("data").create(data)
         for answer in validated_data.get("answer"):
             Answers.objects.define_answer_value(
