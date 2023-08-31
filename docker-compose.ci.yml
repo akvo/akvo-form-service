@@ -2,7 +2,7 @@
 version: "3.9"
 services:
   backend:
-    image: python:3.8.5
+    image: eu.gcr.io/akvo-lumen/akvo-form-service/backend:latest
     working_dir: /app/backend
     command: ["./run-qc.sh"]
     volumes:
