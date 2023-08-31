@@ -8,6 +8,9 @@ from akvo.core_forms.serializers.question_group import (
 from akvo.core_forms.serializers.question import (
     ListQuestionSerializer
 )
+from akvo.core_forms.serializers.form import (
+    ListFormSerializer
+)
 
 
 class TestQuestionGroupSerializers(TestCase):
@@ -54,6 +57,7 @@ class TestQuestionGroupSerializers(TestCase):
         self.question_group_serializer = ListQuestionGroupSerializer(
             instance=self.question_group
         )
+        self.form_serializer = ListFormSerializer(instance=self.form)
 
     def test_list_question_serializer_contains_expected_fields(self):
         data = self.serializer.data
@@ -88,3 +92,18 @@ class TestQuestionGroupSerializers(TestCase):
             "question": [question_data],
         }
         self.assertEqual(question_group_data, expected_data)
+
+    def test_list_form_serializer_return_question_group(self):
+        question_group_data = self.question_group_serializer.data
+        form_data = self.form_serializer.data
+        expected_data = {
+            "id": form_data.get("id"),
+            "name": "Test Form",
+            "description": "Lorem ipsum sit dolor",
+            "version": 1,
+            "languages": ["en"],
+            "default_language": "en",
+            "translations": None,
+            "question_group": [question_group_data]
+        }
+        self.assertEqual(form_data, expected_data)
