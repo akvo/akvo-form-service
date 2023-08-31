@@ -62,6 +62,7 @@ class Questions(models.Model):
     api = models.JSONField(default=None, null=True)
     extra = models.JSONField(default=None, null=True)
     autofield = models.JSONField(default=None, null=True)
+    data_api_url = models.CharField(max_length=255, null=True, default=None)
     translations = models.JSONField(default=None, null=True)
 
     def __str__(self):
@@ -84,8 +85,9 @@ class Questions(models.Model):
             "dependency": self.dependency,
             "api": self.api,
             "extra": self.extra,
-            "options": options,
+            "data_api_url": self.data_api_url,
             "translations": self.translations,
+            "option": options,
         }
 
     @property
@@ -105,6 +107,7 @@ class Options(models.Model):
     code = models.CharField(max_length=255, null=True, default=None)
     name = models.TextField()
     order = models.BigIntegerField(null=True, default=None)
+    color = models.CharField(max_length=255, null=True, default=None)
     translations = models.JSONField(default=None, null=True)
 
     def __str__(self):
