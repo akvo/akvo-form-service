@@ -14,6 +14,11 @@ class Node(models.Model):
 
 
 class NodeDetail(models.Model):
+    node = models.ForeignKey(
+        to=Node,
+        on_delete=models.CASCADE,
+        related_name="node_details"
+    )
     code = models.CharField(max_length=255)
     name = models.TextField()
 
