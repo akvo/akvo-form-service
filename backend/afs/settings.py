@@ -57,6 +57,21 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "afs.urls"
 
+REST_FRAMEWORK = {
+    "DATE_FORMAT": "%d-%m-%Y",
+    "DATETIME_FORMAT": "%d-%m-%Y %H:%M:%S",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "AFS",
+    "DESCRIPTION": "",
+    "VERSION": "1.0.0",
+    "SORT_OPERATIONS": False,
+    "COMPONENT_SPLIT_REQUEST": True,
+}
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",

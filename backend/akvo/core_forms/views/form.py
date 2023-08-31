@@ -1,4 +1,3 @@
-# Create your views here.
 from drf_spectacular.utils import extend_schema
 
 from rest_framework import status
@@ -17,7 +16,7 @@ from akvo.core_forms.serializers.form import ListFormSerializer
     summary='To get list of forms',
     description='Get list of all forms')
 @api_view(['GET'])
-def list_form(request, version):
+def list_form(request):
     instance = Forms.objects.all()
     return Response(
         ListFormSerializer(instance=instance, many=True).data,

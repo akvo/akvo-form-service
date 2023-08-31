@@ -1,3 +1,7 @@
-# from django.urls import re_path
+from django.urls import path
 
-# urlpatterns = []
+from akvo.core_forms.views.form import list_form
+
+urlpatterns = [
+    path('forms', list_form),
+]
