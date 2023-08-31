@@ -8,7 +8,7 @@ from django.test.utils import override_settings
 @override_settings(USE_TZ=False)
 class TestFormEndpoint(TestCase):
     def test_endpoint_list_form(self):
-        call_command("form_seeder", "--file=1693403249322")
+        call_command("form_seeder", "--file=./source/forms/1693403249322.json")
         data = self.client.get(
             "/api/forms",
         )
@@ -20,7 +20,7 @@ class TestFormEndpoint(TestCase):
         self.assertEqual(result, [expected_result])
 
     def test_endpoint_get_form_by_id(self):
-        call_command("form_seeder", "--file=1693403249322")
+        call_command("form_seeder", "--file=./source/forms/1693403249322.json")
         data = self.client.get(
             "/api/form/1693403249322",
             follow=True

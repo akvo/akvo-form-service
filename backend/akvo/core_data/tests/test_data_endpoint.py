@@ -6,7 +6,7 @@ from django.test.utils import override_settings
 @override_settings(USE_TZ=False)
 class TestDataEndpoint(TestCase):
     def test_endpoint_data_view(self):
-        call_command("form_seeder", "--file=1693403249322")
+        call_command("form_seeder", "--file=./source/forms/1693403249322.json")
         # POST DATA
         payload = {
             "data": {

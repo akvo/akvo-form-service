@@ -20,7 +20,7 @@ class Command(BaseCommand):
                             const=1,
                             default=False,
                             type=int)
-        parser.add_argument("-f", "--file", nargs="?", default=False, type=int)
+        parser.add_argument("-f", "--file", nargs="?", default=False, type=str)
 
     def handle(self, *args, **options):
         TEST = options.get("test")
@@ -36,7 +36,7 @@ class Command(BaseCommand):
             if TEST else "example" not in x, source_files
         ))
         if JSON_FILE:
-            source_files = [f"{source_folder}{JSON_FILE}.json"]
+            source_files = [JSON_FILE]
         for source in source_files:
             json_form = open(source, 'r')
             json_form = json.load(json_form)

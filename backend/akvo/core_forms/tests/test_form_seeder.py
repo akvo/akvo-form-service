@@ -33,7 +33,7 @@ class FormSeederTestCase(TestCase):
         ]
 
         # RUN SEED NEW FORM
-        output = self.call_command("--file=1693403249322")
+        output = self.call_command("--file=./source/forms/1693403249322.json")
         output = list(filter(lambda x: len(x), output.split("\n")))
         forms = Forms.objects.all()
         self.assertEqual(forms.count(), 1)
@@ -44,7 +44,7 @@ class FormSeederTestCase(TestCase):
             self.assertIn(form.name, json_forms)
 
         # RUN UPDATE EXISTING FORM
-        output = self.call_command("--file=1693403249322")
+        output = self.call_command("--file=./source/forms/1693403249322.json")
         output = list(filter(lambda x: len(x), output.split("\n")))
         forms = Forms.objects.all()
         # form_ids = [form.id for form in forms]
@@ -61,7 +61,7 @@ class FormSeederTestCase(TestCase):
             self.assertIn(form.name, json_forms)
 
     def test_get_form_after_seed_return_expected_form_definition(self):
-        self.call_command("--file=1693403249322")
+        self.call_command("--file=./source/forms/1693403249322.json")
         form = Forms.objects.filter(id=1693403249322).first()
         form_serializer = ListFormSerializer(instance=form)
         form_definition = form_serializer.data
