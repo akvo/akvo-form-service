@@ -22,3 +22,19 @@ def list_form(request):
         ListFormSerializer(instance=instance, many=True).data,
         status=status.HTTP_200_OK
     )
+
+
+@extend_schema(
+    responses={
+        200: ListFormSerializer()
+    },
+    tags=['Form'],
+    summary='To get a form definition by form id',
+    description='Get form definition by form id')
+@api_view(['GET'])
+def get_form_by_id(request, form_id):
+    instance = Forms.objects.filter(pk=form_id).first()
+    return Response(
+        ListFormSerializer(instance=instance).data,
+        status=status.HTTP_200_OK
+    )
