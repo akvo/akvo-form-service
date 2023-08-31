@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
   frontend:
-    image: akvo/akvo-node-18-alpine:20220923.084347.0558ee6
+    image: akvo/akvo-node-18-alpine:20230831.105309.b9593b7
     command: ["./start.sh"]
     volumes:
       - ./frontend:/app:delegated
