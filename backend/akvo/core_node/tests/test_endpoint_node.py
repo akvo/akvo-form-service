@@ -18,8 +18,21 @@ class TestNodeEndpoint(TestCase):
             "/api/node",
             payload,
             content_type="application/json",
-            follow=True
         )
         self.assertEqual(data.status_code, 200)
         data = data.json()
         self.assertEqual(data, {"message": "ok"})
+
+        # GET LIST OF NODE DETAIL
+        data = self.client.get(
+            "/api/node_detail/1",
+            follow=True
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        expected_result = [
+            {'id': 1, 'code': 'JKT', 'name': 'Jakarta'},
+            {'id': 2, 'code': 'DPS', 'name': 'Denpasar'},
+            {'id': 3, 'code': 'DIY', 'name': 'Daerah Istimewa Yogyakarta'}
+        ]
+        self.assertEqual(result, expected_result)
