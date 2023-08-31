@@ -9,7 +9,7 @@ CI_COMMIT=$(git rev-parse --short "$GITHUB_SHA")
 echo "CI_COMMIT=${CI_COMMIT}"
 
 dc() {
-    docker-compose \
+    docker compose \
         --ansi never \
         "$@"
 }
