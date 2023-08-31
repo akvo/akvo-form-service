@@ -23,7 +23,8 @@ class TestDataEndpoint(TestCase):
         data = self.client.post(
             "/api/data/1693403249322",
             payload,
-            content_type="application/json"
+            content_type="application/json",
+            follow=True
         )
         self.assertEqual(data.status_code, 200)
         data = data.json()
@@ -36,7 +37,8 @@ class TestDataEndpoint(TestCase):
         data = self.client.put(
             "/api/data/1693403249322?data_id=1",
             payload,
-            content_type="application/json"
+            content_type="application/json",
+            follow=True
         )
         self.assertEqual(data.status_code, 200)
         data = data.json()

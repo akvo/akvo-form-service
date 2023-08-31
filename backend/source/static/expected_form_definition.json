@@ -101,7 +101,8 @@
           "fn": {
             "fnString": "function(){return #1693403503687 === 'KG' ? #1693403399692 : #1693403503687.replace(/[^0-9]/g, '') * #1693403399692}",
             "multiline": false
-          }
+          },
+          "dataApiUrl": "./poc-idh-1/api/value"
         },
         {
           "id": 1693403843111,

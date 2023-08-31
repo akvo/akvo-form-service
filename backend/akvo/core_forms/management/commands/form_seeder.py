@@ -111,6 +111,7 @@ class Command(BaseCommand):
                             translations=q.get("translations"),
                             extra=q.get("extra"),
                             autofield=q.get("fn"),
+                            data_api_url=q.get("dataApiUrl")
                         )
                     else:
                         question.name = q.get("name")
@@ -126,6 +127,7 @@ class Command(BaseCommand):
                         question.translations = q.get("translations")
                         question.extra = q.get("extra"),
                         question.autofield = q.get("fn")
+                        question.data_api_url = q.get("dataApiUrl")
                         question.save()
                     # question options
                     if q.get("option"):
@@ -139,6 +141,7 @@ class Command(BaseCommand):
                                 code=o.get("code"),
                                 name=o["name"].strip(),
                                 order=o["order"],
+                                color=o.get("color"),
                                 translations=o.get("translations")
                             ) for o in q.get("option")
                         ])
