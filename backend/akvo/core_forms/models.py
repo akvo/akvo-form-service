@@ -54,7 +54,7 @@ class Questions(models.Model):
     name = models.TextField()
     order = models.BigIntegerField(null=True, default=None)
     type = models.IntegerField(choices=QuestionTypes.FieldStr.items())
-    tooltip = models.TextField(null=True, default=None)
+    tooltip = models.JSONField(default=None, null=True)
     required = models.BooleanField(default=True)
     meta = models.BooleanField(default=False)
     rule = models.JSONField(default=None, null=True)

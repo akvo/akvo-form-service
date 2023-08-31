@@ -1,3 +1,5 @@
+import json
+
 from io import StringIO
 
 from django.test.utils import override_settings
@@ -5,6 +7,9 @@ from django.core.management import call_command
 from django.test import TestCase
 
 from akvo.core_forms.models import Forms
+from akvo.core_forms.serializers.form import (
+    ListFormSerializer
+)
 
 
 @override_settings(USE_TZ=False)
@@ -24,11 +29,11 @@ class FormSeederTestCase(TestCase):
         self.maxDiff = None
         forms = Forms.objects.all().delete()
         json_forms = [
-            "TOILET AND HANDWASHING FACILITY OUTCOMES",
+            "IDH Form",
         ]
 
         # RUN SEED NEW FORM
-        output = self.call_command("--file=1691495283921")
+        output = self.call_command("--file=1693403249322")
         output = list(filter(lambda x: len(x), output.split("\n")))
         forms = Forms.objects.all()
         self.assertEqual(forms.count(), 1)
@@ -39,7 +44,7 @@ class FormSeederTestCase(TestCase):
             self.assertIn(form.name, json_forms)
 
         # RUN UPDATE EXISTING FORM
-        output = self.call_command()
+        output = self.call_command("--file=1693403249322")
         output = list(filter(lambda x: len(x), output.split("\n")))
         forms = Forms.objects.all()
         # form_ids = [form.id for form in forms]
@@ -54,3 +59,13 @@ class FormSeederTestCase(TestCase):
                     f"Form Created | {form.name} V{form.version}", output
                 )
             self.assertIn(form.name, json_forms)
+
+    def test_get_form_after_seed_return_expected_form_definition(self):
+        self.call_command("--file=1693403249322")
+        form = Forms.objects.filter(id=1693403249322).first()
+        form_serializer = ListFormSerializer(instance=form)
+        form_definition = form_serializer.data
+        # Load expected form definition from JSON
+        with open('./source/static/expected_form_definition.json', 'r') as f:
+            expected_form_definition = json.load(f)
+        self.assertEqual(form_definition, expected_form_definition)

@@ -19,7 +19,10 @@ class ListQuestionSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(ListOptionSerializer(many=True))
     def get_option(self, instance: Questions):
-        if instance.type in [QuestionTypes.option, QuestionTypes.multiple_option]:
+        if instance.type in [
+            QuestionTypes.option,
+            QuestionTypes.multiple_option
+        ]:
             return ListOptionSerializer(
                 instance=instance.question_options.all(), many=True
             ).data
@@ -59,7 +62,8 @@ class ListQuestionSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(
         inline_serializer(
-            "QuestionExtraFormat", fields={"allowOther": serializers.BooleanField()}
+            "QuestionExtraFormat",
+            fields={"allowOther": serializers.BooleanField()}
         )
     )
     def get_extra(self, instance: Questions):
@@ -78,7 +82,9 @@ class ListQuestionSerializer(serializers.ModelSerializer):
         return instance.autofield
 
     def to_representation(self, instance):
-        result = super(ListQuestionSerializer, self).to_representation(instance)
+        result = super(
+            ListQuestionSerializer, self
+        ).to_representation(instance)
         return OrderedDict(
             [(key, result[key]) for key in result if result[key] is not None]
         )

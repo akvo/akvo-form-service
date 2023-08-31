@@ -23,6 +23,6 @@ class ListQuestionGroupSerializer(serializers.ModelSerializer):
             "description",
             "order",
             "repeatable",
-            "question",
             "translations",
+            "question",
         ]

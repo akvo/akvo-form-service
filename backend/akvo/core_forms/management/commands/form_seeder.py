@@ -47,9 +47,9 @@ class Command(BaseCommand):
                     name=json_form["name"],
                     description=json_form.get("description"),
                     version=json_form.get("form") or 1,
-                    languages=json_form.get("languages"),
+                    languages=json_form.get("languages") or ["en"],
                     default_language=(
-                        json_form.get("default_language") or "en"
+                        json_form.get("defaultLanguage") or "en"
                     ),
                     translations=json_form.get("translations"))
                 if not TEST:
@@ -61,7 +61,7 @@ class Command(BaseCommand):
                 form.description = json_form.get("description")
                 form.languages = json_form.get("languages")
                 form.default_language = (
-                        json_form.get("default_language") or
+                        json_form.get("defaultLanguage") or
                         form.default_language
                     ),
                 form.translations = json_form.get("translations")
@@ -71,30 +71,33 @@ class Command(BaseCommand):
                         f"Form Updated | {form.name} V{form.version}")
             # question group loop
             for qg in json_form["question_group"]:
-                # TODO:: USE QG ID FROM JSON?
-                question_group, created = QG.objects.update_or_create(
-                    form=form,
-                    name=qg["name"],
-                    order=qg["order"],
-                    repeatable=qg.get('repeatable') or False,
-                    description=qg.get("description"),
-                    translations=qg.get("translations"),
-                    defaults={
-                        "form": form,
-                        "name": qg["name"],
-                        "order": qg["order"],
-                        "repeatable": qg.get('repeatable') or False,
-                        "description": qg.get("description"),
-                        "translations": qg.get("translations"),
-                    })
-                if created:
-                    question_group.save()
+                qgroup = QG.objects.filter(pk=qg.get("id")).first()
+                if not qgroup:
+                    qgroup = QG.objects.create(
+                        id=qg["id"],
+                        form=form,
+                        name=qg["name"],
+                        order=qg["order"],
+                        repeatable=qg.get('repeatable') or False,
+                        description=qg.get("description"),
+                        translations=qg.get("translations")
+                    )
+                else:
+                    qgroup.name = qg["name"],
+                    qgroup.order = qg["order"],
+                    qgroup.repeatable = (
+                        qg.get('repeatable')
+                        or qgroup.repeatable
+                    ),
+                    qgroup.description = qg.get("description"),
+                    qgroup.translations = qg.get("translations"),
+                # question loop
                 for q in qg["question"]:
                     question = Questions.objects.filter(pk=q["id"]).first()
                     if not question:
                         question = Questions.objects.create(
                             form=form,
-                            question_group=question_group,
+                            question_group=qgroup,
                             id=q.get("id"),
                             name=q.get("name"),
                             tooltip=q.get("tooltip"),
@@ -107,7 +110,7 @@ class Command(BaseCommand):
                             type=getattr(QuestionTypes, q["type"]),
                             translations=q.get("translations"),
                             extra=q.get("extra"),
-                            autofield=q.get("autofield"),
+                            autofield=q.get("fn"),
                         )
                     else:
                         question.name = q.get("name")
@@ -122,20 +125,22 @@ class Command(BaseCommand):
                         question.extra = q.get("extra")
                         question.translations = q.get("translations")
                         question.extra = q.get("extra"),
-                        question.autofield = q.get("autofield")
+                        question.autofield = q.get("fn")
                         question.save()
-                    if q.get("options"):
+                    # question options
+                    if q.get("option"):
                         Options.objects.filter(
                             question=question
                         ).all().delete()
                         Options.objects.bulk_create([
                             Options(
+                                id=o.get("id"),
                                 question=question,
                                 code=o.get("code"),
                                 name=o["name"].strip(),
                                 order=o["order"],
                                 translations=o.get("translations")
-                            ) for o in q.get("options")
+                            ) for o in q.get("option")
                         ])
-        # DELETE CACHES AND REFRESH MATERIALIZED DATA
+        # DELETE CACHES
         cache.clear()
