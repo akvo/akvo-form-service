@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from collections import OrderedDict
 
 from akvo.core_node.models import NodeDetail
 from akvo.utils.custom_serializer_fields import (
@@ -26,3 +27,17 @@ class AddNodeDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = NodeDetail
         fields = ["code", "name"]
+
+
+class ListNodeDetailSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        result = super(
+            ListNodeDetailSerializer, self
+        ).to_representation(instance)
+        return OrderedDict(
+            [(key, result[key]) for key in result if result[key] is not None]
+        )
+
+    class Meta:
+        model = NodeDetail
+        fields = ["id", "code", "name"]
