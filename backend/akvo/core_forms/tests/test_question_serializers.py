@@ -102,7 +102,7 @@ class TestQuestionGroupSerializers(TestCase):
             "description": "Lorem ipsum sit dolor",
             "version": 1,
             "languages": ["en"],
-            "default_language": "en",
+            "defaultLanguage": "en",
             "translations": None,
             "question_group": [question_group_data]
         }

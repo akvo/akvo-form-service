@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 
 from akvo.core_forms.models import Forms, QuestionGroups
 from akvo.core_forms.serializers.question_group import (
@@ -8,7 +9,12 @@ from akvo.core_forms.serializers.question_group import (
 
 
 class ListFormSerializer(serializers.ModelSerializer):
+    defaultLanguage = serializers.SerializerMethodField()
     question_group = serializers.SerializerMethodField()
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_defaultLanguage(self, instance: Forms):
+        return instance.default_language
 
     @extend_schema_field(ListQuestionGroupSerializer(many=True))
     def get_question_group(self, instance: QuestionGroups):
@@ -23,7 +29,7 @@ class ListFormSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
-            "default_language",
+            "defaultLanguage",
             "languages",
             "version",
             "translations",

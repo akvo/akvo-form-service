@@ -14,4 +14,4 @@ class ListOptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Options
-        fields = ["id", "code", "name", "order", "translations"]
+        fields = ["id", "code", "name", "order", "color", "translations"]

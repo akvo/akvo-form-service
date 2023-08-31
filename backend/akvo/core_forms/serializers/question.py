@@ -16,6 +16,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     rule = serializers.SerializerMethodField()
     extra = serializers.SerializerMethodField()
     fn = serializers.SerializerMethodField()
+    dataApiUrl = serializers.SerializerMethodField()
 
     @extend_schema_field(ListOptionSerializer(many=True))
     def get_option(self, instance: Questions):
@@ -81,6 +82,10 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     def get_fn(self, instance: Questions):
         return instance.autofield
 
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_dataApiUrl(self, instance: Questions):
+        return instance.data_api_url
+
     def to_representation(self, instance):
         result = super(
             ListQuestionSerializer, self
@@ -105,5 +110,6 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "extra",
             "translations",
             "fn",
+            "dataApiUrl",
             "option",
         ]

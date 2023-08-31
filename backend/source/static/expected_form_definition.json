@@ -2,7 +2,7 @@
   "id": 1693403249322,
   "name": "IDH Form",
   "description": "IDH Yield value proof of concept",
-  "default_language": "en",
+  "defaultLanguage": "en",
   "languages": [
     "en"
   ],
