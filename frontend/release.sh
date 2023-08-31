@@ -3,8 +3,8 @@
 
 set -euo pipefail
 
-sudo apk update
-sudo apk add --no-cache python3 make g++ yarn
+apk update
+apk add --no-cache python3 make g++ yarn
 
 yarn install --no-progress --frozen-lock
 yarn eslint --config .eslintrc.prod.json src --ext .js,.jsx
