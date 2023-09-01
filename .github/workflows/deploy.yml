@@ -1,4 +1,4 @@
-name: Deploy to test cluster
+name: Deploy to Test Cluster
 
 on:
   push:

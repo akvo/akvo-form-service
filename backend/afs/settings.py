@@ -26,7 +26,7 @@ SECRET_KEY = environ.get("DJANGO_SECRET", "afs-demo-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
