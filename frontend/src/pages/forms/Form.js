@@ -16,24 +16,26 @@ const Form = () => {
     }
   }, [formId, formDef]);
 
-  const onChange = ({ current, values, progress }) => {
-    console.log(progress);
+  const onChange = ({ progress }) => {
+    console.info(progress);
   };
 
-  const onFinish = (values, refreshForm) => {
-    let payload = { data: { ...values.datapoint, submitter: 'Akvo'}}
-    const answers = Object.keys(values).map(key => {
-      if (key === "datapoint") {
-        return false;
-      }
-      const value = values[key]
-      return {
-        question: parseInt(key),
-        value: value
-      }
-    }).filter(x => x)
-    payload = {...payload, answer: answers}
-    console.log(payload);
+  const onFinish = (values) => {
+    let payload = { data: { ...values.datapoint, submitter: "Akvo" } };
+    const answers = Object.keys(values)
+      .map((key) => {
+        if (key === "datapoint") {
+          return false;
+        }
+        const value = values[key];
+        return {
+          question: parseInt(key),
+          value: value,
+        };
+      })
+      .filter((x) => x);
+    payload = { ...payload, answer: answers };
+    console.info(payload);
   };
 
   return (
