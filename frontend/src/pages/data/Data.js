@@ -25,7 +25,7 @@ const Data = () => {
   const fetchData = useCallback(() => {
     setLoading(true);
     api
-      .get(`data/${selectedForm}?page=1`)
+      .get(`data/${selectedForm}?page=${page.current}`)
       .then((res) => {
         const { current, total_page, data: resData, total } = res.data;
         setData(resData);
@@ -38,16 +38,24 @@ const Data = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [selectedForm]);
+  }, [selectedForm, page.current]);
 
   useEffect(() => {
     if (selectedForm) {
       fetchData();
     }
-  }, [selectedForm, fetchData]);
+  }, [selectedForm, page.current]);
 
   const handleOnSelectForm = (value) => {
     setSelectedForm(value);
+  };
+
+  const handleTableChange = (pagination) => {
+    const { current } = pagination;
+    setPage({
+      ...page,
+      current: current,
+    });
   };
 
   const columns = [
@@ -92,6 +100,11 @@ const Data = () => {
         dataSource={data}
         columns={columns}
         loading={loading}
+        onChange={handleTableChange}
+        pagination={{
+          current: page.current,
+          total: page.total,
+        }}
       />
     </div>
   );
