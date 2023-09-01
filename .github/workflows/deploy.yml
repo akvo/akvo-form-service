@@ -23,7 +23,7 @@ jobs:
     with:
       app-name: "akvo-form-service"
       service-name: "frontend"
-      dockerfile-location: "frontend/Dockerfile"
+      dockerfile-location: "frontend"
 
   build-push-backend:
     needs: node-operation
@@ -32,7 +32,7 @@ jobs:
     with:
       app-name: "akvo-form-service"
       service-name: "backend"
-      dockerfile-location: "backend/Dockerfile"
+      dockerfile-location: "backend"
 
   rollout-frontend:
     needs: build-push-frontend
