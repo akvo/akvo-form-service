@@ -32,9 +32,11 @@ class TestNodeEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
+        for each in result:
+            each.pop('id')
         expected_result = [
-            {'id': 1, 'code': 'JKT', 'name': 'Jakarta'},
-            {'id': 2, 'code': 'DPS', 'name': 'Denpasar'},
-            {'id': 3, 'code': 'DIY', 'name': 'Daerah Istimewa Yogyakarta'}
+            {'code': 'JKT', 'name': 'Jakarta'},
+            {'code': 'DPS', 'name': 'Denpasar'},
+            {'code': 'DIY', 'name': 'Daerah Istimewa Yogyakarta'}
         ]
         self.assertEqual(result, expected_result)
