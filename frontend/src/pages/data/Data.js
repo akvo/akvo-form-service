@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { api } from "../../lib";
 import { GlobalStore } from "../../store";
-import { Select, Divider, Table, Spin, List } from "antd";
+import { Select, Divider, Table, Spin } from "antd";
 import { orderBy, groupBy } from "lodash";
 
 const Data = () => {
@@ -107,22 +107,18 @@ const Data = () => {
     return Object.keys(groups).map((key) => {
       const listSource = groups[key];
       return (
-        <List
-          size="small"
-          key={key}
-          header={<b>{key}</b>}
-          footer={false}
-          bordered
-          dataSource={listSource}
-          renderItem={(item) => (
-            <List.Item key={item.qId}>
-              <p>
-                <i>{item.qName}</i>
-              </p>
-              Answer : {item.answer || "NA"}
-            </List.Item>
-          )}
-        />
+        <>
+          <h4>{key}</h4>
+          <Table
+            size="small"
+            columns={[
+              { title: "Question", dataIndex: "qName", width: "50%" },
+              { title: "Answer", dataIndex: "answer" },
+            ]}
+            dataSource={listSource}
+            pagination={false}
+          />
+        </>
       );
     });
   }, [answers]);

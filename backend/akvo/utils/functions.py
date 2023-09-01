@@ -39,7 +39,10 @@ def get_answer_value(
         if toString:
             return "|".join([str(o) for o in ops]) if ops else None
         return answer.options
-    elif answer.question.type == QuestionTypes.number:
+    elif answer.question.type in [
+        QuestionTypes.number,
+        QuestionTypes.autofield
+    ]:
         return answer.value
     else:
         return answer.name
