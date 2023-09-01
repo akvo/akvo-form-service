@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo } from "react";
-import "akvo-react-form/dist/index.css"; /* REQUIRED */
 import { Webform } from "akvo-react-form";
 import { api } from "../../lib";
 import { useParams } from "react-router-dom";

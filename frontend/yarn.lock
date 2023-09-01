@@ -2709,6 +2709,18 @@ ajv@^8.0.0, ajv@^8.6.0, ajv@^8.9.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
+akvo-react-form-editor@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/akvo-react-form-editor/-/akvo-react-form-editor-1.1.5.tgz#75770d36fb976802a07b03026b9fc8007deb2c07"
+  integrity sha512-EEMo2CH9v0P2eGVcfW02WXP9A23wenWcXB2YvWn056VwZ6UTuw6DwVEOWGGTglrCBV/Tjhx3Ok52kNEE8WG5GA==
+  dependencies:
+    akvo-react-form "^2.2.5"
+    antd "^4.20.0"
+    locale-codes "^1.3.1"
+    lodash "^4.17.21"
+    pullstate "^1.24.0"
+    react-icons "^4.4.0"
+
 akvo-react-form@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-2.2.5.tgz#974b53a54bef111fb1b1b0dbe53c6c615eecd69b"
@@ -9428,7 +9440,7 @@ react-html-parser@^2.0.2:
   dependencies:
     htmlparser2 "^3.9.0"
 
-react-icons@^4.3.1:
+react-icons@^4.3.1, react-icons@^4.4.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.10.1.tgz#3f3b5eec1f63c1796f6a26174a1091ca6437a500"
   integrity sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==

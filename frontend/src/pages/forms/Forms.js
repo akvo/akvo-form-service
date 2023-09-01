@@ -1,6 +1,7 @@
 import React from "react";
-import { Table, Button, Divider } from "antd";
+import { Row, Col, Table, Button, Divider } from "antd";
 import { Link } from "react-router-dom";
+import { FormOutlined, ProfileOutlined } from "@ant-design/icons";
 import { GlobalStore } from "../../store";
 
 const Forms = () => {
@@ -23,14 +24,26 @@ const Forms = () => {
       key: "description",
     },
     {
-      title: "Action",
+      title: "Actions",
+      width: 200,
       render: (form) => {
         return (
-          <Link to={`/form/${form.id}`}>
-            <Button type="primary" size="small">
-              Go to Webform
-            </Button>
-          </Link>
+          <Row>
+            <Col span={12}>
+              <Link to={`/form/${form.id}`}>
+                <Button icon={<ProfileOutlined />} type="primary" size="small">
+                  Open
+                </Button>
+              </Link>
+            </Col>
+            <Col span={12}>
+              <Link to={`/forms/edit/${form.id}`}>
+                <Button icon={<FormOutlined />} type="primary" size="small">
+                  Edit
+                </Button>
+              </Link>
+            </Col>
+          </Row>
         );
       },
     },
