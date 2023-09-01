@@ -1,23 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { api } from "../../lib";
+import React from "react";
 import { Table, Button, Divider } from "antd";
 import { Link } from "react-router-dom";
+import { GlobalStore } from "../../store";
 
 const Forms = () => {
-  const [loading, setLoading] = useState(false);
-  const [forms, setForms] = useState([]);
-
-  useEffect(() => {
-    setLoading(true);
-    api
-      .get("forms")
-      .then((res) => {
-        setForms(res.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { loading, forms } = GlobalStore.useState((s) => s);
 
   const columns = [
     {

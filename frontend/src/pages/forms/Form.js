@@ -3,7 +3,7 @@ import "akvo-react-form/dist/index.css"; /* REQUIRED */
 import { Webform } from "akvo-react-form";
 import { api } from "../../lib";
 import { useParams } from "react-router-dom";
-import { Spin } from "antd";
+import { Spin, notification } from "antd";
 
 const Form = () => {
   const { formId } = useParams();
@@ -52,11 +52,18 @@ const Form = () => {
     api
       .post(`data/${formId}`, payload)
       .then(() => {
-        console.info("Submitted");
         refreshForm();
+        notification.success({
+          message: "Success",
+          description: "Submission submitted successfully.",
+        });
       })
       .catch((e) => {
         console.error(e);
+        notification.error({
+          message: "Error",
+          description: "Something went wrong.",
+        });
       });
   };
 
