@@ -13,6 +13,7 @@ const Data = () => {
     total_page: 1,
     total: 0,
   });
+  console.info(page);
 
   const formsDropdown = useMemo(() => {
     return forms.map((f) => ({
@@ -66,8 +67,6 @@ const Data = () => {
       key: "created",
     },
   ];
-
-  console.log(data);
 
   return (
     <div>
