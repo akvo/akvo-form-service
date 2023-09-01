@@ -25,7 +25,6 @@ class TestFormSerializers(TestCase):
             {
                 "id", "name", "description", "defaultLanguage",
                 "version", "languages", "translations",
-                "question_group"
             },
         )
 
@@ -39,6 +38,5 @@ class TestFormSerializers(TestCase):
             "languages": ["en"],
             "defaultLanguage": "en",
             "translations": None,
-            "question_group": []
         }
         self.assertEqual(data, expected_data)
