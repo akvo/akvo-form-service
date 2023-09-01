@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import WebformEditor from "akvo-react-form-editor";
 import "akvo-react-form-editor/dist/index.css"; /* REQUIRED */
 import { api } from "../../lib";
 
 const Editor = () => {
   const { formId } = useParams();
+  const history = useNavigate();
   const [formDef, setFormDef] = useState({});
 
   useEffect(() => {
@@ -21,7 +22,17 @@ const Editor = () => {
   };
   return (
     <div>
-      <h1>Form Editor</h1>
+      <h1>
+        <a
+          onClick={() => {
+            history("/forms");
+          }}
+        >
+          {" "}
+          Form
+        </a>{" "}
+        / Edit / {formId}
+      </h1>
       <WebformEditor initialValue={formDef} onSave={onSave} />
     </div>
   );

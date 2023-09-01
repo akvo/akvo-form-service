@@ -25,21 +25,21 @@ const Forms = () => {
     },
     {
       title: "Actions",
-      width: 200,
+      width: 300,
       render: (form) => {
         return (
           <Row>
-            <Col span={12}>
+            <Col span={16}>
               <Link to={`/form/${form.id}`}>
                 <Button icon={<ProfileOutlined />} type="primary" size="small">
-                  Open
+                  New Submission
                 </Button>
               </Link>
             </Col>
-            <Col span={12}>
+            <Col span={8}>
               <Link to={`/forms/edit/${form.id}`}>
                 <Button icon={<FormOutlined />} type="primary" size="small">
-                  Edit
+                  Editor
                 </Button>
               </Link>
             </Col>
