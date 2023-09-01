@@ -13,7 +13,7 @@ const Data = () => {
     total_page: 1,
     total: 0,
   });
-  console.info(page);
+  const current = page.current;
 
   const formsDropdown = useMemo(() => {
     return forms.map((f) => ({
@@ -25,7 +25,7 @@ const Data = () => {
   const fetchData = useCallback(() => {
     setLoading(true);
     api
-      .get(`data/${selectedForm}?page=${page.current}`)
+      .get(`data/${selectedForm}?page=${current}`)
       .then((res) => {
         const { current, total_page, data: resData, total } = res.data;
         setData(resData);
@@ -38,13 +38,13 @@ const Data = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [selectedForm, page]);
+  }, [selectedForm, current]);
 
   useEffect(() => {
     if (selectedForm) {
       fetchData();
     }
-  }, [selectedForm, page, fetchData]);
+  }, [selectedForm, current, fetchData]);
 
   const handleOnSelectForm = (value) => {
     setSelectedForm(value);
