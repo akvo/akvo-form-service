@@ -1,8 +1,6 @@
-from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import (
     extend_schema,
     inline_serializer,
-    OpenApiParameter,
 )
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
