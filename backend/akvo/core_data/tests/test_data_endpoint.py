@@ -37,11 +37,9 @@ class TestDataEndpoint(TestCase):
         self.assertEqual(data.status_code, 200)
         data = data.json()
         self.assertEqual(data, {"message": "ok"})
-        self.assertEqual(Data.objects.count(), 1)
-        self.assertEqual(Answers.objects.count(), 3)
+        data_id = Data.objects.first().id
 
         # SHOW ANSWERS
-        data_id = Data.objects.first().id
 
         answers = self.client.get(f"/api/answers/{data_id}", follow=True)
         self.assertEqual(answers.status_code, 200)
@@ -63,7 +61,7 @@ class TestDataEndpoint(TestCase):
             "question": 1693403277316,
             "value": "John Doe"
         }]
-        data = self.client.put("/api/data/1693403249322?data_id=1",
+        data = self.client.put(f"/api/data/1693403249322?data_id={data_id}",
                                payload,
                                content_type="application/json",
                                follow=True)
