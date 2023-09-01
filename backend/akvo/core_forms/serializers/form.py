@@ -10,6 +10,26 @@ from akvo.core_forms.serializers.question_group import (
 
 class ListFormSerializer(serializers.ModelSerializer):
     defaultLanguage = serializers.SerializerMethodField()
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_defaultLanguage(self, instance: Forms):
+        return instance.default_language
+
+    class Meta:
+        model = Forms
+        fields = [
+            "id",
+            "name",
+            "description",
+            "defaultLanguage",
+            "languages",
+            "version",
+            "translations",
+        ]
+
+
+class FormDefinitionSerializer(serializers.ModelSerializer):
+    defaultLanguage = serializers.SerializerMethodField()
     question_group = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)

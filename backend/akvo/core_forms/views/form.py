@@ -6,7 +6,9 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
 from akvo.core_forms.models import Forms
-from akvo.core_forms.serializers.form import ListFormSerializer
+from akvo.core_forms.serializers.form import (
+    ListFormSerializer, FormDefinitionSerializer
+)
 
 
 @extend_schema(
@@ -27,7 +29,7 @@ def list_form(request):
 
 @extend_schema(
     responses={
-        200: ListFormSerializer()
+        200: FormDefinitionSerializer()
     },
     tags=['Form'],
     summary='To get a form definition by form id',
@@ -36,6 +38,6 @@ def list_form(request):
 def get_form_by_id(request, form_id):
     instance = get_object_or_404(Forms, pk=form_id)
     return Response(
-        ListFormSerializer(instance=instance).data,
+        FormDefinitionSerializer(instance=instance).data,
         status=status.HTTP_200_OK
     )

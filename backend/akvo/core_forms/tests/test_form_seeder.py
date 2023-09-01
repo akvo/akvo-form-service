@@ -8,7 +8,7 @@ from django.test import TestCase
 
 from akvo.core_forms.models import Forms
 from akvo.core_forms.serializers.form import (
-    ListFormSerializer
+    FormDefinitionSerializer
 )
 
 
@@ -63,7 +63,7 @@ class FormSeederTestCase(TestCase):
     def test_get_form_after_seed_return_expected_form_definition(self):
         self.call_command("--file=./source/forms/1693403249322.json")
         form = Forms.objects.filter(id=1693403249322).first()
-        form_serializer = ListFormSerializer(instance=form)
+        form_serializer = FormDefinitionSerializer(instance=form)
         form_definition = form_serializer.data
         # Load expected form definition from JSON
         with open('./source/static/expected_form_definition.json', 'r') as f:
