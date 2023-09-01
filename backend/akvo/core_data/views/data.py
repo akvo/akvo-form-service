@@ -98,7 +98,7 @@ class DataView(APIView):
     )
     def put(self, request, form_id):
         data_id = request.GET["data_id"]
-        # form = get_object_or_404(Forms, pk=form_id)
+        get_object_or_404(Forms, pk=form_id)
         data = get_object_or_404(Data, pk=data_id)
         serializer = SubmitDataAnswerSerializer(
             data=request.data, many=True
@@ -115,10 +115,10 @@ class DataView(APIView):
         answers = request.data
         for answer in answers:
             question_id = answer.get("question")
-            form_answer = Answers(
-                data=data, question_id=question_id
-            )
             question = Questions.objects.get(id=question_id)
+            form_answer = Answers.objects.filter(
+                data=data, question_id=question_id
+            ).first()
             name = None
             value = None
             option = None

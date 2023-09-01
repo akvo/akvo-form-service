@@ -67,24 +67,19 @@ class TestDataEndpoint(TestCase):
         self.assertEqual(result, expected_result)
 
         # SHOW ANSWERS
-
         answers = self.client.get(f"/api/answers/{data_id}", follow=True)
         self.assertEqual(answers.status_code, 200)
         result = answers.json()
         expected_result = [{
-            # TODO: FIXME - This is a bug, the previous value is not deleted
             'question': 1693403277316,
-            'value': 'Jane'
+            'value': 'John Doe'
             }, {
             'question': 1693403399692,
             'value': 20.0
             }, {
             'question': 1693403503687,
             'value': ['KG']
-            }, {
-            'question': 1693403277316,
-            'value': 'John Doe'
-        }]
+            }]
         self.assertEqual(result, expected_result)
 
         # SHOW STATISTIC
