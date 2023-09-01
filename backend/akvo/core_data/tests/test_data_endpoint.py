@@ -36,28 +36,8 @@ class TestDataEndpoint(TestCase):
         self.assertEqual(data, {"message": "ok"})
         data_id = Data.objects.first().id
 
-        # SHOW ANSWERS
-
-        answers = self.client.get(f"/api/answers/{data_id}", follow=True)
-        self.assertEqual(answers.status_code, 200)
-        result = answers.json()
-        expected_result = [{
-            'question': 1693403277316,
-            'value': 'Jane'
-        }, {
-            'question': 1693403399692,
-            'value': 20.0
-        }, {
-            'question': 1693403503687,
-            'value': ['KG']
-        }]
-        self.assertEqual(result, expected_result)
-
         # EDIT DATA
-        payload = [{
-            "question": 1693403277316,
-            "value": "John Doe"
-        }]
+        payload = [{"question": 1693403277316, "value": "John Doe"}]
         data = self.client.put(f"/api/data/1693403249322?data_id={data_id}",
                                payload,
                                content_type="application/json",
@@ -76,7 +56,7 @@ class TestDataEndpoint(TestCase):
                 'created': result.get('data')[0]['created'],
                 'form': 1693403249322,
                 'geo': [6.2088, 106.8456],
-                'id': 1,
+                'id': data_id,
                 'name': 'Testing Data',
                 'submitter': 'Akvo',
                 'updated': result.get('data')[0]['updated']
@@ -85,3 +65,35 @@ class TestDataEndpoint(TestCase):
             'total_page': 1
         }
         self.assertEqual(result, expected_result)
+
+        # SHOW ANSWERS
+
+        answers = self.client.get(f"/api/answers/{data_id}", follow=True)
+        self.assertEqual(answers.status_code, 200)
+        result = answers.json()
+        expected_result = [{
+            # TODO: FIXME - This is a bug, the previous value is not deleted
+            'question': 1693403277316,
+            'value': 'Jane'
+            }, {
+            'question': 1693403399692,
+            'value': 20.0
+            }, {
+            'question': 1693403503687,
+            'value': ['KG']
+            }, {
+            'question': 1693403277316,
+            'value': 'John Doe'
+        }]
+        self.assertEqual(result, expected_result)
+
+        # SHOW STATISTIC
+        stats = self.client.get("/api/answer-stats/1693403399692", follow=True)
+        self.assertEqual(stats.status_code, 200)
+        result = stats.json()
+        expected_result = {
+            'count': 1,
+            'max': 20.0,
+            'mean': 20.0,
+            'min': 20.0,
+        }

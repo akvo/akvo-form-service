@@ -17,6 +17,7 @@ const Data = () => {
   const [expandLoading, setExpandLoading] = useState(false);
   const [formDef, setFormDef] = useState({});
   const [answers, setAnswers] = useState([]);
+  const current = page.current;
 
   const formsDropdown = useMemo(() => {
     return forms.map((f) => ({
@@ -34,7 +35,7 @@ const Data = () => {
   const fetchData = useCallback(() => {
     setLoading(true);
     api
-      .get(`data/${selectedForm}?page=${page.current}`)
+      .get(`data/${selectedForm}?page=${current}`)
       .then((res) => {
         const { current, total_page, data: resData, total } = res.data;
         setData(resData);
@@ -47,15 +48,13 @@ const Data = () => {
       .finally(() => {
         setLoading(false);
       });
-    // eslint-disable-next-line
-  }, [selectedForm, page.current]);
+  }, [selectedForm, current]);
 
   useEffect(() => {
     if (selectedForm) {
       fetchData();
     }
-    // eslint-disable-next-line
-  }, [selectedForm, page.current]);
+  }, [selectedForm, current, fetchData]);
 
   const handleOnSelectForm = (value) => {
     fetchFormDefinition(value);

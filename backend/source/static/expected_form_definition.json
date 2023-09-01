@@ -1,165 +1,163 @@
 {
-  "id": 1693403249322,
-  "name": "IDH Form",
-  "description": "IDH Yield value proof of concept",
-  "defaultLanguage": "en",
-  "languages": [
-    "en"
-  ],
-  "version": 1,
-  "translations": null,
-  "question_group": [
-    {
-      "id": 1693403277315,
-      "name": "Farm Yields",
-      "description": null,
-      "order": 1,
-      "repeatable": false,
-      "translations": null,
-      "question": [
-        {
-          "id": 1693403277316,
-          "name": "Farm name",
-          "order": 1,
-          "type": "input",
-          "required": true,
-          "meta": true
-        },
-        {
-          "id": 1693403399692,
-          "name": "How much of the potatoes did you produce during this period?",
-          "order": 2,
-          "type": "number",
-          "tooltip": {
-            "text": "Number 9999 will be treated as \"I don't know\" and 9998 as \"I prefer not to say\",\"0\" ad I didn't produce anything"
-          },
-          "required": true,
-          "meta": false
-        },
-        {
-          "id": 1693403503687,
-          "name": "Using what measurement unit did you measure the amount of potatoes that you produced during this period?",
-          "order": 3,
-          "type": "option",
-          "required": true,
-          "meta": false,
-          "option": [
-            {
-              "id": 1693403528554,
-              "name": "KG",
-              "order": 1
-            },
-            {
-              "id": 1693403528555,
-              "name": "Crate (30 KG)",
-              "order": 2
-            },
-            {
-              "id": 1693403549824,
-              "name": "50 KG Bags",
-              "order": 3
-            },
-            {
-              "id": 1693403568774,
-              "name": "Wooden Box (60 KG)",
-              "order": 4
-            },
-            {
-              "id": 1693403729858,
-              "name": "70 KG Bags",
-              "order": 5
-            },
-            {
-              "id": 1693403765312,
-              "name": "75 KG Bags",
-              "order": 6
-            },
-            {
-              "id": 1693403775705,
-              "name": "90 KG Bags",
-              "order": 7
-            },
-            {
-              "id": 1693403689710,
-              "name": "I don't know",
-              "order": 8
-            },
-            {
-              "id": 1693403697157,
-              "name": "I prefer not to say",
-              "order": 9
-            }
-          ]
-        },
-        {
-          "id": 1693403547388,
-          "name": "Current Production",
-          "order": 4,
-          "type": "autofield",
-          "required": false,
-          "meta": false,
-          "fn": {
-            "fnString": "function(){return #1693403503687 === 'KG' ? #1693403399692 : #1693403503687.replace(/[^0-9]/g, '') * #1693403399692}",
-            "multiline": false
-          },
-          "dataApiUrl": "./poc-idh-1/api/value"
-        },
-        {
-          "id": 1693403843111,
-          "name": "Yield / Land Size",
-          "order": 5,
-          "type": "number",
-          "required": true,
-          "meta": false,
-          "rule": {
-            "allowDecimal": true
-          }
-        },
-        {
-          "id": 1693403947085,
-          "name": "Unit of Area",
-          "order": 6,
-          "type": "option",
-          "required": true,
-          "meta": false,
-          "option": [
-            {
-              "id": 1693403957072,
-              "name": "Hectare",
-              "order": 1
-            },
-            {
-              "id": 1693403957073,
-              "name": "Acre",
-              "order": 2
-            }
-          ]
-        },
-        {
-          "id": 1693404048281,
-          "name": "Total Area in Acres",
-          "order": 7,
-          "type": "autofield",
-          "required": false,
-          "meta": false,
-          "fn": {
-            "fnString": "function(){return #1693403947085 === \"Acre\" ? #1693403843111 : #1693403843111 * 2.47105;}",
-            "multiline": false
-          }
-        },
-        {
-          "id": 1693403971287,
-          "name": "Productivity",
-          "order": 8,
-          "type": "autofield",
-          "required": false,
-          "meta": false,
-          "fn": {
-            "fnString": "function(){return #1693403547388 / #1693404048281}",
-            "multiline": false
-          }
-        }
-      ]
-    }
-  ]
+	"id": 1693403249322,
+	"name": "IDH Form",
+	"description": "IDH Yield value proof of concept",
+	"defaultLanguage": "en",
+	"languages": ["en"],
+	"version": 1,
+	"translations": null,
+	"question_group": [
+		{
+			"id": 1693403277315,
+			"name": "Farm Yields",
+			"description": null,
+			"order": 1,
+			"repeatable": false,
+			"translations": null,
+			"question": [
+				{
+					"id": 1693403277316,
+					"name": "Farm name",
+					"order": 1,
+					"type": "input",
+					"required": true,
+					"meta": true
+				},
+				{
+					"id": 1693403399692,
+					"name": "How much of the potatoes did you produce during this period?",
+					"order": 2,
+					"type": "number",
+					"tooltip": {
+						"text": "Number 9999 will be treated as \"I don't know\" and 9998 as \"I prefer not to say\",\"0\" ad I didn't produce anything"
+					},
+					"required": true,
+					"meta": false
+				},
+				{
+					"id": 1693403503687,
+					"name": "Using what measurement unit did you measure the amount of potatoes that you produced during this period?",
+					"order": 3,
+					"type": "option",
+					"required": true,
+					"meta": false,
+					"option": [
+						{
+							"id": 1693403528554,
+							"name": "KG",
+							"order": 1
+						},
+						{
+							"id": 1693403528555,
+							"name": "Crate (30 KG)",
+							"order": 2
+						},
+						{
+							"id": 1693403549824,
+							"name": "50 KG Bags",
+							"order": 3
+						},
+						{
+							"id": 1693403568774,
+							"name": "Wooden Box (60 KG)",
+							"order": 4
+						},
+						{
+							"id": 1693403729858,
+							"name": "70 KG Bags",
+							"order": 5
+						},
+						{
+							"id": 1693403765312,
+							"name": "75 KG Bags",
+							"order": 6
+						},
+						{
+							"id": 1693403775705,
+							"name": "90 KG Bags",
+							"order": 7
+						},
+						{
+							"id": 1693403689710,
+							"name": "I don't know",
+							"order": 8
+						},
+						{
+							"id": 1693403697157,
+							"name": "I prefer not to say",
+							"order": 9
+						}
+					]
+				},
+				{
+					"id": 1693403547388,
+					"name": "Current Production",
+					"order": 4,
+					"type": "autofield",
+					"required": false,
+					"meta": false,
+					"fn": {
+						"fnString": "function(){return #1693403503687 === 'KG' ? #1693403399692 : #1693403503687.replace(/[^0-9]/g, '') * #1693403399692}",
+						"multiline": false
+					},
+					"dataApiUrl": "/api/answer-stats/1693403547388"
+				},
+				{
+					"id": 1693403843111,
+					"name": "Yield / Land Size",
+					"order": 5,
+					"type": "number",
+					"required": true,
+					"meta": false,
+					"rule": {
+						"allowDecimal": true
+					}
+				},
+				{
+					"id": 1693403947085,
+					"name": "Unit of Area",
+					"order": 6,
+					"type": "option",
+					"required": true,
+					"meta": false,
+					"option": [
+						{
+							"id": 1693403957072,
+							"name": "Hectare",
+							"order": 1
+						},
+						{
+							"id": 1693403957073,
+							"name": "Acre",
+							"order": 2
+						}
+					]
+				},
+				{
+					"id": 1693404048281,
+					"name": "Total Area in Acres",
+					"order": 7,
+					"type": "autofield",
+					"required": false,
+					"meta": false,
+					"fn": {
+						"fnString": "function(){return #1693403947085 === \"Acre\" ? #1693403843111 : #1693403843111 * 2.47105;}",
+						"multiline": false
+					}
+				},
+				{
+					"id": 1693403971287,
+					"name": "Productivity",
+					"order": 8,
+					"type": "autofield",
+					"required": false,
+					"meta": false,
+					"fn": {
+						"fnString": "function(){return #1693403547388 / #1693404048281}",
+						"multiline": false
+					}
+				}
+			]
+		}
+	]
 }
