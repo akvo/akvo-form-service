@@ -1,4 +1,7 @@
-from akvo.core_data.models import Answers
+import requests
+
+# from akvo.core_data.models import Answers
+from akvo.core_forms.models import Questions
 from akvo.core_forms.constants import QuestionTypes
 
 
@@ -10,7 +13,7 @@ def update_date_time_format(date):
 
 
 def get_answer_value(
-    answer: Answers, toString: bool = False, trans: list = None
+    answer, toString: bool = False, trans: list = None
 ):
     if answer.question.type in [
         QuestionTypes.geo,
@@ -46,3 +49,35 @@ def get_answer_value(
         return answer.value
     else:
         return answer.name
+
+
+def define_column_from_answer_value(question: Questions, answer: dict):
+    name = None
+    value = None
+    option = None
+    if question.type in [
+        QuestionTypes.geo,
+        QuestionTypes.option,
+        QuestionTypes.multiple_option,
+    ]:
+        option = answer.get("value")
+    elif question.type in [
+        QuestionTypes.input,
+        QuestionTypes.text,
+        QuestionTypes.photo,
+        QuestionTypes.date,
+    ]:
+        name = answer.get("value")
+    elif question.type == QuestionTypes.cascade:
+        val = None
+        id = answer.get("value")
+        ep = answer.get("question").api.get("endpoint")
+        ep = ep.split("?")[0]
+        ep = f"{ep}?id={id}"
+        val = requests.get(ep).json()
+        val = val[0].get("name")
+        name = val
+    else:
+        # for number question type
+        value = answer.get("value")
+    return name, value, option

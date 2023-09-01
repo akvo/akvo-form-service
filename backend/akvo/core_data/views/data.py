@@ -19,11 +19,13 @@ from akvo.core_data.serializers.data import (
 from akvo.core_data.serializers.answer import (
     SubmitDataAnswerSerializer
 )
-from akvo.core_forms.constants import QuestionTypes
 from akvo.core_forms.models import Forms, Questions
 from akvo.utils.custom_serializer_fields import validate_serializers_message
 from akvo.utils.default_serializers import DefaultResponseSerializer
 from akvo.utils.custom_pagination import Pagination
+from akvo.utils.functions import (
+    define_column_from_answer_value
+)
 
 
 class DataView(APIView):
@@ -119,25 +121,10 @@ class DataView(APIView):
             form_answer = Answers.objects.filter(
                 data=data, question_id=question_id
             ).first()
-            name = None
-            value = None
-            option = None
-            if question.type in [
-                QuestionTypes.geo,
-                QuestionTypes.option,
-                QuestionTypes.multiple_option,
-            ]:
-                option = answer.get("value")
-            elif question.type in [
-                QuestionTypes.input,
-                QuestionTypes.text,
-                QuestionTypes.photo,
-                QuestionTypes.date,
-            ]:
-                name = answer.get("value")
-            else:
-                # for number question type
-                value = answer.get("value")
+            # define answer column
+            name, value, option = define_column_from_answer_value(
+                question=question, answer=answer
+            )
             # Update answer
             form_answer.data = data
             form_answer.question = question
