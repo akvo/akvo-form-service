@@ -26,9 +26,9 @@ class Command(BaseCommand):
         TEST = options.get("test")
         JSON_FILE = options.get("file")
         # Form source
-        source_folder = "source/forms/"
+        source_folder = "./source/forms/"
         source_files = [
-            f"{source_folder}/{json_file}"
+            f"./{source_folder}/{json_file}"
             for json_file in os.listdir(source_folder)
         ]
         source_files = list(filter(

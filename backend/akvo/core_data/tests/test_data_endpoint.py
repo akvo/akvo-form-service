@@ -1,10 +1,12 @@
 from django.core.management import call_command
 from django.test import TestCase
 from django.test.utils import override_settings
+from akvo.core_data.models import Data
 
 
 @override_settings(USE_TZ=False)
 class TestDataEndpoint(TestCase):
+
     def test_endpoint_data_view(self):
         call_command("form_seeder", "--file=./source/forms/1693403249322.json")
         # POST DATA
@@ -14,41 +16,58 @@ class TestDataEndpoint(TestCase):
                 "geo": [6.2088, 106.8456],
                 "submitter": "Akvo",
             },
-            "answer": [
-                {"question": 1693403277316, "value": "Jane"},
-                {"question": 1693403399692, "value": 20},
-                {"question": 1693403503687, "value": ["KG"]},
-            ],
+            "answer": [{
+                "question": 1693403277316,
+                "value": "Jane"
+            }, {
+                "question": 1693403399692,
+                "value": 20
+            }, {
+                "question": 1693403503687,
+                "value": ["KG"]
+            }],
         }
-        data = self.client.post(
-            "/api/data/1693403249322",
-            payload,
-            content_type="application/json",
-            follow=True
-        )
+        data = self.client.post("/api/data/1693403249322",
+                                payload,
+                                content_type="application/json",
+                                follow=True)
         self.assertEqual(data.status_code, 200)
         data = data.json()
         self.assertEqual(data, {"message": "ok"})
+        data_id = Data.objects.first().id
+
+        # SHOW ANSWERS
+
+        answers = self.client.get(f"/api/answers/{data_id}", follow=True)
+        self.assertEqual(answers.status_code, 200)
+        result = answers.json()
+        expected_result = [{
+            'question': 1693403277316,
+            'value': 'Jane'
+        }, {
+            'question': 1693403399692,
+            'value': 20.0
+        }, {
+            'question': 1693403503687,
+            'value': ['KG']
+        }]
+        self.assertEqual(result, expected_result)
 
         # EDIT DATA
-        payload = [
-            {"question": 1693403277316, "value": "John Doe"},
-        ]
-        data = self.client.put(
-            "/api/data/1693403249322?data_id=1",
-            payload,
-            content_type="application/json",
-            follow=True
-        )
+        payload = [{
+            "question": 1693403277316,
+            "value": "John Doe"
+        }]
+        data = self.client.put(f"/api/data/1693403249322?data_id={data_id}",
+                               payload,
+                               content_type="application/json",
+                               follow=True)
         self.assertEqual(data.status_code, 200)
         data = data.json()
         self.assertEqual(data, {'message': 'Update data success'})
 
         # LIST DATA
-        data = self.client.get(
-            "/api/data/1693403249322?page=1",
-            follow=True
-        )
+        data = self.client.get("/api/data/1693403249322?page=1", follow=True)
         self.assertEqual(data.status_code, 200)
         result = data.json()
         expected_result = {
