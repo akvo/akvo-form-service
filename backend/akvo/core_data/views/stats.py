@@ -40,7 +40,8 @@ def answer_stats(_, question_id):
             "min": min,
             "max": max,
             "total": total,
-            "count": count
+            "count": count,
+            "average": total / count
         },
         status=status.HTTP_200_OK,
     )

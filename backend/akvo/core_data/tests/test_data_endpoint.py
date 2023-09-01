@@ -96,4 +96,5 @@ class TestDataEndpoint(TestCase):
             'max': 20.0,
             'mean': 20.0,
             'min': 20.0,
+            'average': 20.0,
         }
