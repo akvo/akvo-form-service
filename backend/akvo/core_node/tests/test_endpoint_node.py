@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test.utils import override_settings
+from akvo.core_node.models import Node
 
 
 @override_settings(USE_TZ=False)
@@ -22,10 +23,11 @@ class TestNodeEndpoint(TestCase):
         self.assertEqual(data.status_code, 200)
         data = data.json()
         self.assertEqual(data, {"message": "ok"})
+        node_id = Node.objects.first().id
 
         # GET LIST OF NODE DETAIL
         data = self.client.get(
-            "/api/node_detail/1",
+            f"/api/node_detail/{node_id}",
             follow=True
         )
         self.assertEqual(data.status_code, 200)

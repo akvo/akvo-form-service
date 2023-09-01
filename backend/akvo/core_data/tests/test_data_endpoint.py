@@ -1,10 +1,7 @@
 from django.core.management import call_command
 from django.test import TestCase
 from django.test.utils import override_settings
-from akvo.core_data.models import (
-    Data,
-    Answers,
-)
+from akvo.core_data.models import Data
 
 
 @override_settings(USE_TZ=False)
