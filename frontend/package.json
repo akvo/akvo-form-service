@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "akvo-react-form": "^2.2.3",
+    "akvo-react-form": "^2.2.5",
     "axios": "^0.25.0",
     "axios-mock-adapter": "^1.21.1",
     "pullstate": "^1.23.0",
