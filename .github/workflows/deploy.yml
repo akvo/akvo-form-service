@@ -1,0 +1,53 @@
+name: Deploy to test cluster
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [synchronize]
+
+
+jobs:
+  node-operation:
+    uses: akvo/main-github-workflow/.github/workflows/node-operation.yml@main
+    secrets: inherit
+    with:
+      node-version: "18"
+      node-command: "yarn install --no-progress --frozen-lock && yarn build && rm -rf node_modules"
+
+  build-push-frontend:
+    needs: node-operation
+    uses: akvo/main-github-workflow/.github/workflows/build-push.yml@main
+    secrets: inherit
+    with:
+      app-name: "akvo-form-service"
+      service-name: "frontend"
+      dockerfile-location: "frontend/Dockerfile"
+
+  build-push-backend:
+    needs: node-operation
+    uses: akvo/main-github-workflow/.github/workflows/build-push.yml@main
+    secrets: inherit
+    with:
+      app-name: "akvo-form-service"
+      service-name: "backend"
+      dockerfile-location: "backend/Dockerfile"
+
+  rollout-frontend:
+    needs: build-push-frontend
+    uses: akvo/main-github-workflow/.github/workflows/rollout.yml@main
+    secrets: inherit
+    with:
+      app-name: "akvo-form-service"
+      service-name: "frontend"
+      cluster-name: "test"
+
+  rollout-backend:
+    needs: build-push-backend
+    uses: akvo/main-github-workflow/.github/workflows/rollout.yml@main
+    secrets: inherit
+    with:
+      app-name: "akvo-form-service"
+      service-name: "backend"
+      cluster-name: "test"
