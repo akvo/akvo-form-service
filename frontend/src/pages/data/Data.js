@@ -47,13 +47,15 @@ const Data = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [selectedForm, page]);
+    // eslint-disable-next-line
+  }, [selectedForm, page.current]);
 
   useEffect(() => {
     if (selectedForm) {
       fetchData();
     }
-  }, [selectedForm, page, fetchData]);
+    // eslint-disable-next-line
+  }, [selectedForm, page.current]);
 
   const handleOnSelectForm = (value) => {
     fetchFormDefinition(value);
