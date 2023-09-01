@@ -21,7 +21,19 @@ const Form = () => {
   };
 
   const onFinish = (values, refreshForm) => {
-    console.log(values);
+    let payload = { data: { ...values.datapoint, submitter: 'Akvo'}}
+    const answers = Object.keys(values).map(key => {
+      if (key === "datapoint") {
+        return false;
+      }
+      const value = values[key]
+      return {
+        question: parseInt(key),
+        value: value
+      }
+    }).filter(x => x)
+    payload = {...payload, answer: answers}
+    console.log(payload);
   };
 
   return (
