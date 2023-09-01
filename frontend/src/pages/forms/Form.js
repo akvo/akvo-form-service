@@ -3,6 +3,7 @@ import "akvo-react-form/dist/index.css"; /* REQUIRED */
 import { Webform } from "akvo-react-form";
 import { api } from "../../lib";
 import { useParams } from "react-router-dom";
+import { Spin } from "antd";
 
 const Form = () => {
   const { formId } = useParams();
@@ -64,7 +65,9 @@ const Form = () => {
       {Object.keys(formDef).length > 0 ? (
         <Webform forms={formDef} onChange={onChange} onFinish={onFinish} />
       ) : (
-        <h1>Form</h1>
+        <div className="loading-container">
+          <Spin />
+        </div>
       )}
     </div>
   );
