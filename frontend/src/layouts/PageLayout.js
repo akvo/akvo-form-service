@@ -1,15 +1,18 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  HomeOutlined,
   FormOutlined,
   TableOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import React, { useState } from "react";
 
 const { Header, Sider, Content } = Layout;
 
 const PageLayout = ({ children }) => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -22,13 +25,21 @@ const PageLayout = ({ children }) => {
           items={[
             {
               key: "1",
-              icon: <FormOutlined />,
-              label: "Form",
+              icon: <HomeOutlined />,
+              label: "Home",
+              onClick: () => navigate("/"),
             },
             {
               key: "2",
+              icon: <FormOutlined />,
+              label: "Form",
+              onClick: () => navigate("/forms"),
+            },
+            {
+              key: "3",
               icon: <TableOutlined />,
               label: "Data",
+              onClick: () => navigate("/data"),
             },
           ]}
         />
