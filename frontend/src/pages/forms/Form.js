@@ -23,8 +23,8 @@ const Form = () => {
     return formDef.question_group.flatMap((qg) => qg.question);
   }, [formDef]);
 
-  const onChange = ({ current, values, progress }) => {
-    console.log(progress);
+  const onChange = ({ progress }) => {
+    console.info(progress);
   };
 
   const onFinish = (values, refreshForm) => {

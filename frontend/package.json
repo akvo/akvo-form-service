@@ -6,6 +6,7 @@
     "akvo-react-form": "^2.2.5",
     "axios": "^0.25.0",
     "axios-mock-adapter": "^1.21.1",
+    "buffer": "^6.0.3",
     "pullstate": "^1.23.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -16,7 +17,6 @@
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "@babel/eslint-parser": "^7.16.5",
-    "@babel/preset-react": "^7.16.7",
     "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -35,6 +35,9 @@
     "react-test-renderer": "^17.0.2",
     "yarn-audit-fix": "^9.3.1"
   },
+  "resolutions": {
+    "mini-css-extract-plugin": "2.4.6"
+  },
   "scripts": {
     "start": "react-scripts start",
     "lint": "eslint --config .eslintrc.json src --ext .js,.jsx",
@@ -46,17 +49,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
