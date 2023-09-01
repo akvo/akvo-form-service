@@ -38,13 +38,13 @@ const Data = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [selectedForm, page.current]);
+  }, [selectedForm, page]);
 
   useEffect(() => {
     if (selectedForm) {
       fetchData();
     }
-  }, [selectedForm, page.current]);
+  }, [selectedForm, page, fetchData]);
 
   const handleOnSelectForm = (value) => {
     setSelectedForm(value);
