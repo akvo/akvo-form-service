@@ -15,11 +15,19 @@ class Node(models.Model):
 
 class NodeDetail(models.Model):
     node = models.ForeignKey(
-        to=Node,
-        on_delete=models.CASCADE,
-        related_name="node_details"
+        to=Node, on_delete=models.CASCADE, related_name="node_details"
     )
-    code = models.CharField(max_length=255)
+    parent = models.ForeignKey(
+        to="self",
+        on_delete=models.CASCADE,
+        related_name="children",
+        null=True,
+        blank=True,
+    )
+    code = models.CharField(
+        max_length=255,
+        null=True,
+    )
     name = models.TextField()
 
     def __str__(self):

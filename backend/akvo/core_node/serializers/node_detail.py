@@ -10,6 +10,7 @@ from akvo.utils.custom_serializer_fields import (
 class AddNodeDetailSerializer(serializers.ModelSerializer):
     code = CustomCharField(allow_null=False)
     name = CustomCharField(allow_null=False)
+    parent = CustomCharField(allow_null=True, required=False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -26,18 +27,14 @@ class AddNodeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NodeDetail
-        fields = ["code", "name"]
+        fields = ["parent", "code", "name"]
 
 
 class ListNodeDetailSerializer(serializers.ModelSerializer):
-    def to_representation(self, instance):
-        result = super(
-            ListNodeDetailSerializer, self
-        ).to_representation(instance)
-        return OrderedDict(
-            [(key, result[key]) for key in result if result[key] is not None]
-        )
+    parent_id = serializers.IntegerField(
+        source="parent.id", read_only=True, allow_null=True
+    )
 
     class Meta:
         model = NodeDetail
-        fields = ["id", "code", "name"]
+        fields = ["id", "parent_id", "code", "name"]
