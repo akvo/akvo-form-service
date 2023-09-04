@@ -49,25 +49,24 @@ class UploadCSVNodeSerializer(serializers.Serializer):
             raise serializers.ValidationError("Node name is required")
         return value
 
-    def validate_csv_file(self, value):
-        df = pd.read_csv(value)
-        if "parent" not in df.columns:
-            raise serializers.ValidationError("Column parent is required")
-        if "name" not in df.columns:
-            raise serializers.ValidationError("Column name is required")
-        return value
-
     def create(self, validated_data):
         node_name = validated_data.get("name")
         node = Node.objects.create(name=node_name)
         csv_file = validated_data.get("file")
         df = pd.read_csv(csv_file)
         df = df.where(pd.notnull(df), None)
+        if "name" not in df.columns:
+            node.delete()
+            raise serializers.ValidationError({"message": "Name column is required"})
         for index, row in df.iterrows():
             parent = None
             if row["parent"]:
-                parent = NodeDetail.objects.filter(name=row["parent"]).first()
+                parent = NodeDetail.objects.filter(name=row["parent"], node=node)
+                if not parent:
+                    node.delete()
+                    raise serializers.ValidationError({"message": "Parent not found"})
+                parent = parent.first()
             NodeDetail.objects.create(
-                node=node, parent=parent, code=row["code"], name=row["name"]
+                node=node, parent=parent, code=row.get("code"), name=row.get("name")
             )
         return object

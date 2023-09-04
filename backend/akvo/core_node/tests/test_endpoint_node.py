@@ -120,3 +120,96 @@ class TestNodeEndpoint(TestCase):
 
         # Remove file
         os.remove("./node.csv")
+
+    def test_upload_csv_node_without_code(self):
+
+        pd.DataFrame(
+            [
+                {"name": "Jawa Barat", "parent": None},
+                {"name": "Banten", "parent": None},
+                {"name": "Bandung", "parent": "Jawa Barat"},
+            ]
+        ).to_csv("./node.csv", index=False)
+        data = self.client.post(
+            "/api/node-upload",
+            {
+                "file": open("./node.csv", "rb"),
+                "name": "New Node without code",
+            },
+            format="multipart",
+        )
+        self.assertEqual(data.status_code, 200)
+
+        # GET LIST OF NODE DETAIL
+        node_id = Node.objects.filter(name="New Node without code").first().id
+        data = self.client.get(f"/api/node-detail/{node_id}", follow=True)
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        for each in result:
+            each.pop("id")
+        jawa_barat_id = NodeDetail.objects.get(name="Jawa Barat").id
+        expected_result = [
+            {"code": None, "name": "Jawa Barat", "parent_id": None},
+            {"code": None, "name": "Banten", "parent_id": None},
+            {"code": None, "name": "Bandung", "parent_id": jawa_barat_id},
+        ]
+        self.assertEqual(result, expected_result)
+
+        # Remove file
+        os.remove("./node.csv")
+
+    def test_upload_csv_node_with_wrong_parent(self):
+
+        pd.DataFrame(
+            [
+                {"name": "Jawa Barat", "parent": None},
+                {"name": "Banten", "parent": None},
+                {"name": "Bandung", "parent": "Las Vegas"},
+            ]
+        ).to_csv("./node.csv", index=False)
+        data = self.client.post(
+            "/api/node-upload",
+            {
+                "file": open("./node.csv", "rb"),
+                "name": "New Node with wrong parent",
+            },
+            format="multipart",
+        )
+        self.assertEqual(data.json(), {"message": "Parent not found"})
+        self.assertEqual(data.status_code, 400)
+
+        # Node is not created
+        self.assertEqual(
+            Node.objects.filter(name="New Node with wrong parent").count(), 0
+        )
+
+        # Remove file
+        os.remove("./node.csv")
+
+    def test_upload_csv_node_with_wrong_format(self):
+
+        pd.DataFrame(
+            [
+                {"nm": "Jawa Barat", "parent": None},
+                {"nm": "Banten", "parent": None},
+                {"nm": "Bandung", "parent": "Las Vegas"},
+            ]
+        ).to_csv("./node.csv", index=False)
+        data = self.client.post(
+            "/api/node-upload",
+            {
+                "file": open("./node.csv", "rb"),
+                "name": "New Node with wrong format",
+            },
+            format="multipart",
+        )
+        self.assertEqual(data.json(), {"message": "Name column is required"})
+        self.assertEqual(data.status_code, 400)
+
+        # Node is not created
+        self.assertEqual(
+            Node.objects.filter(name="New Node with wrong format").count(), 0
+        )
+
+        # Remove file
+        os.remove("./node.csv")
