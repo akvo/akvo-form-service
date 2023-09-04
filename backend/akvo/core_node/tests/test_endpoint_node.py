@@ -26,6 +26,14 @@ class TestNodeEndpoint(TestCase):
         self.assertEqual(data, {"message": "ok"})
         node_id = Node.objects.first().id
 
+        # GET LIST OF NODE
+        data = self.client.get("/api/node", follow=True)
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        expected_result = [
+            {"id": node_id, "name": "Example Node"},
+        ]
+
         # GET LIST OF NODE DETAIL
         data = self.client.get(f"/api/node-detail/{node_id}", follow=True)
         self.assertEqual(data.status_code, 200)

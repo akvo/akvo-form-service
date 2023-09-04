@@ -9,6 +9,12 @@ from akvo.utils.custom_serializer_fields import (
 from akvo.core_node.serializers.node_detail import AddNodeDetailSerializer
 
 
+class ListNodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Node
+        fields = ["id", "name"]
+
+
 class AddNodeSerializer(serializers.Serializer):
     name = CustomCharField(allow_null=False)
     node_detail = AddNodeDetailSerializer(many=True)
