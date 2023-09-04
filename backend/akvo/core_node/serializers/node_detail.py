@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from collections import OrderedDict
 
 from akvo.core_node.models import NodeDetail
 from akvo.utils.custom_serializer_fields import (
