@@ -16,7 +16,7 @@ class QuestionTypes:
         number: "number",
         geo: "geo",
         option: "option",
-        multiple_option: "multiple_pption",
+        multiple_option: "multiple_option",
         cascade: "cascade",
         photo: "photo",
         date: "date",

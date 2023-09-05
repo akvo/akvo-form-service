@@ -127,10 +127,7 @@ class AddQuestionSerializer(serializers.ModelSerializer):
     name = CustomCharField()
     order = CustomIntegerField()
     type = serializers.ChoiceField(
-        choices=[
-            (value, key) for key, value
-            in QuestionTypes.FieldStr.items()
-        ],
+        choices=list(QuestionTypes.FieldStr.values()),
         required=True,
     )
     tooltip = CustomJSONField(required=False, allow_null=True)
@@ -159,7 +156,6 @@ class AddQuestionSerializer(serializers.ModelSerializer):
 
     def validate_type(self, value):
         qtype = getattr(QuestionTypes, value)
-        print(getattr(QuestionTypes, value), value, '++++++++++++++++++=')
         if not qtype:
             raise serializers.ValidationError("Invalid question type")
         return qtype
