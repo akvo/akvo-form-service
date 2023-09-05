@@ -75,7 +75,7 @@ class AddFormSerializer(serializers.Serializer):
     version = CustomIntegerField(
         required=False, allow_null=True, default=1)
     translations = CustomListField(required=False, allow_null=True)
-    question_group = AddQuestionGroupSerializer(many=True)
+    question_group = AddQuestionGroupSerializer(many=True, required=False)
 
     def __init__(self, *args, **kwargs):
         # Get the value
@@ -99,14 +99,13 @@ class AddFormSerializer(serializers.Serializer):
         question_groups_data = validated_data.pop("question_group", [])
         form = Forms.objects.create(**validated_data)
         for qg in question_groups_data:
-            qg["form"] = form
             serializer = AddQuestionGroupSerializer(data=qg)
             if not serializer.is_valid():
                 raise serializers.ValidationError({
                     "message": validate_serializers_message(serializer.errors),
                     "details": serializer.errors,
                 })
-            serializer.save()
+            serializer.save(form=form)
             return object
         return form
 

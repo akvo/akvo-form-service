@@ -44,6 +44,7 @@ class TestFormEndpoint(TestCase):
         data = self.client.post(
             "/api/form",
             data=expected_payload,
+            content_type="application/json"
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
@@ -55,4 +56,5 @@ class TestFormEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
-        print(json.dumps(result, indent=2))
+        self.assertEqual(result, {})
+        # print(json.dumps(result, indent=2))

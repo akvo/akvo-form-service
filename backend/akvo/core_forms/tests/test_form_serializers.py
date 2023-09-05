@@ -7,7 +7,6 @@ from akvo.core_forms.serializers.form import (
     ListFormSerializer,
     AddFormSerializer
 )
-from akvo.core_forms.constants import QuestionTypes
 
 
 class TestFormSerializers(TestCase):
@@ -54,10 +53,4 @@ class TestFormSerializers(TestCase):
         with open('./source/static/example_form_payload.json', 'r') as f:
             expected_payload = json.load(f)
         serializer = AddFormSerializer(data=expected_payload)
-        if not serializer.is_valid():
-            print('[ ERROR ]', serializer.errors)
-            print([
-                (key, value) for key, value
-                in QuestionTypes.FieldStr.items()
-            ])
         self.assertTrue(serializer.is_valid())

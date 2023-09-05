@@ -177,10 +177,9 @@ class AddQuestionSerializer(serializers.Serializer):
         return value
 
     def create(self, validated_data):
-        validated_data.pop("form", None)
+        options_data = validated_data.pop("option", [])
         qtype = validated_data.pop("type", None)
         validated_data["type"] = getattr(QuestionTypes, qtype)
-        options_data = validated_data.pop("option", [])
         q = Questions.objects.create(**validated_data)
         for opt in options_data:
             opt["question"] = q
