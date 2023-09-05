@@ -126,27 +126,26 @@ class ListQuestionSerializer(serializers.ModelSerializer):
         ]
 
 
-class AddQuestionSerializer(serializers.ModelSerializer):
+class AddQuestionSerializer(serializers.Serializer):
     form = CustomIntegerField(read_only=True)
     question_group = CustomIntegerField(read_only=True)
     id = CustomIntegerField()
     name = CustomCharField()
     order = CustomIntegerField()
-    type = serializers.ChoiceField(
-        choices=list(QuestionTypes.FieldStr.values()),
-        required=True,
-    )
+    type = CustomCharField()
     tooltip = CustomJSONField(required=False, allow_null=True)
-    required = CustomBooleanField()
+    required = CustomBooleanField(
+        required=False, allow_null=True, default=False)
     meta = CustomBooleanField(
         required=False, allow_null=True, default=False)
     rule = CustomJSONField(required=False, allow_null=True)
     dependency = CustomListField(required=False, allow_null=True)
     api = CustomJSONField(required=False, allow_null=True)
-    extra = CustomJSONField(required=False, allow_null=True)
+    extra = CustomListField(required=False, allow_null=True)
     autofield = CustomJSONField(required=False, allow_null=True)
     data_api_url = CustomCharField(required=False, allow_null=True)
     translations = CustomListField(required=False, allow_null=True)
+    option = AddOptionSerializer(many=True, required=False, allow_null=True)
 
     def __init__(self, *args, **kwargs):
         # Get the value
@@ -157,15 +156,30 @@ class AddQuestionSerializer(serializers.ModelSerializer):
         if data_api_url:
             self.fields['data_api_url'].initial = data_api_url
         if autofield:
-            self.fields['autofield'].initial = data_api_url
+            self.fields['autofield'].initial = autofield
 
     def validate_type(self, value):
         qtype = getattr(QuestionTypes, value)
         if not qtype:
             raise serializers.ValidationError("Invalid question type")
-        return qtype
+        return value
+
+    def validate_option(self, value):
+        if not value:
+            return None
+        serializer = AddOptionSerializer(data=value, many=True)
+        if not serializer.is_valid():
+            print('OPT ERROR', serializer.errors)
+            raise serializers.ValidationError({
+                "message": validate_serializers_message(serializer.errors),
+                "details": serializer.errors,
+            })
+        return value
 
     def create(self, validated_data):
+        validated_data.pop("form", None)
+        qtype = validated_data.pop("type", None)
+        validated_data["type"] = getattr(QuestionTypes, qtype)
         options_data = validated_data.pop("option", [])
         q = Questions.objects.create(**validated_data)
         for opt in options_data:
@@ -180,21 +194,21 @@ class AddQuestionSerializer(serializers.ModelSerializer):
             return object
         return q
 
-    class Meta:
-        model = Questions
-        fields = [
-            "id",
-            "name",
-            "order",
-            "type",
-            "tooltip",
-            "required",
-            "dependency",
-            "meta",
-            "rule",
-            "api",
-            "extra",
-            "translations",
-            "data_api_url",
-            "autofield",
-        ]
+    # class Meta:
+    #     model = Questions
+    #     fields = [
+    #         "id",
+    #         "name",
+    #         "order",
+    #         "type",
+    #         "tooltip",
+    #         "required",
+    #         "dependency",
+    #         "meta",
+    #         "rule",
+    #         "api",
+    #         "extra",
+    #         "translations",
+    #         "data_api_url",
+    #         "autofield",
+    #     ]

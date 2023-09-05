@@ -38,7 +38,7 @@ class ListQuestionGroupSerializer(serializers.ModelSerializer):
         ]
 
 
-class AddQuestionGroupSerializer(serializers.ModelSerializer):
+class AddQuestionGroupSerializer(serializers.Serializer):
     form = CustomIntegerField(read_only=True)
     id = CustomIntegerField()
     name = CustomCharField()
@@ -47,9 +47,20 @@ class AddQuestionGroupSerializer(serializers.ModelSerializer):
     repeatable = CustomBooleanField(
         required=False, allow_null=True, default=False)
     translations = CustomListField(required=False, allow_null=True)
+    question = AddQuestionSerializer(many=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def validate_question(self, value):
+        serializer = AddQuestionSerializer(data=value, many=True)
+        if not serializer.is_valid():
+            print('Q ERROR', serializer.errors)
+            raise serializers.ValidationError({
+                "message": validate_serializers_message(serializer.errors),
+                "details": serializer.errors,
+            })
+        return value
 
     def create(self, validated_data):
         questions_data = validated_data.pop("question", [])
@@ -67,13 +78,13 @@ class AddQuestionGroupSerializer(serializers.ModelSerializer):
             return object
         return qg
 
-    class Meta:
-        model = QuestionGroups
-        fields = [
-            "id",
-            "name",
-            "description",
-            "order",
-            "repeatable",
-            "translations",
-        ]
+    # class Meta:
+    #     model = QuestionGroups
+    #     fields = [
+    #         "id",
+    #         "name",
+    #         "description",
+    #         "order",
+    #         "repeatable",
+    #         "translations",
+    #     ]

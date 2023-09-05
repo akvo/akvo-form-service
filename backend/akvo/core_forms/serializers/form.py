@@ -64,7 +64,7 @@ class FormDefinitionSerializer(serializers.ModelSerializer):
         ]
 
 
-class AddFormSerializer(serializers.ModelSerializer):
+class AddFormSerializer(serializers.Serializer):
     id = CustomIntegerField()
     name = CustomCharField()
     description = CustomCharField(required=False, allow_null=True)
@@ -75,6 +75,7 @@ class AddFormSerializer(serializers.ModelSerializer):
     version = CustomIntegerField(
         required=False, allow_null=True, default=1)
     translations = CustomListField(required=False, allow_null=True)
+    question_group = AddQuestionGroupSerializer(many=True)
 
     def __init__(self, *args, **kwargs):
         # Get the value
@@ -83,6 +84,16 @@ class AddFormSerializer(serializers.ModelSerializer):
         # Set the value
         if default_language:
             self.fields['default_language'].initial = default_language
+
+    def validate_question_group(self, value):
+        serializer = AddQuestionGroupSerializer(data=value, many=True)
+        if not serializer.is_valid():
+            print('QG ERROR', serializer.errors)
+            raise serializers.ValidationError({
+                "message": validate_serializers_message(serializer.errors),
+                "details": serializer.errors,
+            })
+        return value
 
     def create(self, validated_data):
         question_groups_data = validated_data.pop("question_group", [])
@@ -99,14 +110,14 @@ class AddFormSerializer(serializers.ModelSerializer):
             return object
         return form
 
-    class Meta:
-        model = Forms
-        fields = [
-            "id",
-            "name",
-            "description",
-            "default_language",
-            "languages",
-            "version",
-            "translations",
-        ]
+    # class Meta:
+    #     model = Forms
+    #     fields = [
+    #         "id",
+    #         "name",
+    #         "description",
+    #         "default_language",
+    #         "languages",
+    #         "version",
+    #         "translations",
+    #     ]

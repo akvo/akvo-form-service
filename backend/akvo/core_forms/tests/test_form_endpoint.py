@@ -39,14 +39,20 @@ class TestFormEndpoint(TestCase):
         self.assertEqual(result, expected_result)
 
     def test_endpoint_post_form(self):
-        expected_payload = {}
         with open('./source/static/example_form_payload.json', 'r') as f:
             expected_payload = json.load(f)
         data = self.client.post(
             "/api/form",
             data=expected_payload,
-            format="json"
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
         self.assertEqual(result, {"message": "ok"})
+        # get form after post
+        data = self.client.get(
+            f"/api/form/{expected_payload.get('id')}",
+            follow=True
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        print(json.dumps(result, indent=2))

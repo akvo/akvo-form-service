@@ -59,6 +59,7 @@ class FormManagementView(APIView):
     def post(self, request):
         serializer = AddFormSerializer(data=request.data)
         if not serializer.is_valid():
+            print('FORM ERROR', serializer.errors)
             return Response(
                 {
                     "message": validate_serializers_message(serializer.errors),

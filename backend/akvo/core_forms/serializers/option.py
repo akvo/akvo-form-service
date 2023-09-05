@@ -22,7 +22,7 @@ class ListOptionSerializer(serializers.ModelSerializer):
         fields = ["id", "code", "name", "order", "color", "translations"]
 
 
-class AddOptionSerializer(serializers.ModelSerializer):
+class AddOptionSerializer(serializers.Serializer):
     question = CustomIntegerField(read_only=True)
     id = CustomIntegerField()
     name = CustomCharField()
@@ -38,6 +38,6 @@ class AddOptionSerializer(serializers.ModelSerializer):
         opt = Options.objects.create(**validated_data)
         return opt
 
-    class Meta:
-        model = Options
-        fields = ["id", "code", "name", "order", "color", "translations"]
+    # class Meta:
+    #     model = Options
+    #     fields = ["id", "code", "name", "order", "color", "translations"]
