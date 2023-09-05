@@ -7,6 +7,13 @@ from rest_framework import serializers
 from akvo.core_forms.constants import QuestionTypes
 from akvo.core_forms.models import Questions
 from akvo.core_forms.serializers.option import ListOptionSerializer
+from akvo.utils.custom_serializer_fields import (
+    CustomIntegerField,
+    CustomCharField,
+    CustomJSONField,
+    CustomListField,
+    CustomBooleanField,
+)
 
 
 class ListQuestionSerializer(serializers.ModelSerializer):
@@ -111,5 +118,68 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "translations",
             "fn",
             "dataApiUrl",
+            "option",
+        ]
+
+
+class AddQuestionSerializer(serializers.ModelSerializer):
+    id = CustomIntegerField()
+    name = CustomCharField()
+    order = CustomIntegerField()
+    type = serializers.ChoiceField(
+        choices=[
+            (value, key) for key, value
+            in QuestionTypes.FieldStr.items()
+        ],
+        required=True,
+    )
+    tooltip = CustomJSONField(required=False, allow_null=True)
+    required = CustomBooleanField()
+    meta = CustomBooleanField(
+        required=False, allow_null=True, default=False)
+    rule = CustomJSONField(required=False, allow_null=True)
+    dependency = CustomListField(required=False, allow_null=True)
+    api = CustomJSONField(required=False, allow_null=True)
+    extra = CustomJSONField(required=False, allow_null=True)
+    autofield = CustomJSONField(required=False, allow_null=True)
+    data_api_url = CustomCharField(required=False, allow_null=True)
+    translations = CustomListField(required=False, allow_null=True)
+    option = CustomListField(required=False, allow_null=True)
+
+    def __init__(self, *args, **kwargs):
+        # Get the value
+        data_api_url = kwargs.pop('dataApiUrl', None)
+        autofield = kwargs.pop('fn', None)
+        super(AddQuestionSerializer, self).__init__(*args, **kwargs)
+        # Set the value
+        if data_api_url:
+            self.fields['data_api_url'].initial = data_api_url
+        if autofield:
+            self.fields['autofield'].initial = data_api_url
+
+    def validate_type(self, value):
+        qtype = getattr(QuestionTypes, value)
+        print(getattr(QuestionTypes, value), value, '++++++++++++++++++=')
+        if not qtype:
+            raise serializers.ValidationError("Invalid question type")
+        return qtype
+
+    class Meta:
+        model = Questions
+        fields = [
+            "id",
+            "name",
+            "order",
+            "type",
+            "tooltip",
+            "required",
+            "dependency",
+            "meta",
+            "rule",
+            "api",
+            "extra",
+            "translations",
+            "data_api_url",
+            "autofield",
             "option",
         ]

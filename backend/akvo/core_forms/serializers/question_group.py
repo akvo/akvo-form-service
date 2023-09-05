@@ -2,7 +2,10 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from akvo.core_forms.models import QuestionGroups
-from akvo.core_forms.serializers.question import ListQuestionSerializer
+from akvo.core_forms.serializers.question import (
+    ListQuestionSerializer,
+    AddQuestionSerializer
+)
 from akvo.utils.custom_serializer_fields import (
     CustomIntegerField,
     CustomListField,
@@ -42,7 +45,10 @@ class AddQuestionGroupSerializer(serializers.ModelSerializer):
     repeatable = CustomBooleanField(
         required=False, allow_null=True, default=False)
     translations = CustomListField(required=False, allow_null=True)
-    question = CustomListField()
+    question = AddQuestionSerializer(many=True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     class Meta:
         model = QuestionGroups

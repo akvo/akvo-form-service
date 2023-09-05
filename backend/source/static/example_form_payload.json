@@ -540,75 +540,6 @@
                 ]
               }
             ]
-          },
-          {
-            "id": 17,
-            "name": "Order List",
-            "dependency": [
-              {
-                "id": 16,
-                "options": [
-                  "Yes"
-                ]
-              }
-            ],
-            "order": 10,
-            "type": "table",
-            "columns": [
-              {
-                "name": "items",
-                "label": "Items",
-                "type": "option",
-                "options": [
-                  {
-                    "name": "Rendang",
-                    "order": 1
-                  },
-                  {
-                    "name": "Ayam Pop",
-                    "order": 2
-                  },
-                  {
-                    "name": "Paru Goreng",
-                    "order": 3
-                  },
-                  {
-                    "name": "Baluik Goreng",
-                    "order": 4
-                  }
-                ]
-              },
-              {
-                "name": "amount",
-                "label": "Amount",
-                "type": "number"
-              },
-              {
-                "name": "note",
-                "label": "Note",
-                "type": "input"
-              }
-            ],
-            "required": true,
-            "translations": [
-              {
-                "name": "Daftar Pesanan",
-                "language": "id"
-              }
-            ],
-            "extra": [
-              {
-                "placement": "before",
-                "content": "Price: Rendang (IDR 5000), Ayam Pop (IDR 8000)",
-                "translations": [
-                  {
-                    "content": "Harga: Rendang (Rp 5000), Ayam Pop (Rp 8000)",
-                    "language": "id"
-                  }
-                ]
-              }
-            ],
-            "questionGroupId": 1693886026375
           }
         ],
         "description": "Example placeholder description text for <b>Culinary Question Group</b>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet orci in feugiat tincidunt. Donec tempor suscipit accumsan. Vestibulum orci risus, mattis vitae ex et, consectetur consequat augue. Nunc et ante vel massa sollicitudin posuere vel ornare ligula. Ut a mattis massa. Mauris pulvinar congue sem, et venenatis orci vulputate id. Praesent odio purus, ultricies non eros at, iaculis imperdiet turpis. Donec non massa ligula.",
@@ -745,17 +676,6 @@
                 "order": 2
               }
             ]
-          },
-          {
-            "id": 22,
-            "name": "Tree Select",
-            "order": 5,
-            "type": "tree",
-            "option": "administration",
-            "checkStrategy": "children",
-            "expandAll": true,
-            "required": true,
-            "questionGroupId": 1693886026377
           },
           {
             "id": 23,

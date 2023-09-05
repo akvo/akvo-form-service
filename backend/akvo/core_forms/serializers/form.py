@@ -67,8 +67,9 @@ class AddFormSerializer(serializers.ModelSerializer):
     id = CustomIntegerField()
     name = CustomCharField()
     description = CustomCharField(required=False, allow_null=True)
-    defaultLanguage = CustomCharField(
-        required=False, allow_null=True, default="en")
+    default_language = CustomCharField(
+        required=False, allow_null=True,
+        default="en", source="defaultLanguage")
     languages = CustomListField(
         required=False, allow_null=True, default=["en"])
     version = CustomIntegerField(
@@ -85,7 +86,7 @@ class AddFormSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
-            "defaultLanguage",
+            "default_language",
             "languages",
             "version",
             "translations",
