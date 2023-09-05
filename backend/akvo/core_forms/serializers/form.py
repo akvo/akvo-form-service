@@ -4,7 +4,13 @@ from drf_spectacular.types import OpenApiTypes
 
 from akvo.core_forms.models import Forms, QuestionGroups
 from akvo.core_forms.serializers.question_group import (
-    ListQuestionGroupSerializer
+    ListQuestionGroupSerializer,
+    AddQuestionGroupSerializer
+)
+from akvo.utils.custom_serializer_fields import (
+    CustomIntegerField,
+    CustomCharField,
+    CustomListField
 )
 
 
@@ -42,6 +48,36 @@ class FormDefinitionSerializer(serializers.ModelSerializer):
             instance=instance.question_groups.all().order_by("order"),
             many=True,
         ).data
+
+    class Meta:
+        model = Forms
+        fields = [
+            "id",
+            "name",
+            "description",
+            "defaultLanguage",
+            "languages",
+            "version",
+            "translations",
+            "question_group"
+        ]
+
+
+class AddFormSerializer(serializers.ModelSerializer):
+    id = CustomIntegerField()
+    name = CustomCharField()
+    description = CustomCharField(required=False, allow_null=True)
+    defaultLanguage = CustomCharField(
+        required=False, allow_null=True, default="en")
+    languages = CustomListField(
+        required=False, allow_null=True, default=["en"])
+    version = CustomIntegerField(
+        required=False, allow_null=True, default=1)
+    translations = CustomListField(required=False, allow_null=True)
+    question_group = AddQuestionGroupSerializer(many=True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     class Meta:
         model = Forms

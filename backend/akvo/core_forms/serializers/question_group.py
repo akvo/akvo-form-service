@@ -3,6 +3,12 @@ from rest_framework import serializers
 
 from akvo.core_forms.models import QuestionGroups
 from akvo.core_forms.serializers.question import ListQuestionSerializer
+from akvo.utils.custom_serializer_fields import (
+    CustomIntegerField,
+    CustomListField,
+    CustomCharField,
+    CustomBooleanField
+)
 
 
 class ListQuestionGroupSerializer(serializers.ModelSerializer):
@@ -25,4 +31,27 @@ class ListQuestionGroupSerializer(serializers.ModelSerializer):
             "repeatable",
             "translations",
             "question",
+        ]
+
+
+class AddQuestionGroupSerializer(serializers.ModelSerializer):
+    id = CustomIntegerField()
+    name = CustomCharField()
+    description = CustomCharField(required=False, allow_null=True)
+    order = CustomIntegerField()
+    repeatable = CustomBooleanField(
+        required=False, allow_null=True, default=False)
+    translations = CustomListField(required=False, allow_null=True)
+    question = CustomListField()
+
+    class Meta:
+        model = QuestionGroups
+        fields = [
+            "id",
+            "name",
+            "description",
+            "order",
+            "repeatable",
+            "translations",
+            "question"
         ]

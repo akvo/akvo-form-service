@@ -1,7 +1,12 @@
+import json
+
 from django.test import TestCase
 from rest_framework.test import APIClient
 from akvo.core_forms.models import Forms
-from akvo.core_forms.serializers.form import ListFormSerializer
+from akvo.core_forms.serializers.form import (
+    ListFormSerializer,
+    AddFormSerializer
+)
 
 
 class TestFormSerializers(TestCase):
@@ -40,3 +45,12 @@ class TestFormSerializers(TestCase):
             "translations": None,
         }
         self.assertEqual(data, expected_data)
+
+    def test_add_form_serializer_valid(self):
+        expected_payload = {}
+        # Load expected form payload
+        with open('./source/static/example_form_payload.json', 'r') as f:
+            expected_payload = json.load(f)
+        serializer = AddFormSerializer(data=expected_payload)
+        self.assertEqual(expected_payload, expected_payload)
+        self.assertTrue(serializer.is_valid())

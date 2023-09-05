@@ -1,0 +1,907 @@
+{
+    "id": 1693886026376,
+    "name": "Community Culinary Survey 2021",
+    "description": null,
+    "languages": [
+      "en",
+      "id"
+    ],
+    "defaultLanguage": "en",
+    "translations": [
+      {
+        "name": "Komunitas Kuliner Survey 2021",
+        "language": "id"
+      }
+    ],
+    "question_group": [
+      {
+        "id": 1693886026370,
+        "name": "Registration",
+        "order": 1,
+        "question": [
+          {
+            "id": 1,
+            "name": "Geolocation",
+            "order": 1,
+            "type": "geo",
+            "center": {
+              "lat": 9.145,
+              "lng": 40.4897
+            },
+            "required": true,
+            "meta": true,
+            "tooltip": {
+              "text": "Please allow browser to access your <a href=\"https://google.com\">test</a>",
+              "translations": [
+                {
+                  "text": "Mohon izinkan peramban untuk mengakses lokasi saat ini",
+                  "language": "id"
+                }
+              ]
+            },
+            "extra": [
+              {
+                "placement": "after",
+                "content": "Please click on the maps or type it manually",
+                "translations": [
+                  {
+                    "content": "Silakan Klik peta atau ketik secara manual",
+                    "language": "id"
+                  }
+                ]
+              }
+            ],
+            "translations": [
+              {
+                "name": "Geolokasi",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026370
+          },
+          {
+            "id": 2,
+            "name": "Name",
+            "order": 2,
+            "type": "input",
+            "required": true,
+            "meta": true,
+            "disableDelete": true,
+            "tooltip": {
+              "text": "Fullname or Nickname",
+              "translations": [
+                {
+                  "text": "Nama",
+                  "language": "id"
+                }
+              ]
+            },
+            "questionGroupId": 1693886026370
+          },
+          {
+            "id": 3,
+            "name": "Phone Number",
+            "order": 3,
+            "type": "number",
+            "required": true,
+            "meta": true,
+            "disableDelete": true,
+            "translations": [
+              {
+                "name": "Nomor Telepon",
+                "language": "id"
+              }
+            ],
+            "addonBefore": "+62",
+            "extra": [
+              {
+                "placement": "before",
+                "content": "We will not share your phone number to public",
+                "translations": [
+                  {
+                    "content": "Kita tidak akan mempublikasikan nomor anda",
+                    "language": "id"
+                  }
+                ]
+              }
+            ],
+            "questionGroupId": 1693886026370
+          },
+          {
+            "id": 4,
+            "name": "Location (Using API)",
+            "order": 4,
+            "type": "cascade",
+            "api": {
+              "endpoint": "https://rtmis.akvotest.org/api/v1/administration",
+              "initial": 1,
+              "list": "children"
+            },
+            "required": true,
+            "meta": true,
+            "translations": [
+              {
+                "name": "Lokasi (Menggunakan API)",
+                "language": "id"
+              }
+            ],
+            "extra": [
+              {
+                "placement": "before",
+                "content": "Please select your current origin administration",
+                "translations": [
+                  {
+                    "content": "Silakan pilih Kecamatan anda sekarang",
+                    "language": "id"
+                  }
+                ]
+              }
+            ],
+            "questionGroupId": 1693886026370
+          },
+          {
+            "id": 5,
+            "name": "Birthdate",
+            "order": 5,
+            "type": "date",
+            "required": true,
+            "meta": true,
+            "translations": [
+              {
+                "name": "Tanggal Lahir",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026370
+          },
+          {
+            "id": 6,
+            "name": "Gender",
+            "order": 6,
+            "type": "option",
+            "required": true,
+            "meta": true,
+            "translations": [
+              {
+                "name": "Jenis Kelamin",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026370,
+            "option": [
+              {
+                "id": 7,
+                "name": "Male",
+                "order": 1,
+                "translations": [
+                  {
+                    "name": "Laki-Laki",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "name": "Female",
+                "order": 2,
+                "translations": [
+                  {
+                    "name": "Perempuan",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "name": "Other",
+                "order": 3,
+                "translations": [
+                  {
+                    "name": "Lainnya",
+                    "language": "id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "name": "Marital Status",
+            "dependency": [
+              {
+                "id": 6,
+                "options": [
+                  "Female",
+                  "Male"
+                ]
+              }
+            ],
+            "order": 7,
+            "type": "option",
+            "required": true,
+            "translations": [
+              {
+                "name": "Status Keluarga",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026370,
+            "option": [
+              {
+                "id": 8,
+                "name": "Single",
+                "order": 1,
+                "translations": [
+                  {
+                    "name": "Jomblo",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "name": "Maried",
+                "order": 2,
+                "translations": [
+                  {
+                    "name": "Menikah",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "name": "Widowed",
+                "order": 3,
+                "translations": [
+                  {
+                    "name": "Janda / Duda",
+                    "language": "id"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "translations": [
+          {
+            "name": "Registrasi",
+            "language": "id"
+          }
+        ]
+      },
+      {
+        "id": 1693886026375,
+        "name": "Culinary Group",
+        "order": 2,
+        "question": [
+          {
+            "id": 8,
+            "name": "How much do you spent for meals a day?",
+            "order": 1,
+            "type": "number",
+            "required": false,
+            "translations": [
+              {
+                "name": "Berapa biasanya uang yang anda habiskan per hari untuk makanan",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026375
+          },
+          {
+            "id": 9,
+            "name": "How many times do you usually eat in a day?",
+            "order": 2,
+            "type": "number",
+            "required": false,
+            "translations": [
+              {
+                "name": "Berapa kali anda biasanya makan dalam sehari",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026375
+          },
+          {
+            "id": 11,
+            "name": "Favorite Food",
+            "order": 4,
+            "type": "multiple_option",
+            "allowOther": true,
+            "allowOtherText": "Please input other food if any",
+            "required": false,
+            "meta": true,
+            "tooltip": {
+              "text": "Please mention the available options",
+              "translations": [
+                {
+                  "text": "Tolong pilih contoh yang ada",
+                  "language": "id"
+                }
+              ]
+            },
+            "translations": [
+              {
+                "name": "Makanan Favorit",
+                "allowOtherText": "Silahkan menambahkan menu lain jika ada",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026375,
+            "option": [
+              {
+                "id": 4,
+                "name": "Asian",
+                "order": 1,
+                "translations": [
+                  {
+                    "name": "Asia",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "name": "Western",
+                "order": 2,
+                "translations": [
+                  {
+                    "name": "Barat",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "name": "Vegetarian",
+                "order": 3
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "name": "Please specify",
+            "order": 5,
+            "type": "input",
+            "required": true,
+            "dependency": [
+              {
+                "id": 11,
+                "options": [
+                  "Asian",
+                  "Western"
+                ]
+              }
+            ],
+            "tooltip": {
+              "text": "Desert or snacks are allowed too",
+              "translations": [
+                {
+                  "text": "Makanan Penutup dan Makanan Ringan juga diperbolehkan",
+                  "language": "id"
+                }
+              ]
+            },
+            "translations": [
+              {
+                "name": "Tolong sebutkan",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026375
+          },
+          {
+            "id": 13,
+            "name": "Do you know <b>beef rendang</b>?",
+            "order": 6,
+            "type": "option",
+            "allowOtherText": "Other Option",
+            "allowOther": true,
+            "required": false,
+            "translations": [
+              {
+                "name": "Apakah anda tahu <b>Rendang Daging</b>?",
+                "allowOtherText": "Jawaban Lain",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026375,
+            "option": [
+              {
+                "id": 6,
+                "name": "Yes",
+                "order": 1,
+                "translations": [
+                  {
+                    "name": "Ya",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "name": "No",
+                "order": 2,
+                "translations": [
+                  {
+                    "name": "Tidak",
+                    "language": "id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "name": "Weight",
+            "order": 7,
+            "type": "number",
+            "required": true,
+            "rule": {
+              "min": 5,
+              "max": 10
+            },
+            "translations": [
+              {
+                "name": "Berat Badan",
+                "language": "id"
+              }
+            ],
+            "addonAfter": "Kilograms",
+            "questionGroupId": 1693886026375
+          },
+          {
+            "id": 15,
+            "name": "Where do you usually order Rendang from ?",
+            "dependency": [
+              {
+                "id": 13,
+                "options": [
+                  "Yes"
+                ]
+              },
+              {
+                "id": 14,
+                "min": 8
+              }
+            ],
+            "order": 8,
+            "type": "option",
+            "required": true,
+            "translations": [
+              {
+                "name": "Dimana anda biasanya membeli Rendang?",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026375,
+            "option": [
+              {
+                "id": 8,
+                "name": "Pagi Sore",
+                "order": 1
+              },
+              {
+                "id": 9,
+                "name": "Any Rendang Restaurant",
+                "order": 2,
+                "translations": [
+                  {
+                    "name": "Restoran Rendang Manapun",
+                    "language": "id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 16,
+            "name": "Do you want to order Rendang from Pagi Sore now?",
+            "dependency": [
+              {
+                "id": 15,
+                "options": [
+                  "Pagi Sore"
+                ]
+              }
+            ],
+            "order": 9,
+            "type": "option",
+            "required": true,
+            "translations": [
+              {
+                "name": "Apakah anda ingin memesan Rendang dari Pagi Sore?",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026375,
+            "option": [
+              {
+                "id": 9,
+                "name": "Yes",
+                "order": 1,
+                "translations": [
+                  {
+                    "name": "Ya",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "name": "No",
+                "order": 2,
+                "translations": [
+                  {
+                    "name": "Tidak",
+                    "language": "id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 17,
+            "name": "Order List",
+            "dependency": [
+              {
+                "id": 16,
+                "options": [
+                  "Yes"
+                ]
+              }
+            ],
+            "order": 10,
+            "type": "table",
+            "columns": [
+              {
+                "name": "items",
+                "label": "Items",
+                "type": "option",
+                "options": [
+                  {
+                    "name": "Rendang",
+                    "order": 1
+                  },
+                  {
+                    "name": "Ayam Pop",
+                    "order": 2
+                  },
+                  {
+                    "name": "Paru Goreng",
+                    "order": 3
+                  },
+                  {
+                    "name": "Baluik Goreng",
+                    "order": 4
+                  }
+                ]
+              },
+              {
+                "name": "amount",
+                "label": "Amount",
+                "type": "number"
+              },
+              {
+                "name": "note",
+                "label": "Note",
+                "type": "input"
+              }
+            ],
+            "required": true,
+            "translations": [
+              {
+                "name": "Daftar Pesanan",
+                "language": "id"
+              }
+            ],
+            "extra": [
+              {
+                "placement": "before",
+                "content": "Price: Rendang (IDR 5000), Ayam Pop (IDR 8000)",
+                "translations": [
+                  {
+                    "content": "Harga: Rendang (Rp 5000), Ayam Pop (Rp 8000)",
+                    "language": "id"
+                  }
+                ]
+              }
+            ],
+            "questionGroupId": 1693886026375
+          }
+        ],
+        "description": "Example placeholder description text for <b>Culinary Question Group</b>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet orci in feugiat tincidunt. Donec tempor suscipit accumsan. Vestibulum orci risus, mattis vitae ex et, consectetur consequat augue. Nunc et ante vel massa sollicitudin posuere vel ornare ligula. Ut a mattis massa. Mauris pulvinar congue sem, et venenatis orci vulputate id. Praesent odio purus, ultricies non eros at, iaculis imperdiet turpis. Donec non massa ligula.",
+        "translations": [
+          {
+            "name": "Pertanyaan Tentang Kuliner",
+            "description": "Contoh teks pengganti deskripsi untuk <b>Grup Pertanyaan Kuliner</b>. Demikian pula, tidak adakah orang yang mencintai atau mengejar atau ingin mengalami penderitaan, bukan semata-mata karena penderitaan itu sendiri, tetapi karena sesekali terjadi keadaan di mana susah-payah dan penderitaan dapat memberikan kepadanya kesenangan yang besar.",
+            "language": "id"
+          }
+        ]
+      },
+      {
+        "id": 1693886026377,
+        "name": "Other Questions",
+        "order": 3,
+        "repeatable": true,
+        "question": [
+          {
+            "id": 18,
+            "name": "Comment",
+            "order": 1,
+            "type": "text",
+            "required": true,
+            "translations": [
+              {
+                "name": "Komentar",
+                "language": "id"
+              }
+            ],
+            "extra": [
+              {
+                "placement": "after",
+                "content": "Please write at least 10 words",
+                "translations": [
+                  {
+                    "content": "Tolong tulis minimal 10 kata",
+                    "language": "id"
+                  }
+                ]
+              }
+            ],
+            "questionGroupId": 1693886026377
+          },
+          {
+            "id": 19,
+            "name": "Job title",
+            "order": 2,
+            "type": "option",
+            "required": true,
+            "translations": [
+              {
+                "name": "Titel Pekerjaan",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026377,
+            "option": [
+              {
+                "id": 3,
+                "name": "Director",
+                "order": 1,
+                "translations": [
+                  {
+                    "name": "Direktur",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "name": "Manager",
+                "order": 2,
+                "translations": [
+                  {
+                    "name": "Manajer",
+                    "language": "id"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "name": "Staff",
+                "order": 3,
+                "translations": [
+                  {
+                    "name": "Staf",
+                    "language": "id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "name": "Dependency on Gender Male/Female",
+            "dependency": [
+              {
+                "id": 6,
+                "options": [
+                  "Female",
+                  "Male"
+                ]
+              }
+            ],
+            "order": 3,
+            "type": "input",
+            "required": true,
+            "questionGroupId": 1693886026377
+          },
+          {
+            "id": 21,
+            "name": "Dependency on Job Title Staff",
+            "dependency": [
+              {
+                "id": 19,
+                "options": [
+                  "Staff"
+                ]
+              }
+            ],
+            "order": 4,
+            "type": "option",
+            "required": true,
+            "questionGroupId": 1693886026377,
+            "option": [
+              {
+                "id": 5,
+                "name": "Contract",
+                "order": 1
+              },
+              {
+                "id": 6,
+                "name": "Internship",
+                "order": 2
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "name": "Tree Select",
+            "order": 5,
+            "type": "tree",
+            "option": "administration",
+            "checkStrategy": "children",
+            "expandAll": true,
+            "required": true,
+            "questionGroupId": 1693886026377
+          },
+          {
+            "id": 23,
+            "name": "Please input any number start from 0 (no decimal)",
+            "order": 6,
+            "type": "number",
+            "required": true,
+            "translations": [
+              {
+                "name": "Masukkan angka berapapun, dimulai dari 0 (selain decimal)",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026377
+          },
+          {
+            "id": 24,
+            "name": "Please input any number start from 0 to 10 (allow decimal)",
+            "order": 7,
+            "type": "number",
+            "required": true,
+            "rule": {
+              "min": 0,
+              "max": 10,
+              "allowDecimal": true
+            },
+            "translations": [
+              {
+                "name": "Masukkan angka berapapun, dimulai dari 1 sampai 10 (boleh decimal)",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026377
+          },
+          {
+            "id": 25,
+            "name": "Please input any number start from 0 to 5 (allow decimal)",
+            "order": 8,
+            "type": "number",
+            "required": false,
+            "rule": {
+              "min": 0,
+              "max": 5,
+              "allowDecimal": true
+            },
+            "translations": [
+              {
+                "name": "Masukkan angka berapapun, dimulai dari 0 sampai 5 (boleh decimal)",
+                "language": "id"
+              }
+            ],
+            "questionGroupId": 1693886026377
+          }
+        ],
+        "repeatText": "Repeat text",
+        "description": "This is an example of repeat group question",
+        "translations": [
+          {
+            "name": "Pertanyaan Lain",
+            "repeat_text": "Isi lagi",
+            "description": "Ini contoh dari pertanyaan berulang",
+            "language": "id"
+          }
+        ]
+      },
+      {
+        "id": 1693886026378,
+        "name": "Repeat Question",
+        "order": 4,
+        "repeatable": true,
+        "question": [
+          {
+            "id": 26,
+            "name": "Comment for Pagi Sore",
+            "order": 1,
+            "type": "text",
+            "required": false,
+            "translations": [
+              {
+                "name": "Komentar",
+                "language": "id"
+              }
+            ],
+            "dependency": [
+              {
+                "id": 15,
+                "options": [
+                  "Pagi Sore"
+                ]
+              }
+            ],
+            "questionGroupId": 1693886026378
+          },
+          {
+            "id": 27,
+            "name": "Date with Rule",
+            "order": 2,
+            "type": "date",
+            "required": false,
+            "translations": [
+              {
+                "name": "Tanggal dengan ketentuan",
+                "language": "id"
+              }
+            ],
+            "rule": {
+              "minDate": "2022-01-01",
+              "maxDate": "2022-12-31"
+            },
+            "questionGroupId": 1693886026378
+          },
+          {
+            "id": 28,
+            "name": "Question with Custom Params",
+            "order": 3,
+            "type": "text",
+            "required": false,
+            "translations": [
+              {
+                "name": "Pertanyaan dengan Parameter Khusus",
+                "language": "id"
+              }
+            ],
+            "params_name_a": [
+              "SO1"
+            ],
+            "params_name_b": [
+              "MO1",
+              "MO2"
+            ],
+            "params_name_c": [
+              "member"
+            ],
+            "questionGroupId": 1693886026378
+          }
+        ],
+        "repeatText": "Add another Repeat Question",
+        "description": "This is an example of repeat group question",
+        "translations": [
+          {
+            "name": "Pertanyaan Berulang",
+            "repeatText": "Tambahkan Pertanyaan Berulang",
+            "description": "Ini contoh dari pertanyaan berulang",
+            "language": "id"
+          }
+        ]
+      }
+    ]
+  }
