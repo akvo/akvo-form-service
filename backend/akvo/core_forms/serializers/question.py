@@ -6,7 +6,10 @@ from rest_framework import serializers
 
 from akvo.core_forms.constants import QuestionTypes
 from akvo.core_forms.models import Questions
-from akvo.core_forms.serializers.option import ListOptionSerializer
+from akvo.core_forms.serializers.option import (
+    ListOptionSerializer,
+    AddOptionSerializer,
+)
 from akvo.utils.custom_serializer_fields import (
     CustomIntegerField,
     CustomCharField,
@@ -14,6 +17,7 @@ from akvo.utils.custom_serializer_fields import (
     CustomListField,
     CustomBooleanField,
 )
+from akvo.utils.custom_serializer_fields import validate_serializers_message
 
 
 class ListQuestionSerializer(serializers.ModelSerializer):
@@ -123,6 +127,8 @@ class ListQuestionSerializer(serializers.ModelSerializer):
 
 
 class AddQuestionSerializer(serializers.ModelSerializer):
+    form = CustomIntegerField(read_only=True)
+    question_group = CustomIntegerField(read_only=True)
     id = CustomIntegerField()
     name = CustomCharField()
     order = CustomIntegerField()
@@ -141,7 +147,6 @@ class AddQuestionSerializer(serializers.ModelSerializer):
     autofield = CustomJSONField(required=False, allow_null=True)
     data_api_url = CustomCharField(required=False, allow_null=True)
     translations = CustomListField(required=False, allow_null=True)
-    option = CustomListField(required=False, allow_null=True)
 
     def __init__(self, *args, **kwargs):
         # Get the value
@@ -160,6 +165,21 @@ class AddQuestionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Invalid question type")
         return qtype
 
+    def create(self, validated_data):
+        options_data = validated_data.pop("option", [])
+        q = Questions.objects.create(**validated_data)
+        for opt in options_data:
+            opt["question"] = q
+            serializer = AddOptionSerializer(data=opt)
+            if not serializer.is_valid():
+                raise serializers.ValidationError({
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                })
+            serializer.save()
+            return object
+        return q
+
     class Meta:
         model = Questions
         fields = [
@@ -177,5 +197,4 @@ class AddQuestionSerializer(serializers.ModelSerializer):
             "translations",
             "data_api_url",
             "autofield",
-            "option",
         ]

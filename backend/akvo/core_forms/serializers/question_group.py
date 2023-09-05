@@ -12,6 +12,7 @@ from akvo.utils.custom_serializer_fields import (
     CustomCharField,
     CustomBooleanField
 )
+from akvo.utils.custom_serializer_fields import validate_serializers_message
 
 
 class ListQuestionGroupSerializer(serializers.ModelSerializer):
@@ -38,6 +39,7 @@ class ListQuestionGroupSerializer(serializers.ModelSerializer):
 
 
 class AddQuestionGroupSerializer(serializers.ModelSerializer):
+    form = CustomIntegerField(read_only=True)
     id = CustomIntegerField()
     name = CustomCharField()
     description = CustomCharField(required=False, allow_null=True)
@@ -45,10 +47,25 @@ class AddQuestionGroupSerializer(serializers.ModelSerializer):
     repeatable = CustomBooleanField(
         required=False, allow_null=True, default=False)
     translations = CustomListField(required=False, allow_null=True)
-    question = AddQuestionSerializer(many=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def create(self, validated_data):
+        questions_data = validated_data.pop("question", [])
+        qg = QuestionGroups.objects.create(**validated_data)
+        for q in questions_data:
+            q["form"] = validated_data.get("form")
+            q["question_group"] = qg
+            serializer = AddQuestionSerializer(data=q)
+            if not serializer.is_valid():
+                raise serializers.ValidationError({
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                })
+            serializer.save()
+            return object
+        return qg
 
     class Meta:
         model = QuestionGroups
@@ -59,5 +76,4 @@ class AddQuestionGroupSerializer(serializers.ModelSerializer):
             "order",
             "repeatable",
             "translations",
-            "question"
         ]
