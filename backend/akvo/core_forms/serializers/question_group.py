@@ -78,7 +78,6 @@ class AddQuestionGroupSerializer(serializers.Serializer):
                     "details": serializer.errors,
                 })
             serializer.save(form=qg.form, question_group=qg)
-            return object
         return qg
 
     # class Meta:

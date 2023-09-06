@@ -189,8 +189,7 @@ class AddQuestionSerializer(serializers.Serializer):
                     "message": validate_serializers_message(serializer.errors),
                     "details": serializer.errors,
                 })
-            serializer.save()
-            return object
+            serializer.save(question=q)
         return q
 
     # class Meta:

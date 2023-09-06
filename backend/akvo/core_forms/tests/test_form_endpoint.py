@@ -56,5 +56,8 @@ class TestFormEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
-        self.assertEqual(result, {})
-        # print(json.dumps(result, indent=2))
+        with open(
+            './source/static/example_form_payload_result.json', 'r'
+        ) as f:
+            expected_result = json.load(f)
+        self.assertEqual(result, expected_result)

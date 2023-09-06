@@ -106,7 +106,6 @@ class AddFormSerializer(serializers.Serializer):
                     "details": serializer.errors,
                 })
             serializer.save(form=form)
-            return object
         return form
 
     # class Meta:

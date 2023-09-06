@@ -24,7 +24,7 @@ class ListOptionSerializer(serializers.ModelSerializer):
 
 class AddOptionSerializer(serializers.Serializer):
     question = CustomIntegerField(read_only=True)
-    id = CustomIntegerField()
+    # id = CustomIntegerField()
     name = CustomCharField()
     order = CustomIntegerField()
     code = CustomCharField(required=False, allow_null=True)
