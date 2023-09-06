@@ -50,6 +50,7 @@ def get_form_by_id(request, form_id):
 
 class FormManagementView(APIView):
     @extend_schema(
+        request=AddFormSerializer(),
         responses={
             (200, "application/json"): DefaultResponseSerializer,
         },
@@ -73,6 +74,7 @@ class FormManagementView(APIView):
         )
 
     @extend_schema(
+        request=AddFormSerializer(),
         responses={
             (200, "application/json"): DefaultResponseSerializer,
         },

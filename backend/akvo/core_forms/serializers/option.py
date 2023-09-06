@@ -37,7 +37,3 @@ class AddOptionSerializer(serializers.Serializer):
     def create(self, validated_data):
         opt = Options.objects.create(**validated_data)
         return opt
-
-    # class Meta:
-    #     model = Options
-    #     fields = ["id", "code", "name", "order", "color", "translations"]

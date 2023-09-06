@@ -79,14 +79,3 @@ class AddQuestionGroupSerializer(serializers.Serializer):
                 })
             serializer.save(form=qg.form, question_group=qg)
         return qg
-
-    # class Meta:
-    #     model = QuestionGroups
-    #     fields = [
-    #         "id",
-    #         "name",
-    #         "description",
-    #         "order",
-    #         "repeatable",
-    #         "translations",
-    #     ]

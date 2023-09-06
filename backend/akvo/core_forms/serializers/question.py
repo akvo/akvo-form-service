@@ -191,22 +191,3 @@ class AddQuestionSerializer(serializers.Serializer):
                 })
             serializer.save(question=q)
         return q
-
-    # class Meta:
-    #     model = Questions
-    #     fields = [
-    #         "id",
-    #         "name",
-    #         "order",
-    #         "type",
-    #         "tooltip",
-    #         "required",
-    #         "dependency",
-    #         "meta",
-    #         "rule",
-    #         "api",
-    #         "extra",
-    #         "translations",
-    #         "data_api_url",
-    #         "autofield",
-    #     ]

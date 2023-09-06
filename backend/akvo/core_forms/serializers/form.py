@@ -107,15 +107,3 @@ class AddFormSerializer(serializers.Serializer):
                 })
             serializer.save(form=form)
         return form
-
-    # class Meta:
-    #     model = Forms
-    #     fields = [
-    #         "id",
-    #         "name",
-    #         "description",
-    #         "default_language",
-    #         "languages",
-    #         "version",
-    #         "translations",
-    #     ]
