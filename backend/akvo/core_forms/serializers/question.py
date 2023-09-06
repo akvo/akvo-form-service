@@ -195,6 +195,7 @@ class AddQuestionSerializer(serializers.Serializer):
         return q
 
     def update(self, instance, validated_data):
+        # update question
         instance.name = validated_data.get(
             'name', instance.name)
         instance.order = validated_data.get(
@@ -223,15 +224,29 @@ class AddQuestionSerializer(serializers.Serializer):
             'translations', instance.translations)
 
         # check and delete options
-        # delete old options then create new
-        Options.objects.filter(question=instance).delete()
+        current_options = Options.objects.filter(question=instance).all()
+        current_opt_ids = [co.id for co in current_options]
+
         new_option_data = validated_data.get('option', [])
+        new_opt_ids = [no.get('id') for no in new_option_data]
+
         for opt in new_option_data:
+            current_opt = Options.objects.filter(id=opt.get('id')).first()
             serializer = AddOptionSerializer(data=opt)
             if not serializer.is_valid():
                 raise serializers.ValidationError({
                     "message": validate_serializers_message(serializer.errors),
                     "details": serializer.errors,
                 })
-            serializer.save(question=instance)
+            if not current_opt:
+                serializer.save(question=instance)
+            if current_opt:
+                serializer.update(
+                    instance=current_opt,
+                    validated_data=serializer.validated_data)
+
+        missing_opt_ids = list(set(current_opt_ids) - set(new_opt_ids))
+        # delete old options then create new
+        Options.objects.filter(id__in=missing_opt_ids).delete()
+
         return instance

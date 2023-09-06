@@ -118,7 +118,6 @@ class AddQuestionGroupSerializer(serializers.Serializer):
                     validated_data=serializer.validated_data)
 
         missing_q_ids = list(set(current_qs_ids) - set(new_q_ids))
-        print('MISSING Q IDS', missing_q_ids)
         # check missing question ids with answer and delete
         for qid in missing_q_ids:
             answers = Answers.objects.filter(question_id=qid).count()

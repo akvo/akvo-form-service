@@ -111,7 +111,15 @@ class TestFormEndpoint(TestCase):
                 "name": "Lorem lorem Nam",
                 "order": 1,
                 "repeatable": False,
-                "question": [payload_question[1]]
+                "question": [payload_question[0]] + [{
+                    "id": 1693987349188,
+                    "order": 2,
+                    "questionGroupId": 1693987349171,
+                    "name": "Add new number question",
+                    "type": "number",
+                    "required": False,
+                    "meta": False
+                }]
             }]
         }
         data = self.client.put(
@@ -145,10 +153,17 @@ class TestFormEndpoint(TestCase):
                 "repeatable": False,
                 "translations": None,
                 "question": [{
-                    "id": 1693987361547,
-                    "name": "Tincidunt mauris tristique eu dapibus augue",
-                    "order": 2,
+                    "id": 1693987349172,
+                    "name": "Phasellus amet suscipit ac tristique nisl",
+                    "order": 1,
                     "type": "input",
+                    "required": False,
+                    "meta": False
+                }, {
+                    "id": 1693987349188,
+                    "name": "Add new number question",
+                    "order": 2,
+                    "type": "number",
                     "required": False,
                     "meta": False
                 }]
@@ -200,12 +215,26 @@ class TestFormEndpoint(TestCase):
         self.assertEqual(data.status_code, 200)
         result = data.json()
         self.assertEqual(result, {"message": "ok"})
-        # PUT (payload with question removed)
+        # PUT (payload with question group removed)
         payload = {
             "id": 1693988922937,
             "name": "New Form",
             "description": "New Form Description",
-            "question_group": [payload_question_group[0]]
+            "question_group": [payload_question_group[0]] + [{
+                "id": 1693988922977,
+                "name": "New Question Group",
+                "order": 2,
+                "repeatable": False,
+                "question": [{
+                    "id": 1693988922955,
+                    "order": 1,
+                    "questionGroupId": 1693988922977,
+                    "name": "New Question",
+                    "type": "number",
+                    "required": False,
+                    "meta": False
+                }]
+            }]
         }
         data = self.client.put(
             "/api/form",
@@ -242,6 +271,21 @@ class TestFormEndpoint(TestCase):
                     "name": "Dolor ante augue adipiscing elit amet",
                     "order": 1,
                     "type": "input",
+                    "required": False,
+                    "meta": False
+                }]
+            }, {
+                "id": 1693988922977,
+                "name": "New Question Group",
+                "description": None,
+                "order": 2,
+                "repeatable": False,
+                "translations": None,
+                "question": [{
+                    "id": 1693988922955,
+                    "name": "New Question",
+                    "order": 1,
+                    "type": "number",
                     "required": False,
                     "meta": False
                 }]

@@ -123,7 +123,7 @@ class AddFormSerializer(serializers.Serializer):
         instance.translations = validated_data.get(
             'translations', instance.translations)
 
-        # TODO :: check and delete question group
+        # check and delete question group
         current_qgs = QuestionGroups.objects.filter(form=instance).all()
         current_qg_ids = [cqg.id for cqg in current_qgs]
 
@@ -147,7 +147,6 @@ class AddFormSerializer(serializers.Serializer):
                     validated_data=serializer.validated_data)
 
         missing_qg_ids = list(set(current_qg_ids) - set(new_qg_ids))
-        print('MISSING QG IDS', missing_qg_ids)
         # delete missing question groups
         QuestionGroups.objects.filter(id__in=missing_qg_ids).delete()
 
