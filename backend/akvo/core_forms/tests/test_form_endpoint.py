@@ -154,3 +154,96 @@ class TestFormEndpoint(TestCase):
                 }]
             }]
         })
+
+    def test_endpoint_put_form_with_deleted_question_group(self):
+        payload_question_group = [{
+            "id": 1693988922938,
+            "name": "Ante aliquet lorem",
+            "order": 1,
+            "repeatable": False,
+            "question": [{
+                "id": 1693988922939,
+                "order": 1,
+                "questionGroupId": 1693988922938,
+                "name": "Dolor ante augue adipiscing elit amet",
+                "type": "input",
+                "required": False,
+                "meta": False
+            }]
+        }, {
+            "id": 1693988928051,
+            "name": "Consequat Donec neque",
+            "order": 2,
+            "repeatable": False,
+            "question": [{
+                "id": 1693988928052,
+                "order": 1,
+                "questionGroupId": 1693988928051,
+                "name": "Ornare consectetur neque Donec nisl lorem",
+                "type": "input",
+                "required": False,
+                "meta": False
+            }]
+        }]
+        payload = {
+            "id": 1693988922937,
+            "name": "New Form",
+            "description": "New Form Description",
+            "question_group": payload_question_group
+        }
+        # POST
+        data = self.client.post(
+            "/api/form",
+            data=payload,
+            content_type="application/json"
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        self.assertEqual(result, {"message": "ok"})
+        # PUT (payload with question removed)
+        payload = {
+            "id": 1693988922937,
+            "name": "New Form",
+            "description": "New Form Description",
+            "question_group": [payload_question_group[0]]
+        }
+        data = self.client.put(
+            "/api/form",
+            data=payload,
+            content_type="application/json"
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        self.assertEqual(result, {"message": "Update form success"})
+        # GET
+        data = self.client.get(
+            "/api/form/1693988922937",
+            follow=True
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        self.assertEqual(result, {
+            "id": 1693988922937,
+            "name": "New Form",
+            "description": "New Form Description",
+            "defaultLanguage": "en",
+            "languages": ["en"],
+            "version": 1,
+            "translations": None,
+            "question_group": [{
+                "id": 1693988922938,
+                "name": "Ante aliquet lorem",
+                "description": None,
+                "order": 1,
+                "repeatable": False,
+                "translations": None,
+                "question": [{
+                    "id": 1693988922939,
+                    "name": "Dolor ante augue adipiscing elit amet",
+                    "order": 1,
+                    "type": "input",
+                    "required": False,
+                    "meta": False
+                }]
+            }]
+        })

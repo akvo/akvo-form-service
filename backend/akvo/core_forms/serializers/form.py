@@ -129,8 +129,6 @@ class AddFormSerializer(serializers.Serializer):
 
         new_qg_data = validated_data.get('question_group', [])
         new_qg_ids = [nqg.get('id') for nqg in new_qg_data]
-        missing_qg_ids = list(set(current_qg_ids) - set(new_qg_ids))
-        print('MISSING QG IDS', missing_qg_ids)
 
         # create or update question group
         for qg in new_qg_data:
@@ -147,5 +145,10 @@ class AddFormSerializer(serializers.Serializer):
                 serializer.update(
                     instance=current_qg,
                     validated_data=serializer.validated_data)
+
+        missing_qg_ids = list(set(current_qg_ids) - set(new_qg_ids))
+        print('MISSING QG IDS', missing_qg_ids)
+        # delete missing question groups
+        QuestionGroups.objects.filter(id__in=missing_qg_ids).delete()
 
         return instance

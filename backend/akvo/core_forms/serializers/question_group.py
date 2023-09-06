@@ -99,13 +99,6 @@ class AddQuestionGroupSerializer(serializers.Serializer):
 
         new_q_data = validated_data.get('question', [])
         new_q_ids = [nq.get('id') for nq in new_q_data]
-        missing_q_ids = list(set(current_qs_ids) - set(new_q_ids))
-        print('MISSING QG IDS', missing_q_ids)
-        # check missing question ids with answer and delete
-        for qid in missing_q_ids:
-            answers = Answers.objects.filter(question_id=qid).count()
-            if not answers:
-                Questions.objects.filter(id=qid).delete()
 
         # create or update questions
         for q in new_q_data:
@@ -123,5 +116,13 @@ class AddQuestionGroupSerializer(serializers.Serializer):
                 serializer.update(
                     instance=current_q,
                     validated_data=serializer.validated_data)
+
+        missing_q_ids = list(set(current_qs_ids) - set(new_q_ids))
+        print('MISSING Q IDS', missing_q_ids)
+        # check missing question ids with answer and delete
+        for qid in missing_q_ids:
+            answers = Answers.objects.filter(question_id=qid).count()
+            if not answers:
+                Questions.objects.filter(id=qid).delete()
 
         return instance
