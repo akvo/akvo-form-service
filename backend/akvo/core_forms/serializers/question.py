@@ -21,6 +21,7 @@ from akvo.utils.custom_serializer_fields import (
     CustomBooleanField,
 )
 from akvo.utils.custom_serializer_fields import validate_serializers_message
+from akvo.core_data.models import Answers
 
 
 class ListQuestionSerializer(serializers.ModelSerializer):
@@ -195,10 +196,19 @@ class AddQuestionSerializer(serializers.Serializer):
         return q
 
     def update(self, instance, validated_data):
-        # update question
+        # get question type
         qtype = validated_data.get('type', instance.type)
-        instance.type = getattr(QuestionTypes, qtype)
-
+        qtype = getattr(QuestionTypes, qtype)
+        # check if question type change
+        if instance.type != qtype:
+            answers = Answers.objects.filter(question=instance).count()
+            if answers:
+                raise serializers.ValidationError({
+                    "message": "Can't update question type",
+                    "details": f"Question {instance.id} has answers",
+                })
+        # update question
+        instance.type = qtype
         instance.name = validated_data.get(
             'name', instance.name)
         instance.order = validated_data.get(

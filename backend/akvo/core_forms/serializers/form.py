@@ -2,7 +2,11 @@ from rest_framework import serializers
 from drf_spectacular.utils import extend_schema_field
 from drf_spectacular.types import OpenApiTypes
 
-from akvo.core_forms.models import Forms, QuestionGroups
+from akvo.core_forms.models import (
+    Forms,
+    QuestionGroups,
+    Questions
+)
 from akvo.core_forms.serializers.question_group import (
     ListQuestionGroupSerializer,
     AddQuestionGroupSerializer
@@ -13,6 +17,7 @@ from akvo.utils.custom_serializer_fields import (
     CustomListField
 )
 from akvo.utils.custom_serializer_fields import validate_serializers_message
+from akvo.core_data.models import Answers
 
 
 class ListFormSerializer(serializers.ModelSerializer):
@@ -148,6 +153,16 @@ class AddFormSerializer(serializers.Serializer):
 
         missing_qg_ids = list(set(current_qg_ids) - set(new_qg_ids))
         # delete missing question groups
-        QuestionGroups.objects.filter(id__in=missing_qg_ids).delete()
+        for qgid in missing_qg_ids:
+            questions = Questions.objects.filter(question_group_id=qgid).all()
+            qids = [q.id for q in questions]
+            # check answers
+            answers = Answers.objects.filter(question_id__in=qids).count()
+            if answers:
+                raise serializers.ValidationError({
+                    "message": "Can't delete question group",
+                    "details": f"Question in group {qgid} has answers",
+                })
+            QuestionGroups.objects.filter(id=qgid).delete()
         instance.save()
         return instance
