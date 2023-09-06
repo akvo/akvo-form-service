@@ -34,7 +34,7 @@ class TestNodeEndpoint(TestCase):
             {
                 "id": node_id,
                 "name": "Example Node",
-                "url": f"/api/node/{node_id}",
+                "endpoint": f"/api/node/{node_id}",
                 "initial": 0,
             },
         ]

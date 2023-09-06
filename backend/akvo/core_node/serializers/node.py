@@ -10,10 +10,10 @@ from akvo.core_node.serializers.node_detail import AddNodeDetailSerializer
 
 
 class ListNodeSerializer(serializers.ModelSerializer):
-    url = serializers.SerializerMethodField()
+    endpoint = serializers.SerializerMethodField()
     initial = serializers.SerializerMethodField()
 
-    def get_url(self, obj):
+    def get_endpoint(self, obj):
         return f"/api/node/{obj.id}"
 
     def get_initial(self, obj):
@@ -21,7 +21,7 @@ class ListNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Node
-        fields = ["id", "name", "url", "initial"]
+        fields = ["id", "name", "endpoint", "initial"]
 
 
 class AddNodeSerializer(serializers.Serializer):
