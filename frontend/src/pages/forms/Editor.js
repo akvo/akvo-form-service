@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import WebformEditor from "akvo-react-form-editor";
 import "akvo-react-form-editor/dist/index.css"; /* REQUIRED */
 import { api } from "../../lib";
+import { GlobalStore } from "../../store";
+import { Spin } from "antd";
 
 const Editor = () => {
   const { formId } = useParams();
   const history = useNavigate();
   const [formDef, setFormDef] = useState({});
+  const { loading, settingCascadeURL } = GlobalStore.useState((s) => s);
 
   useEffect(() => {
     if (!Object.keys(formDef).length) {
@@ -33,7 +36,17 @@ const Editor = () => {
         </a>{" "}
         / Edit / {formId}
       </h1>
-      <WebformEditor initialValue={formDef} onSave={onSave} />
+      {loading ? (
+        <div className="loading-container">
+          <Spin />
+        </div>
+      ) : (
+        <WebformEditor
+          initialValue={formDef}
+          onSave={onSave}
+          settingCascadeURL={settingCascadeURL}
+        />
+      )}
     </div>
   );
 };

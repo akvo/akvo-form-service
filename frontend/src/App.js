@@ -13,11 +13,11 @@ const App = () => {
     GlobalStore.update((s) => {
       s.loading = true;
     });
-    api
-      .get("forms")
-      .then((res) => {
+    Promise.all([api.get("forms"), api.get("node")])
+      .then(([resForms, resNode]) => {
         GlobalStore.update((s) => {
-          s.forms = res.data;
+          s.forms = resForms.data;
+          s.settingCascadeURL = resNode.data;
         });
       })
       .finally(() => {
