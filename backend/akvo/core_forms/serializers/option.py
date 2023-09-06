@@ -37,3 +37,17 @@ class AddOptionSerializer(serializers.Serializer):
     def create(self, validated_data):
         opt = Options.objects.create(**validated_data)
         return opt
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get(
+            'name', instance.name)
+        instance.order = validated_data.get(
+            'order', instance.order)
+        instance.code = validated_data.get(
+            'code', instance.code)
+        instance.color = validated_data.get(
+            'color', instance.color)
+        instance.translations = validated_data.get(
+            'translations', instance.translations)
+        instance.save()
+        return instance

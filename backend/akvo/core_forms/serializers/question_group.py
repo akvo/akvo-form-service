@@ -79,3 +79,17 @@ class AddQuestionGroupSerializer(serializers.Serializer):
                 })
             serializer.save(form=qg.form, question_group=qg)
         return qg
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get(
+            'name', instance.name)
+        instance.description = validated_data.get(
+            'description', instance.description)
+        instance.order = validated_data.get(
+            'order', instance.order)
+        instance.repeatable = validated_data.get(
+            'repeatable', instance.repeatable)
+        instance.translations = validated_data.get(
+            'translations', instance.translations)
+        # check and delete question
+        return instance

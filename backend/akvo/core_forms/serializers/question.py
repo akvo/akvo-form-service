@@ -191,3 +191,35 @@ class AddQuestionSerializer(serializers.Serializer):
                 })
             serializer.save(question=q)
         return q
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get(
+            'name', instance.name)
+        instance.order = validated_data.get(
+            'order', instance.order)
+        instance.type = validated_data.get(
+            'type', instance.type)
+        instance.tooltip = validated_data.get(
+            'tooltip', instance.tooltip)
+        instance.required = validated_data.get(
+            'required', instance.required)
+        instance.meta = validated_data.get(
+            'meta', instance.meta)
+        instance.rule = validated_data.get(
+            'rule', instance.rule)
+        instance.dependency = validated_data.get(
+            'dependency', instance.dependency)
+        instance.api = validated_data.get(
+            'api', instance.api)
+        instance.extra = validated_data.get(
+            'extra', instance.extra)
+        instance.autofield = validated_data.get(
+            'autofield', instance.autofield)
+        instance.data_api_url = validated_data.get(
+            'data_api_url', instance.data_api_url)
+        instance.translations = validated_data.get(
+            'translations', instance.translations)
+        # if question type changed from option,
+        # we should delete the old options
+        # check and delete options
+        return instance

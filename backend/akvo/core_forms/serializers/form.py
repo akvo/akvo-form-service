@@ -107,3 +107,19 @@ class AddFormSerializer(serializers.Serializer):
                 })
             serializer.save(form=form)
         return form
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get(
+            'name', instance.name)
+        instance.description = validated_data.get(
+            'description', instance.description)
+        instance.version = validated_data.get(
+            'version', instance.version)
+        instance.languages = validated_data.get(
+            'languages', instance.languages)
+        instance.default_language = validated_data.get(
+            'default_language', instance.default_language)
+        instance.translations = validated_data.get(
+            'translations', instance.translations)
+        # check and delete question group
+        return instance
