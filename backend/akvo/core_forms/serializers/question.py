@@ -5,7 +5,10 @@ from drf_spectacular.utils import extend_schema_field, inline_serializer
 from rest_framework import serializers
 
 from akvo.core_forms.constants import QuestionTypes
-from akvo.core_forms.models import Questions
+from akvo.core_forms.models import (
+    Questions,
+    Options
+)
 from akvo.core_forms.serializers.option import (
     ListOptionSerializer,
     AddOptionSerializer,
@@ -182,7 +185,6 @@ class AddQuestionSerializer(serializers.Serializer):
         validated_data["type"] = getattr(QuestionTypes, qtype)
         q = Questions.objects.create(**validated_data)
         for opt in options_data:
-            opt["question"] = q
             serializer = AddOptionSerializer(data=opt)
             if not serializer.is_valid():
                 raise serializers.ValidationError({
@@ -219,7 +221,17 @@ class AddQuestionSerializer(serializers.Serializer):
             'data_api_url', instance.data_api_url)
         instance.translations = validated_data.get(
             'translations', instance.translations)
-        # if question type changed from option,
-        # we should delete the old options
+
         # check and delete options
+        # delete old options then create new
+        Options.objects.filter(question=instance).delete()
+        new_option_data = validated_data.get('option', [])
+        for opt in new_option_data:
+            serializer = AddOptionSerializer(data=opt)
+            if not serializer.is_valid():
+                raise serializers.ValidationError({
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                })
+            serializer.save(question=instance)
         return instance
