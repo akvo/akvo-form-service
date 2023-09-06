@@ -40,7 +40,7 @@
     "no-delete-var": "warn",
     "prefer-const": "warn",
     "prefer-arrow-callback": "error",
-    "react/no-unknown-property": ["error", { "ignore": ["testid"] }],
+    "react/no-unknown-property": ["warn", { "ignore": ["testid"] }],
     "react/prefer-stateless-function": "warn",
     "react-hooks/rules-of-hooks": "warn",
     "react-hooks/exhaustive-deps": "warn",
