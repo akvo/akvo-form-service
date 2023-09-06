@@ -82,6 +82,20 @@ class FormManagementView(APIView):
         summary="Update form definition",
     )
     def put(self, request):
+        form_id = request.data.get('id')
+        instance = get_object_or_404(Forms, pk=form_id)
+        serializer = AddFormSerializer(data=request.data)
+        if not serializer.is_valid():
+            print('FORM ERROR', serializer.errors)
+            return Response(
+                {
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        serializer.update(
+            instance=instance, validated_data=serializer.validated_data)
         return Response(
             {"message": "Update form success"}, status=status.HTTP_200_OK
         )

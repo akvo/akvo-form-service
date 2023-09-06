@@ -109,6 +109,7 @@ class AddFormSerializer(serializers.Serializer):
         return form
 
     def update(self, instance, validated_data):
+        # update form
         instance.name = validated_data.get(
             'name', instance.name)
         instance.description = validated_data.get(
@@ -121,5 +122,30 @@ class AddFormSerializer(serializers.Serializer):
             'default_language', instance.default_language)
         instance.translations = validated_data.get(
             'translations', instance.translations)
-        # check and delete question group
+
+        # TODO :: check and delete question group
+        current_qgs = QuestionGroups.objects.filter(form=instance).all()
+        current_qg_ids = [cqg.id for cqg in current_qgs]
+
+        new_qg_data = validated_data.get('question_group')
+        new_qg_ids = [nqg.get('id') for nqg in new_qg_data]
+        missing_qg_ids = list(set(current_qg_ids) - set(new_qg_ids))
+        print('MISSING QG IDS', missing_qg_ids)
+
+        # update question group
+        for qg in new_qg_data:
+            current_qg = QuestionGroups.objects.filter(id=qg.get('id')).first()
+            serializer = AddQuestionGroupSerializer(data=qg)
+            if not serializer.is_valid():
+                raise serializers.ValidationError({
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                })
+            if not current_qg:
+                serializer.save(form=instance)
+            if current_qg:
+                serializer.update(
+                    instance=current_qg,
+                    validated_data=serializer.validated_data)
+
         return instance

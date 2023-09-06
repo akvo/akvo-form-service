@@ -1,7 +1,7 @@
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
-from akvo.core_forms.models import QuestionGroups
+from akvo.core_forms.models import QuestionGroups, Questions
 from akvo.core_forms.serializers.question import (
     ListQuestionSerializer,
     AddQuestionSerializer
@@ -91,5 +91,23 @@ class AddQuestionGroupSerializer(serializers.Serializer):
             'repeatable', instance.repeatable)
         instance.translations = validated_data.get(
             'translations', instance.translations)
+
         # check and delete question
+        new_q_data = validated_data.get('question', [])
+        for q in new_q_data:
+            current_q = Questions.objects.filter(id=q.get('id')).first()
+            serializer = AddQuestionSerializer(data=q)
+            if not serializer.is_valid():
+                raise serializers.ValidationError({
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                })
+            if not current_q:
+                serializer.save(
+                    form=instance.form, question_group=instance)
+            if current_q:
+                serializer.update(
+                    instance=current_q,
+                    validated_data=serializer.validated_data)
+
         return instance
