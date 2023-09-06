@@ -149,5 +149,5 @@ class AddFormSerializer(serializers.Serializer):
         missing_qg_ids = list(set(current_qg_ids) - set(new_qg_ids))
         # delete missing question groups
         QuestionGroups.objects.filter(id__in=missing_qg_ids).delete()
-
+        instance.save()
         return instance

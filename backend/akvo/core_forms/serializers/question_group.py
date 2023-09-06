@@ -121,7 +121,11 @@ class AddQuestionGroupSerializer(serializers.Serializer):
         # check missing question ids with answer and delete
         for qid in missing_q_ids:
             answers = Answers.objects.filter(question_id=qid).count()
-            if not answers:
-                Questions.objects.filter(id=qid).delete()
-
+            if answers:
+                raise serializers.ValidationError({
+                    "message": "Can't delete question",
+                    "details": f"Question {qid} has answers",
+                })
+            Questions.objects.filter(id=qid).delete()
+        instance.save()
         return instance

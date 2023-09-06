@@ -196,12 +196,13 @@ class AddQuestionSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         # update question
+        qtype = validated_data.get('type', instance.type)
+        instance.type = getattr(QuestionTypes, qtype)
+
         instance.name = validated_data.get(
             'name', instance.name)
         instance.order = validated_data.get(
             'order', instance.order)
-        instance.type = validated_data.get(
-            'type', instance.type)
         instance.tooltip = validated_data.get(
             'tooltip', instance.tooltip)
         instance.required = validated_data.get(
@@ -248,5 +249,5 @@ class AddQuestionSerializer(serializers.Serializer):
         missing_opt_ids = list(set(current_opt_ids) - set(new_opt_ids))
         # delete old options then create new
         Options.objects.filter(id__in=missing_opt_ids).delete()
-
+        instance.save()
         return instance
