@@ -26,7 +26,7 @@ class NodeView(APIView):
     def get(self, request):
         nodes = Node.objects.all()
         return Response(
-            {"data": ListNodeSerializer(instance=nodes, many=True).data},
+            ListNodeSerializer(instance=nodes, many=True).data,
             status=status.HTTP_200_OK,
         )
 

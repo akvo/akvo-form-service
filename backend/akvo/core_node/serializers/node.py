@@ -10,9 +10,18 @@ from akvo.core_node.serializers.node_detail import AddNodeDetailSerializer
 
 
 class ListNodeSerializer(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
+    initial = serializers.SerializerMethodField()
+
+    def get_url(self, obj):
+        return f"/api/node/{obj.id}"
+
+    def get_initial(self, obj):
+        return 0
+
     class Meta:
         model = Node
-        fields = ["id", "name"]
+        fields = ["id", "name", "url", "initial"]
 
 
 class AddNodeSerializer(serializers.Serializer):
@@ -66,7 +75,7 @@ class UploadCSVNodeSerializer(serializers.Serializer):
             raise serializers.ValidationError({"message": "Name column is required"})
         for index, row in df.iterrows():
             parent = None
-            if row["parent"]:
+            if row.get("parent") and row.get("parent") == row.get("parent"):
                 parent = NodeDetail.objects.filter(name=row["parent"], node=node)
                 if not parent:
                     node.delete()
