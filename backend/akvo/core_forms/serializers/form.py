@@ -127,12 +127,12 @@ class AddFormSerializer(serializers.Serializer):
         current_qgs = QuestionGroups.objects.filter(form=instance).all()
         current_qg_ids = [cqg.id for cqg in current_qgs]
 
-        new_qg_data = validated_data.get('question_group')
+        new_qg_data = validated_data.get('question_group', [])
         new_qg_ids = [nqg.get('id') for nqg in new_qg_data]
         missing_qg_ids = list(set(current_qg_ids) - set(new_qg_ids))
         print('MISSING QG IDS', missing_qg_ids)
 
-        # update question group
+        # create or update question group
         for qg in new_qg_data:
             current_qg = QuestionGroups.objects.filter(id=qg.get('id')).first()
             serializer = AddQuestionGroupSerializer(data=qg)

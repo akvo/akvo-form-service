@@ -13,6 +13,7 @@ from akvo.utils.custom_serializer_fields import (
     CustomBooleanField
 )
 from akvo.utils.custom_serializer_fields import validate_serializers_message
+from akvo.core_data.models import Answers
 
 
 class ListQuestionGroupSerializer(serializers.ModelSerializer):
@@ -93,7 +94,20 @@ class AddQuestionGroupSerializer(serializers.Serializer):
             'translations', instance.translations)
 
         # check and delete question
+        current_qs = Questions.objects.filter(question_group=instance).all()
+        current_qs_ids = [cq.id for cq in current_qs]
+
         new_q_data = validated_data.get('question', [])
+        new_q_ids = [nq.get('id') for nq in new_q_data]
+        missing_q_ids = list(set(current_qs_ids) - set(new_q_ids))
+        print('MISSING QG IDS', missing_q_ids)
+        # check missing question ids with answer and delete
+        for qid in missing_q_ids:
+            answers = Answers.objects.filter(question_id=qid).count()
+            if not answers:
+                Questions.objects.filter(id=qid).delete()
+
+        # create or update questions
         for q in new_q_data:
             current_q = Questions.objects.filter(id=q.get('id')).first()
             serializer = AddQuestionSerializer(data=q)
