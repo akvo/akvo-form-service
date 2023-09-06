@@ -31,11 +31,17 @@ class TestNodeEndpoint(TestCase):
         self.assertEqual(data.status_code, 200)
         result = data.json()
         expected_result = [
-            {"id": node_id, "name": "Example Node"},
+            {
+                "id": node_id,
+                "name": "Example Node",
+                "endpoint": f"/api/node/{node_id}",
+                "initial": 0,
+            },
         ]
+        self.assertEqual(result, expected_result)
 
         # GET LIST OF NODE DETAIL
-        data = self.client.get(f"/api/node-detail/{node_id}", follow=True)
+        data = self.client.get(f"/api/node-detail/{node_id}/0", follow=True)
         self.assertEqual(data.status_code, 200)
         result = data.json()
         bali_id = NodeDetail.objects.get(name="Bali").id
@@ -74,31 +80,24 @@ class TestNodeEndpoint(TestCase):
         self.assertEqual(data, {"message": "ok"})
 
         # GET LIST OF NODE DETAIL
-        data = self.client.get(f"/api/node-detail/{node_id}", follow=True)
+        data = self.client.get(f"/api/node-detail/{node_id}/0", follow=True)
         self.assertEqual(data.status_code, 200)
         result = data.json()
         for each in result:
             each.pop("id")
-        jakarta_id = NodeDetail.objects.get(name="Jakarta").id
         expected_result = [
             {"code": "BLI", "name": "Bali", "parent_id": None},
             {"code": "DIY", "name": "Daerah Istimewa Yogyakarta", "parent_id": None},
             {"code": "JKT", "name": "Jakarta", "parent_id": None},
-            {"code": "JKTBR", "name": "Jakarta Barat", "parent_id": jakarta_id},
-            {"code": "JKTSL", "name": "Jakarta Selatan", "parent_id": jakarta_id},
-            {"code": "JKTUT", "name": "Jakarta Utara", "parent_id": jakarta_id},
-            {"code": "JKTTR", "name": "Jakarta Timur", "parent_id": jakarta_id},
-            {"code": "JKTPT", "name": "Jakarta Pusat", "parent_id": jakarta_id},
         ]
         self.assertEqual(result, expected_result)
 
-    def test_upload_csv_node(self):
-        # POST DATA
+    def test_upload_csv_node_with_children(self):
         pd.DataFrame(
             [
                 {"name": "Jawa Barat", "code": "JWB", "parent": None},
                 {"name": "Banten", "code": "BTN", "parent": None},
-                {"name": "Bandung", "code": "BDG", "parent": "Jawa Barat"},
+                {"name": "Bogor", "code": "BGR", "parent": "Jawa Barat"},
             ]
         ).to_csv("./node.csv", index=False)
         data = self.client.post(
@@ -113,16 +112,70 @@ class TestNodeEndpoint(TestCase):
 
         # GET LIST OF NODE DETAIL
         node_id = Node.objects.filter(name="New Node").first().id
-        data = self.client.get(f"/api/node-detail/{node_id}", follow=True)
+        data = self.client.get(f"/api/node-detail/{node_id}/0", follow=True)
         self.assertEqual(data.status_code, 200)
         result = data.json()
         for each in result:
             each.pop("id")
-        jawa_barat_id = NodeDetail.objects.get(name="Jawa Barat").id
         expected_result = [
             {"code": "JWB", "name": "Jawa Barat", "parent_id": None},
             {"code": "BTN", "name": "Banten", "parent_id": None},
-            {"code": "BDG", "name": "Bandung", "parent_id": jawa_barat_id},
+        ]
+        self.assertEqual(result, expected_result)
+
+        # GET LIST OF NODE DETAIL CHILDREN
+        jawa_barat_id = NodeDetail.objects.get(name="Jawa Barat").id
+        data = self.client.get(
+            f"/api/node-detail/{node_id}/{jawa_barat_id}", follow=True
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        for each in result:
+            each.pop("id")
+        expected_result = [
+            {"code": "BGR", "name": "Bogor", "parent_id": jawa_barat_id},
+        ]
+        self.assertEqual(result, expected_result)
+
+        # WRONG ENDPOINT
+        data = self.client.get(f"/api/node-detail/{node_id}", follow=True)
+        self.assertEqual(data.status_code, 404)
+
+        # WRONG PARENT ID
+        data = self.client.get(f"/api/node-detail/{node_id}/999", follow=True)
+        self.assertEqual(data.json(), [])
+
+        # Remove file
+        os.remove("./node.csv")
+
+    def test_upload_csv_node_without_children(self):
+        node = pd.DataFrame(
+            [
+                {"name": "Jawa Barat", "code": "JWB", "parent": None},
+                {"name": "Banten", "code": "BTN", "parent": None},
+            ]
+        )
+        node.to_csv("./node.csv", index=False)
+        data = self.client.post(
+            "/api/node-upload",
+            {
+                "file": open("./node.csv", "rb"),
+                "name": "New Node Without Children",
+            },
+            format="multipart",
+        )
+        self.assertEqual(data.status_code, 200)
+
+        # GET LIST OF NODE DETAIL
+        node_id = Node.objects.filter(name="New Node Without Children").first().id
+        data = self.client.get(f"/api/node-detail/{node_id}/0", follow=True)
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        for each in result:
+            each.pop("id")
+        expected_result = [
+            {"code": "JWB", "name": "Jawa Barat", "parent_id": None},
+            {"code": "BTN", "name": "Banten", "parent_id": None},
         ]
         self.assertEqual(result, expected_result)
 
@@ -150,16 +203,14 @@ class TestNodeEndpoint(TestCase):
 
         # GET LIST OF NODE DETAIL
         node_id = Node.objects.filter(name="New Node without code").first().id
-        data = self.client.get(f"/api/node-detail/{node_id}", follow=True)
+        data = self.client.get(f"/api/node-detail/{node_id}/0", follow=True)
         self.assertEqual(data.status_code, 200)
         result = data.json()
         for each in result:
             each.pop("id")
-        jawa_barat_id = NodeDetail.objects.get(name="Jawa Barat").id
         expected_result = [
             {"code": None, "name": "Jawa Barat", "parent_id": None},
             {"code": None, "name": "Banten", "parent_id": None},
-            {"code": None, "name": "Bandung", "parent_id": jawa_barat_id},
         ]
         self.assertEqual(result, expected_result)
 
