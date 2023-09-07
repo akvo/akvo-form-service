@@ -23,7 +23,7 @@ class Storage:
         return url
 
     def check(self, url: str):
-        path = Path(f"{self.storage_location}/{url}")
+        path = Path(f"{self.storage_path}/{url}")
         return path.is_file()
 
     def download(self, url: str):
