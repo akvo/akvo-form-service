@@ -27,4 +27,7 @@ class Storage:
         return path.is_file()
 
     def download(self, url: str):
-        return f"{self.storage_path}/{url}"
+        if not self.check(url):
+            return None
+        with open(f"{self.storage_path}/{url}", "rb") as f:
+            return f.read()

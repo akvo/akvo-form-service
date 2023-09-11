@@ -40,7 +40,10 @@ class StorageTestCase(TestCase):
         self.storage.upload(file=self.file, folder="testing")
         self.assertTrue(os.path.exists(f"{self.path}/testing/{self.file}"))
         filename = self.file.split("/")[-1]
-        self.assertEqual(
-            self.storage.download(url="testing/test.txt"),
-            f"{self.path}/testing/{filename}",
-        )
+        file = self.storage.download(url="testing/test.txt")
+        with open(f"{self.path}/testing/{filename}", "rb") as f:
+            self.assertEqual(f.read(), file)
+
+        # Failed Download
+        file = self.storage.download(url="testing/test2.txt")
+        self.assertFalse(file)
