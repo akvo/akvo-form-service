@@ -26,7 +26,7 @@ SECRET_KEY = environ.get("DJANGO_SECRET", "afs-demo-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "akvo.core_forms",
     "akvo.core_node",
     "akvo.core_data",
+    "akvo.utils",
 ]
 
 MIDDLEWARE = [

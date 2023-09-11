@@ -14,6 +14,7 @@ services:
       - DB_HOST=db
       - DEBUG=True
       - DJANGO_SECRET=local-secret
+      - STORAGE_PATH
     depends_on:
       - db
   frontend:
