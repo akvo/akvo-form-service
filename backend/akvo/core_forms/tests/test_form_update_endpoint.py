@@ -320,7 +320,6 @@ class TestFormUpdateEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 400)
         result = data.json()
-        print(result)
         self.assertEqual(
             result,
             {
@@ -356,7 +355,6 @@ class TestFormUpdateEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 400)
         result = data.json()
-        print(result)
         self.assertEqual(
             result,
             {
@@ -392,7 +390,6 @@ class TestFormUpdateEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 400)
         result = data.json()
-        print(result)
         self.assertEqual(
             result,
             {
