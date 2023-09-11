@@ -12,10 +12,14 @@ services:
       - 8888:8888
   frontend:
     network_mode: service:mainnetwork
+    volumes:
+      - ${STORAGE_PATH}/images:/app/public/images:delegated
   backend:
     environment:
       - WEBDOMAIN=https://afs.akvotest.org
     network_mode: service:mainnetwork
+    volumes:
+      - ${STORAGE_PATH}:/app/storage:delegated
   pgadmin:
     image: dpage/pgadmin4:5.7
     environment:
