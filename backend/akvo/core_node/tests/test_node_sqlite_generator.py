@@ -5,6 +5,7 @@ import pandas as pd
 from django.test import TestCase
 from django.core.management import call_command
 from akvo.core_node.models import NodeDetail
+from afs.settings import BASE_DIR
 
 
 class SQLiteGenerationTest(TestCase):
@@ -47,7 +48,8 @@ class SQLiteGenerationTest(TestCase):
         call_command("generate_sqlite")
         generated_example_sqlite = "./source/sqlite/example_node.sqlite"
         self.assertTrue(os.path.exists(generated_example_sqlite))
-        conn = sqlite3.connect(generated_example_sqlite)
+        file_path = os.path.join(BASE_DIR, generated_example_sqlite)
+        conn = sqlite3.connect(file_path)
         self.assertEqual(
             len(self.example_node),
             len(pd.read_sql_query("SELECT * FROM nodes", conn))
