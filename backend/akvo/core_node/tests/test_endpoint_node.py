@@ -58,7 +58,6 @@ class TestNodeEndpoint(TestCase):
         self.assertEqual(result, expected_result)
 
         # POST WITH PARENT
-
         payload = {
             "name": "Example Node",
             "node_detail": [
@@ -183,7 +182,6 @@ class TestNodeEndpoint(TestCase):
         os.remove("./node.csv")
 
     def test_upload_csv_node_without_code(self):
-
         pd.DataFrame(
             [
                 {"name": "Jawa Barat", "parent": None},
@@ -218,7 +216,6 @@ class TestNodeEndpoint(TestCase):
         os.remove("./node.csv")
 
     def test_upload_csv_node_with_wrong_parent(self):
-
         pd.DataFrame(
             [
                 {"name": "Jawa Barat", "parent": None},
@@ -246,7 +243,6 @@ class TestNodeEndpoint(TestCase):
         os.remove("./node.csv")
 
     def test_upload_csv_node_with_wrong_format(self):
-
         pd.DataFrame(
             [
                 {"nm": "Jawa Barat", "parent": None},
