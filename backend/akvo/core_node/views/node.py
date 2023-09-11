@@ -1,3 +1,7 @@
+import os
+import mimetypes
+
+from django.http import HttpResponse
 from drf_spectacular.utils import (
     extend_schema,
 )
@@ -15,6 +19,7 @@ from akvo.core_node.serializers.node import (
 )
 from akvo.utils.custom_serializer_fields import validate_serializers_message
 from akvo.utils.default_serializers import DefaultResponseSerializer
+from afs.settings import BASE_DIR
 
 
 class NodeView(APIView):
@@ -70,3 +75,25 @@ def upload_csv_node(request):
         )
     serializer.save()
     return Response({"message": "ok"}, status=status.HTTP_200_OK)
+
+
+@extend_schema(tags=["Node"], summary="Get SQLITE File")
+@api_view(["GET"])
+def download_sqlite_file(request, file_name):
+    file_path = os.path.join(BASE_DIR, f"./source/sqlite/{file_name}")
+    print(file_path, file_name, '=========')
+    # Check if file exists and is accessible
+    if not os.path.exists(file_path):
+        return HttpResponse(
+            {"message": "File not found."}, status=status.HTTP_404_NOT_FOUND
+        )
+    # Get the file's content type
+    content_type, _ = mimetypes.guess_type(file_path)
+    # Read the file content into a variable
+    with open(file_path, "rb") as file:
+        file_content = file.read()
+    # Create the response and set the appropriate headers
+    response = HttpResponse(file_content, content_type=content_type)
+    response["Content-Length"] = os.path.getsize(file_path)
+    response["Content-Disposition"] = "attachment; filename=%s" % file_name
+    return response
