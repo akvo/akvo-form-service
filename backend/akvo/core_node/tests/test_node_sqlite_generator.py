@@ -46,9 +46,8 @@ class SQLiteGenerationTest(TestCase):
     def test_sqlite_generation_command(self):
         call_command("generate_sqlite")
         generated_example_sqlite = "./source/sqlite/example_node.sqlite"
-        conn = sqlite3.connect(generated_example_sqlite)
-
         self.assertTrue(os.path.exists(generated_example_sqlite))
+        conn = sqlite3.connect(generated_example_sqlite)
         self.assertEqual(
             len(self.example_node),
             len(pd.read_sql_query("SELECT * FROM nodes", conn))
