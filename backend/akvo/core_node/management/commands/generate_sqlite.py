@@ -4,6 +4,9 @@ import pandas as pd
 
 from django.core.management import BaseCommand
 from akvo.core_node.models import Node, NodeDetail
+from akvo.utils.storage import Storage
+
+storage = Storage(os.environ.get('STORAGE_PATH'))
 
 
 class Command(BaseCommand):
@@ -22,7 +25,7 @@ class Command(BaseCommand):
                 print(f"Node {name} doesn't have node details")
                 continue
 
-            file_name = f"./source/sqlite/{name}.sqlite"
+            file_name = f"{name}.sqlite"
             if os.path.exists(file_name):
                 os.remove(file_name)
 
@@ -36,6 +39,9 @@ class Command(BaseCommand):
             data = data[["id", "code", "name", "parent"]]
             conn = sqlite3.connect(file_name)
             data.to_sql('nodes', conn, if_exists='replace', index=False)
+
+            storage.upload(file=file_name, folder="sqlite")
+            os.remove(file_name)
 
             print(f"{file_name} Generated Successfully")
             conn.close()
