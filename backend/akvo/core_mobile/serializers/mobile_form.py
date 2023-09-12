@@ -1,3 +1,5 @@
+import os
+
 from rest_framework import serializers
 from drf_spectacular.utils import extend_schema_field
 from drf_spectacular.types import OpenApiTypes
@@ -8,6 +10,8 @@ from akvo.core_forms.serializers.question_group import (
     ListQuestionGroupSerializer
 )
 from akvo.utils.functions import get_node_sqlite_source
+
+WEBDOMAIN = os.environ.get("WEBDOMAIN")
 
 
 class MobileFormDefinitionSerializer(serializers.ModelSerializer):
@@ -30,7 +34,7 @@ class MobileFormDefinitionSerializer(serializers.ModelSerializer):
             source_file = get_node_sqlite_source(cascade_url=cascade_url)
             if not source_file:
                 continue
-            source.append(f"/sqlite/{source_file}")
+            source.append(f"{WEBDOMAIN}/sqlite/{source_file}")
         return source
 
     @extend_schema_field(ListQuestionGroupSerializer(many=True))

@@ -1,7 +1,11 @@
+import os
+
 from django.test import TestCase
 from django.test.utils import override_settings
 
 from akvo.core_node.models import Node
+
+WEBDOMAIN = os.environ.get("WEBDOMAIN")
 
 
 @override_settings(USE_TZ=False)
@@ -83,7 +87,7 @@ class TestMobileFormEndpoint(TestCase):
             "languages": ["en"],
             "version": 1,
             "cascades": [
-                "/sqlite/the_node.sqlite"
+                f"{WEBDOMAIN}/sqlite/the_node.sqlite"
             ],
             "translations": None,
             "question_group": [{
