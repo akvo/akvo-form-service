@@ -27,7 +27,7 @@ class ImageUploadTest(TestCase):
         uploaded_filename = response.json().get("file")
         self.assertTrue(
             storage.check(uploaded_filename),
-            "File exists",
+            f"File {uploaded_filename} was not uploaded to the storage.",
         )
         os.remove(f"{STORAGE_PATH}/{uploaded_filename}")
         os.remove(filename)
