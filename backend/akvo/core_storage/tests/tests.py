@@ -3,6 +3,7 @@ from django.test import TestCase
 from akvo.utils import storage
 
 STORAGE_PATH = os.environ.get("STORAGE_PATH")
+storage = storage.Storage(storage_path=STORAGE_PATH)
 
 
 def generate_image(filename: str, extension: str = "jpg"):

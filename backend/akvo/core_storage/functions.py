@@ -1,4 +1,4 @@
-from os import environ
+from os import environ, path, mkdir
 from uuid import uuid4
 from akvo.utils import storage
 
@@ -6,6 +6,9 @@ storage = storage.Storage(storage_path=environ.get("STORAGE_PATH"))
 
 
 def generate_image_file(file, filename, folder="images"):
+    # create a temporary folder to store the file
+    if not path.exists("./tmp"):
+        mkdir("./tmp")
     temp_file = open(f"./tmp/{filename}", "wb+")
     for chunk in file.chunks():
         temp_file.write(chunk)
