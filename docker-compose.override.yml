@@ -14,6 +14,7 @@ services:
     network_mode: service:mainnetwork
     volumes:
       - ${STORAGE_PATH}/images:/app/public/images:delegated
+      - ${STORAGE_PATH}/sqlite:/app/public/sqlite:delegated
   backend:
     environment:
       - WEBDOMAIN=https://afs.akvotest.org

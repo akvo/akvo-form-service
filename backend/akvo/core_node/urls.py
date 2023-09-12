@@ -1,6 +1,8 @@
 from django.urls import path, re_path
 
-from akvo.core_node.views.node import NodeView, upload_csv_node
+from akvo.core_node.views.node import (
+    NodeView, upload_csv_node,
+)
 from akvo.core_node.views.node_detail import get_node_detail_by_node_id
 
 urlpatterns = [
