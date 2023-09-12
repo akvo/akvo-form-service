@@ -57,12 +57,3 @@ class SQLiteGenerationTest(TestCase):
             len(pd.read_sql_query("SELECT * FROM nodes", conn))
         )
         conn.close()
-
-    # def test_sqlite_file_endpoint(self):
-    #     call_command("generate_sqlite")
-    #     generated_example_sqlite = "./source/sqlite/example_node.sqlite"
-    #     self.assertTrue(os.path.exists(generated_example_sqlite))
-    #     file = generated_example_sqlite.split("/")[-1]
-    #     endpoint = f"/api/device/sqlite/{file}"
-    #     response = self.client.get(endpoint)
-    #     self.assertEqual(response.status_code, 200)

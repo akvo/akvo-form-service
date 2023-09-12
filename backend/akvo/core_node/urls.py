@@ -2,7 +2,6 @@ from django.urls import path, re_path
 
 from akvo.core_node.views.node import (
     NodeView, upload_csv_node,
-    download_sqlite_file
 )
 from akvo.core_node.views.node_detail import get_node_detail_by_node_id
 
@@ -13,5 +12,4 @@ urlpatterns = [
         get_node_detail_by_node_id,
     ),
     re_path(r"node-upload", upload_csv_node),
-    re_path(r"device/sqlite/(?P<file_name>.*)$", download_sqlite_file),
 ]
