@@ -20,10 +20,9 @@ urlpatterns = [
     path("api/", include("akvo.core_forms.urls"), name="core_forms"),
     path("api/", include("akvo.core_data.urls"), name="core_data"),
     path("api/", include("akvo.core_node.urls"), name="core_node"),
+    path("api/", include("akvo.core_storage.urls"), name="core_storage"),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "api/doc/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="swagger-ui"
+        "api/doc/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"
     ),
 ]
