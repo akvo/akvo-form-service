@@ -4,6 +4,8 @@ from django.test.utils import override_settings
 from akvo.core_node.models import Node, NodeDetail
 import pandas as pd
 
+storage_path = os.environ.get("STORAGE_PATH")
+
 
 @override_settings(USE_TZ=False)
 class TestNodeEndpoint(TestCase):
@@ -24,6 +26,11 @@ class TestNodeEndpoint(TestCase):
         self.assertEqual(data.status_code, 200)
         data = data.json()
         self.assertEqual(data, {"message": "ok"})
+
+        # check sqlite generated
+        generated_example_sqlite = f"{storage_path}/sqlite/example_node.sqlite"
+        self.assertTrue(os.path.exists(generated_example_sqlite))
+
         node_id = Node.objects.first().id
 
         # GET LIST OF NODE
@@ -108,6 +115,10 @@ class TestNodeEndpoint(TestCase):
             format="multipart",
         )
         self.assertEqual(data.status_code, 200)
+
+        # check sqlite generated
+        generated_example_sqlite = f"{storage_path}/sqlite/new_node.sqlite"
+        self.assertTrue(os.path.exists(generated_example_sqlite))
 
         # GET LIST OF NODE DETAIL
         node_id = Node.objects.filter(name="New Node").first().id

@@ -7,6 +7,7 @@ from akvo.utils.custom_serializer_fields import (
     CustomCharField,
 )
 from akvo.core_node.serializers.node_detail import AddNodeDetailSerializer
+from akvo.utils.custom_generator import generate_sqlite
 
 
 class ListNodeSerializer(serializers.ModelSerializer):
@@ -46,6 +47,8 @@ class AddNodeSerializer(serializers.Serializer):
             NodeDetail.objects.create(
                 node=obj_node, parent=parent, code=nd.get("code"), name=nd.get("name")
             )
+        # generate sqlite file
+        generate_sqlite(node=obj_node)
         return object
 
 
@@ -84,4 +87,6 @@ class UploadCSVNodeSerializer(serializers.Serializer):
             NodeDetail.objects.create(
                 node=node, parent=parent, code=row.get("code"), name=row.get("name")
             )
+        # generate sqlite file
+        generate_sqlite(node=node)
         return object
