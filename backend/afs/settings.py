@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "akvo.core_node",
     "akvo.core_data",
     "akvo.core_storage",
+    "akvo.core_mobile",
     "akvo.utils",
 ]
 

@@ -4,15 +4,14 @@ import pandas as pd
 
 from akvo.core_node.models import Node, NodeDetail
 from akvo.utils.storage import Storage
+from akvo.utils.functions import generate_node_filename
 
-storage = Storage(os.environ.get('STORAGE_PATH'))
+storage_path = os.environ.get('STORAGE_PATH')
+storage = Storage(storage_path=storage_path)
 
 
 def generate_sqlite(node: Node):
-    name = node.name
-    name = name.strip().lower()
-    name = name.split(" ")
-    name = "_".join(name)
+    name = generate_node_filename(name=node.name)
     print(f"Generating {name}.sqlite file")
 
     objects = NodeDetail.objects.filter(node_id=node.id).all()
@@ -23,8 +22,8 @@ def generate_sqlite(node: Node):
     filename = f"{name}.sqlite"
     if os.path.exists(filename):
         os.remove(filename)
-    if storage.check(f"sqlite/{filename}"):
-        storage.delete(f"sqlite/{filename}")
+    if storage.check(f"/sqlite/{filename}"):
+        storage.delete(f"/sqlite/{filename}")
 
     data = pd.DataFrame(list(objects.values()))
     if "parent_id" not in data.columns:

@@ -22,6 +22,7 @@ from akvo.utils.custom_serializer_fields import (
 )
 from akvo.utils.custom_serializer_fields import validate_serializers_message
 from akvo.core_data.models import Answers
+from akvo.utils.functions import get_node_sqlite_source
 
 
 class ListQuestionSerializer(serializers.ModelSerializer):
@@ -32,6 +33,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     extra = serializers.SerializerMethodField()
     fn = serializers.SerializerMethodField()
     dataApiUrl = serializers.SerializerMethodField()
+    source = serializers.SerializerMethodField()
 
     @extend_schema_field(ListOptionSerializer(many=True))
     def get_option(self, instance: Questions):
@@ -101,6 +103,28 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     def get_dataApiUrl(self, instance: Questions):
         return instance.data_api_url
 
+    @extend_schema_field(
+        inline_serializer(
+            'QuestionSourceFormat',
+            fields={
+                'file': serializers.CharField(),
+                'parent': serializers.IntegerField(),
+            }
+        )
+    )
+    def get_source(self, instance: Questions):
+        if not instance.type == QuestionTypes.cascade:
+            return None
+        # get node name from api endpoint
+        cascade_url = instance.api.get("endpoint", None)
+        source_file = get_node_sqlite_source(cascade_url=cascade_url)
+        if not source_file:
+            return None
+        return {
+            "file": source_file,
+            "parent_id": 0
+        }
+
     def to_representation(self, instance):
         result = super(
             ListQuestionSerializer, self
@@ -127,6 +151,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "fn",
             "dataApiUrl",
             "option",
+            "source",
         ]
 
 
