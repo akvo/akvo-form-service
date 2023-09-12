@@ -1,5 +1,3 @@
-# import json
-
 from django.test import TestCase
 from django.test.utils import override_settings
 
@@ -77,7 +75,6 @@ class TestMobileFormEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
-        # print(json.dumps(result, indent=2))
         self.assertEqual(result, {
             "id": 1694489640833,
             "name": "New Form",
@@ -85,6 +82,9 @@ class TestMobileFormEndpoint(TestCase):
             "defaultLanguage": "en",
             "languages": ["en"],
             "version": 1,
+            "cascades": [
+                "/sqlite/the_node.sqlite"
+            ],
             "translations": None,
             "question_group": [{
                 "id": 1694489640834,
@@ -110,7 +110,7 @@ class TestMobileFormEndpoint(TestCase):
                     "api": {
                         "list": "children",
                         "initial": 2,
-                        "endpoint": f"/api/node/{self.node.id}"
+                        "endpoint": "/api/node/1"
                     },
                     "source": {
                         "file": "the_node.sqlite",

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 
 from akvo.core_forms.models import Forms, Questions
 from akvo.core_forms.constants import QuestionTypes
@@ -10,8 +11,13 @@ from akvo.utils.functions import get_node_sqlite_source
 
 
 class MobileFormDefinitionSerializer(serializers.ModelSerializer):
+    defaultLanguage = serializers.SerializerMethodField()
     cascades = serializers.SerializerMethodField()
     question_group = serializers.SerializerMethodField()
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_defaultLanguage(self, instance: Forms):
+        return instance.default_language
 
     @extend_schema_field(serializers.ListField())
     def get_cascades(self, instance: Forms):
@@ -37,6 +43,13 @@ class MobileFormDefinitionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Forms
         fields = [
-            'name', 'version', 'cascades',
-            'question_group', 'translations'
+            "id",
+            "name",
+            "description",
+            "defaultLanguage",
+            "languages",
+            "version",
+            "cascades",
+            "translations",
+            "question_group",
         ]
