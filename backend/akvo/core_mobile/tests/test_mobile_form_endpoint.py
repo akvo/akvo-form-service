@@ -110,7 +110,7 @@ class TestMobileFormEndpoint(TestCase):
                     "api": {
                         "list": "children",
                         "initial": 2,
-                        "endpoint": "/api/node/1"
+                        "endpoint": f"/api/node/{self.node.id}"
                     },
                     "source": {
                         "file": "the_node.sqlite",
