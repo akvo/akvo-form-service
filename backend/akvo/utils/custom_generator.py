@@ -23,6 +23,8 @@ def generate_sqlite(node: Node):
     filename = f"{name}.sqlite"
     if os.path.exists(filename):
         os.remove(filename)
+    if storage.check(f"sqlite/{filename}"):
+        storage.delete(f"sqlite/{filename}")
 
     data = pd.DataFrame(list(objects.values()))
     if "parent_id" not in data.columns:

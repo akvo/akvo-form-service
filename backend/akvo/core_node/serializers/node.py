@@ -47,6 +47,8 @@ class AddNodeSerializer(serializers.Serializer):
             NodeDetail.objects.create(
                 node=obj_node, parent=parent, code=nd.get("code"), name=nd.get("name")
             )
+        # generate sqlite file
+        generate_sqlite(node=obj_node)
         return object
 
 

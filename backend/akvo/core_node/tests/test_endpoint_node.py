@@ -26,6 +26,11 @@ class TestNodeEndpoint(TestCase):
         self.assertEqual(data.status_code, 200)
         data = data.json()
         self.assertEqual(data, {"message": "ok"})
+
+        # check sqlite generated
+        generated_example_sqlite = f"{storage_path}/sqlite/example_node.sqlite"
+        self.assertTrue(os.path.exists(generated_example_sqlite))
+
         node_id = Node.objects.first().id
 
         # GET LIST OF NODE
