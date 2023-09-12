@@ -15,7 +15,7 @@ def generate_sqlite(node: Node):
     name = "_".join(name)
     print(f"Generating {name}.sqlite file")
 
-    objects = NodeDetail.objects.filter(node=node).all()
+    objects = NodeDetail.objects.filter(node_id=node.id).all()
     if not len(objects):
         print(f"Node {name} doesn't have node details")
         return

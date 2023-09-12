@@ -1,4 +1,5 @@
 from django.core.management import BaseCommand
+
 from akvo.core_node.models import Node
 from akvo.utils.custom_generator import generate_sqlite
 
