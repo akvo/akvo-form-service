@@ -34,6 +34,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
     fn = serializers.SerializerMethodField()
     dataApiUrl = serializers.SerializerMethodField()
     source = serializers.SerializerMethodField()
+    disableDelete = serializers.SerializerMethodField()
 
     @extend_schema_field(ListOptionSerializer(many=True))
     def get_option(self, instance: Questions):
@@ -125,6 +126,13 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "parent_id": 0
         }
 
+    @extend_schema_field(serializers.BooleanField())
+    def get_disableDelete(self, instance: Questions):
+        answers = Answers.objects.filter(question=instance).count()
+        if answers:
+            return True
+        return None
+
     def to_representation(self, instance):
         result = super(
             ListQuestionSerializer, self
@@ -152,6 +160,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "dataApiUrl",
             "option",
             "source",
+            "disableDelete"
         ]
 
 

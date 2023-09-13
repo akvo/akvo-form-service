@@ -291,3 +291,87 @@ class TestFormEndpoint(TestCase):
                 }]
             }]
         })
+
+    def test_form_definition_return_disableDelete_param_if_has_answers(self):
+        payload = {
+            "id": 1694509989310,
+            "name": "New Form",
+            "description": "New Form Description",
+            "question_group": [{
+                "id": 1694509989312,
+                "name": "Dapibus lorem ultrices",
+                "order": 1,
+                "repeatable": False,
+                "question": [{
+                    "id": 1694509989313,
+                    "order": 1,
+                    "questionGroupId": 1694509989312,
+                    "name": "Augue neque sapien ultrices eu quis",
+                    "type": "input",
+                    "required": False,
+                    "meta": False
+                }]
+            }]
+        }
+        data = self.client.post(
+            "/api/form",
+            data=payload,
+            content_type="application/json"
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        self.assertEqual(result, {"message": "ok"})
+        # post answer
+        answer_payload = {
+            "data": {
+                "name": "Testing Data",
+                "geo": None,
+                "submitter": "Akvo",
+            },
+            "answer": [{
+                "question": 1694509989313,
+                "value": "Test answer"
+            }],
+        }
+        data = self.client.post(
+            f"/api/data/{payload.get('id')}",
+            answer_payload,
+            content_type="application/json",
+            follow=True
+        )
+        self.assertEqual(data.status_code, 200)
+        data = data.json()
+        self.assertEqual(data, {"message": "ok"})
+        # get form after post
+        data = self.client.get(
+            f"/api/form/{payload.get('id')}",
+            follow=True
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        self.assertEqual(result, {
+            "id": 1694509989310,
+            "name": "New Form",
+            "description": "New Form Description",
+            "defaultLanguage": "en",
+            "languages": ["en"],
+            "version": 1,
+            "translations": None,
+            "question_group": [{
+                "id": 1694509989312,
+                "name": "Dapibus lorem ultrices",
+                "description": None,
+                "order": 1,
+                "repeatable": False,
+                "translations": None,
+                "question": [{
+                    "id": 1694509989313,
+                    "name": "Augue neque sapien ultrices eu quis",
+                    "order": 1,
+                    "type": "input",
+                    "required": False,
+                    "meta": False,
+                    "disableDelete": True
+                }]
+            }]
+        })
