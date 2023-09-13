@@ -135,7 +135,11 @@
               "name": "Lokasi (Menggunakan API)",
               "language": "id"
             }
-          ]
+          ],
+          "source": {
+            "file": "administration.sqlite",
+            "parent_id": 0
+          }
         },
         {
           "id": 5,

@@ -17,7 +17,7 @@ services:
       - ${STORAGE_PATH}/sqlite:/app/public/sqlite:delegated
   backend:
     environment:
-      - WEBDOMAIN=https://afs.akvotest.org
+      - WEBDOMAIN=localhost:3000
     network_mode: service:mainnetwork
     volumes:
       - ${STORAGE_PATH}:/app/storage:delegated

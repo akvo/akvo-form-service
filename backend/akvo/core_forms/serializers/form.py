@@ -49,7 +49,7 @@ class FormDefinitionSerializer(serializers.ModelSerializer):
         return instance.default_language
 
     @extend_schema_field(ListQuestionGroupSerializer(many=True))
-    def get_question_group(self, instance: QuestionGroups):
+    def get_question_group(self, instance: Forms):
         return ListQuestionGroupSerializer(
             instance=instance.question_groups.all().order_by("order"),
             many=True,

@@ -1,8 +1,9 @@
+import re
 import requests
 
-# from akvo.core_data.models import Answers
 from akvo.core_forms.models import Questions
 from akvo.core_forms.constants import QuestionTypes
+from akvo.core_node.models import Node
 
 
 def update_date_time_format(date):
@@ -81,3 +82,29 @@ def define_column_from_answer_value(question: Questions, answer: dict):
         # for number question type
         value = answer.get("value")
     return name, value, option
+
+
+def generate_node_filename(name: str):
+    name = name.strip().lower()
+    name = name.split(" ")
+    name = "_".join(name)
+    return name
+
+
+def is_string_integer(value):
+    pattern = r'^[+-]?\d+$'
+    return bool(re.match(pattern, value))
+
+
+def get_node_sqlite_source(cascade_url: str):
+    if not cascade_url:
+        return None
+    node_id = cascade_url.split("/")[-1]
+    source_file = node_id
+    if is_string_integer(node_id):
+        node_id = int(node_id)
+        node = Node.objects.filter(pk=node_id).first()
+        if not node:
+            return None
+        source_file = generate_node_filename(name=node.name)
+    return f"{source_file}.sqlite"
