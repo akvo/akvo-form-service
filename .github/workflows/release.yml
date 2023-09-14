@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  release:
+    name: apk build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout Mobile Repo
+        uses: actions/checkout@v4
+        with:
+          repository: akvo/nmis-mobile
+          path: ./app
+
+      - name: 🪄 Environment setup
+        run: |
+          rsync -av ./apk/ ./app/app/
+          rm ./app/app/package-lock.json
+          sed -i 's/"name": "nmis-mobile"/"name": "akvo-data-app"/' ./app/app/package.json
+
+      - name: 🧰 Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: |
+          cd ./app/app
+          npm install
+
+      - name: 🚀 Release to Expo Dev
+        id: eas_release
+        run: |
+          cd ./app/app
+          npm run eas:release > output.txt
+          echo "APK_URL=$(tail -n 1 output.txt)" >> $GITHUB_ENV
