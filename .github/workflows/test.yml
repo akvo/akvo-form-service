@@ -22,7 +22,7 @@ jobs:
 
       - name: Environment setup
         run: |
-          ls
+          ls -a app
           cp -r ./apk/assets ./app/app/assets
           cp ./apk/app.json ./app/app/app.json
           cp ./apk/src/build.json ./app/app/src/build.json
