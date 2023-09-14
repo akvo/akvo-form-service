@@ -7,7 +7,6 @@ from drf_spectacular.types import OpenApiTypes
 from akvo.core_forms.models import Forms, Questions, QuestionGroups
 from akvo.core_forms.serializers.question import ListQuestionSerializer
 from akvo.core_forms.constants import QuestionTypes
-from akvo.core_forms.serializers.question_group import ListQuestionGroupSerializer
 from akvo.utils.functions import get_node_sqlite_source
 
 WEBDOMAIN = os.environ.get("WEBDOMAIN")
