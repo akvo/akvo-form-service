@@ -6,9 +6,7 @@ from drf_spectacular.types import OpenApiTypes
 
 from akvo.core_forms.models import Forms, Questions
 from akvo.core_forms.constants import QuestionTypes
-from akvo.core_forms.serializers.question_group import (
-    ListQuestionGroupSerializer
-)
+from akvo.core_forms.serializers.question_group import ListQuestionGroupSerializer
 from akvo.utils.functions import get_node_sqlite_source
 
 WEBDOMAIN = os.environ.get("WEBDOMAIN")
@@ -26,7 +24,8 @@ class MobileFormDefinitionSerializer(serializers.ModelSerializer):
     @extend_schema_field(serializers.ListField())
     def get_cascades(self, instance: Forms):
         cascade_questions = Questions.objects.filter(
-            type=QuestionTypes.cascade, form=instance).all()
+            type=QuestionTypes.cascade, form=instance
+        ).all()
         source = []
         for cascade_question in cascade_questions:
             # get node name from api endpoint
@@ -57,3 +56,40 @@ class MobileFormDefinitionSerializer(serializers.ModelSerializer):
             "translations",
             "question_group",
         ]
+
+
+class MobileFormSubmissionSerializer(serializers.Serializer):
+    formId = serializers.IntegerField()
+    name = serializers.CharField()
+    duration = serializers.IntegerField()
+    submittedAt = serializers.DateTimeField()
+    submitter = serializers.CharField()
+    geo = serializers.ListField(child=serializers.IntegerField())
+    answers = serializers.DictField()
+    answer = serializers.ListField(child=serializers.DictField())
+    data = serializers.DictField()
+
+    def validate(self, data):
+        if not data.get("answers"):
+            raise serializers.ValidationError("Answers is required.")
+        return data
+
+    def validate_formId(self, value):
+        form = Forms.objects.filter(id=value).first()
+        if not form:
+            raise serializers.ValidationError("Form not found.")
+        return value
+
+    def to_internal_value(self, submission):
+        answers = []
+        qna = submission.get("answers")
+        for q in list(qna):
+            answers.append({"question": q, "value": qna[q]})
+        submission["answer"] = answers
+        submission["data"] = {
+            "name": submission.get("name"),
+            "geo": submission.get("geo"),
+            "submitter": submission.get("submitter"),
+            "duration": submission.get("duration"),
+        }
+        return super().to_internal_value(submission)
