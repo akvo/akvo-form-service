@@ -49,8 +49,6 @@ jobs:
 
       - name: 🚀 Release to Expo Dev
         id: eas_release
-        working-directory: ./app/app
         run: |
-          npm run eas:release > output.txt
-          cat output.txt
-          echo "APK_URL=$(tail -n 1 output.txt)" >> $GITHUB_ENV
+          cd ./app/app
+          npm run eas:release
