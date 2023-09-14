@@ -11,17 +11,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Build and Test
-        run: |
-          ./ci/build.sh
-
       - name: Checkout tools repo
         uses: actions/checkout@v4
         with:
           repository: akvo/nmis-mobile
-          path: app
+          path: ./app
 
       - name: Environment setup
         run: |
