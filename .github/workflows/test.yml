@@ -49,7 +49,7 @@ jobs:
 
       - name: 🚀 Release to Expo Dev
         id: eas_release
-        working-directory: ./app
+        working-directory: ./app/app
         run: |
           npm run eas:release > output.txt
           cat output.txt
