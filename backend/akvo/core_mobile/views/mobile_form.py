@@ -8,6 +8,7 @@ from akvo.core_forms.models import Forms
 from akvo.core_data.serializers.data import SubmitFormSerializer
 from akvo.core_mobile.serializers.mobile_form import (
     MobileFormDefinitionSerializer,
+    MobileFormSubmissionRequestSerializer,
     MobileFormSubmissionSerializer,
 )
 from akvo.utils.custom_serializer_fields import validate_serializers_message
@@ -27,7 +28,7 @@ def get_mobile_form_definition(request, form_id):
 
 
 @extend_schema(
-    request=MobileFormSubmissionSerializer,
+    request=MobileFormSubmissionRequestSerializer,
     responses={200: DefaultResponseSerializer},
     tags=["Mobile Device Form"],
     summary="Submit mobile form data",
