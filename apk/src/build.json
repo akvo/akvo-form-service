@@ -1,6 +1,6 @@
 {
   "authenticationType": ["username", "password"],
-  "serverURL": null,
+  "serverURL": "https://form-service.akvotest.org/api/device",
   "debugMode": false,
   "dataSyncInterval": 1,
   "errorHandling": true,

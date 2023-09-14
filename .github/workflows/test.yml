@@ -22,14 +22,12 @@ jobs:
 
       - name: Environment setup
         run: |
-          ls -a app
           cp -r ./apk/assets ./app/app/assets
           cp ./apk/app.json ./app/app/app.json
           cp ./apk/src/build.json ./app/app/src/build.json
+          cp ./apk/src/build.js ./app/app/src/build.js
           rm ./app/app/package-lock.json
           sed -i 's/"name": "nmis-mobile"/"name": "akvo-data-app"/' ./app/app/package.json
-          cat ./app/app/package.json
-          cat ./app/app/src/build.json
 
       - name: 🧰 Setup node
         uses: actions/setup-node@v3
