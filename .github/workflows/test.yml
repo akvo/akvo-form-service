@@ -19,26 +19,4 @@ jobs:
 
       - name: Environment setup
         run: |
-          cp -r ./apk/assets ./app/app/assets
-          cp ./apk/app.json ./app/app/app.json
-          cp ./apk/src/build.json ./app/app/src/build.json
-          rm ./app/app/package-lock.json
-          sed -i 's/"name": "nmis-mobile"/"name": "akvo-data-app"/' ./app/app/src/package.json
-          cat ./app/app/src/package.json
-          cat ./app/app/src/build.json
-
-      - name: 🧰 Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-
-      - name: 🏗  Setup EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-
-      - name: 📦 Install dependencies
-        run: |
-          cd ./app/app
-          npm install
+          ls
