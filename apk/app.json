@@ -1,0 +1,49 @@
+{
+	"expo": {
+		"name": "akvo-data-app",
+		"slug": "akvo-data-app",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.akvo.ada"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "b217771b-b6e1-4779-9e81-799dd8287ac5"
+			}
+		},
+		"owner": "akvo",
+		"backgroundFetch": {
+			"jobs": [
+				{
+					"jobName": "sync-form-version",
+					"minimumInterval": 86400,
+					"enabled": true
+				},
+				{
+					"jobName": "sync-form-submission",
+					"minimumInterval": 1,
+					"enabled": true
+				}
+			]
+		}
+	}
+}
