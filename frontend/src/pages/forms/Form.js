@@ -29,14 +29,25 @@ const Form = () => {
   };
 
   const onFinish = (values, refreshForm) => {
-    let payload = { data: { ...values.datapoint, submitter: "Akvo" } };
+    const datapointName = values?.datapoint?.name || "Untitled";
+    let payload = {
+      data: { ...values.datapoint, name: datapointName, submitter: "Akvo" },
+    };
     const answers = Object.keys(values)
       .map((key) => {
         if (key === "datapoint") {
           return false;
         }
+        let qid = key;
+        let repeat = 0;
+        // handle repeat index
+        if (qid.includes("-")) {
+          const temp = qid.split("-");
+          qid = temp[0];
+          repeat = parseInt(temp[1]);
+        }
+        qid = parseInt(qid);
         // remap answer by question type
-        const qid = parseInt(key);
         const question = questions.find((q) => q.id === qid);
         let value = values[key];
         if (question.type === "option") {
@@ -45,6 +56,7 @@ const Form = () => {
         return {
           question: qid,
           value: value,
+          repeat: repeat,
         };
       })
       .filter((x) => x);
