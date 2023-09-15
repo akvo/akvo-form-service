@@ -10,17 +10,24 @@ from akvo.utils.custom_serializer_fields import (
     UnvalidatedField,
 )
 from akvo.utils.functions import get_answer_value
+from akvo.utils.custom_serializer_fields import IntegerField
 
 
 class SubmitDataAnswerSerializer(serializers.ModelSerializer):
     value = UnvalidatedField(allow_null=False)
     question = CustomPrimaryKeyRelatedField(queryset=Questions.objects.none())
+    repeat = IntegerField(allow_null=True, default=0)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.fields.get("question").queryset = Questions.objects.all()
 
     def validate_value(self, value):
+        return value
+
+    def validate_repeat(self, value):
+        if not value:
+            return 0
         return value
 
     def validate(self, attrs):
@@ -49,6 +56,7 @@ class SubmitDataAnswerSerializer(serializers.ModelSerializer):
             QuestionTypes.photo,
             QuestionTypes.date,
         ]:
+            # TODO Include Question autofield here
             if not isinstance(value, str):
                 raise_validation_error("Valid string value is required")
         elif question_type in [QuestionTypes.number, QuestionTypes.cascade]:
@@ -59,7 +67,7 @@ class SubmitDataAnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answers
-        fields = ["question", "value"]
+        fields = ["question", "value", "repeat"]
 
 
 class ListAnswerSerializer(serializers.ModelSerializer):
@@ -71,4 +79,4 @@ class ListAnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answers
-        fields = ["question", "value"]
+        fields = ["question", "value", "repeat"]
