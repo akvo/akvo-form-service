@@ -20,10 +20,11 @@ def generate_sqlite(node: Node):
         return
 
     filename = f"{name}.sqlite"
+    filename = os.path.abspath(filename)
     if os.path.exists(filename):
         os.remove(filename)
-    if storage.check(f"/sqlite/{filename}"):
-        storage.delete(f"/sqlite/{filename}")
+    if storage.check(f"sqlite/{filename}"):
+        storage.delete(f"sqlite/{filename}")
 
     data = pd.DataFrame(list(objects.values()))
     if "parent_id" not in data.columns:
