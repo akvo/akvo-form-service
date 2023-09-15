@@ -1,0 +1,11 @@
+{
+  "authenticationType": ["username", "password"],
+  "serverURL": "https://form-service.akvotest.org/api/device",
+  "debugMode": false,
+  "dataSyncInterval": 1,
+  "errorHandling": true,
+  "loggingLevel": "verbose",
+  "appVersion": "1.2.0",
+  "lang": "en",
+  "gpsThreshold": 20
+}
