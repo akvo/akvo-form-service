@@ -86,7 +86,7 @@ const Data = () => {
           const q = questions.find((q) => q.id === d.question);
           return {
             qgId: q.qgId,
-            qgName: q.qgName,
+            qgName: `${q.qgName}-${d?.repeat || 0}`,
             qgOrder: q.qgOrder,
             qId: q.id,
             qName: q.name,
@@ -105,10 +105,16 @@ const Data = () => {
   const answerDetail = useMemo(() => {
     const groups = groupBy(answers, "qgName");
     return Object.keys(groups).map((key) => {
+      let groupName = key;
+      if (groupName.includes("-0")) {
+        groupName = key.split("-");
+        groupName = groupName.slice(0, groupName.length - 1);
+        groupName = groupName.join("-");
+      }
       const listSource = groups[key];
       return (
         <>
-          <h4>{key}</h4>
+          <h4>{groupName}</h4>
           <Table
             size="small"
             columns={[
@@ -118,6 +124,7 @@ const Data = () => {
             dataSource={listSource}
             pagination={false}
           />
+          <Divider />
         </>
       );
     });
