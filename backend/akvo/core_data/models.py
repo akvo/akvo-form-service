@@ -21,6 +21,7 @@ class AnswerManager(models.Manager):
             name=name,
             value=value,
             options=option,
+            repeat=answer.get("repeat", 0)
         )
         return answer_data
 
@@ -58,6 +59,7 @@ class Answers(models.Model):
     name = models.TextField(null=True, default=None)
     value = models.FloatField(null=True, default=None)
     options = models.JSONField(default=None, null=True)
+    repeat = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(default=None, null=True)
 
