@@ -1,0 +1,59 @@
+{
+  "id": 1694745892378,
+  "name": "New Form with Repeatable Group",
+  "description": "New Form Description",
+  "question_group": [
+    {
+      "id": 1694745892379,
+      "name": "Group 1",
+      "order": 1,
+      "repeatable": false,
+      "question": [
+        {
+          "id": 1694745892380,
+          "order": 1,
+          "questionGroupId": 1694745892379,
+          "name": "Input Type",
+          "type": "input",
+          "required": true,
+          "meta": false
+        },
+        {
+          "id": 1694745902446,
+          "order": 2,
+          "questionGroupId": 1694745892379,
+          "name": "Number Type",
+          "type": "number",
+          "required": true,
+          "meta": false
+        }
+      ]
+    },
+    {
+      "id": 1694745925475,
+      "name": "Group 2 - Repeatable",
+      "order": 2,
+      "repeatable": true,
+      "question": [
+        {
+          "id": 1694745925476,
+          "order": 1,
+          "questionGroupId": 1694745925475,
+          "name": "Text Type",
+          "type": "text",
+          "required": false,
+          "meta": false
+        },
+        {
+          "id": 1694746018883,
+          "order": 2,
+          "questionGroupId": 1694745925475,
+          "name": "Number Type",
+          "type": "number",
+          "required": false,
+          "meta": false
+        }
+      ]
+    }
+  ]
+}

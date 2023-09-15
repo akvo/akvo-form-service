@@ -99,7 +99,6 @@ class DataView(APIView):
         summary="Edit form data",
     )
     def put(self, request, form_id):
-        # TODO Handle removed repeat answers
         data_id = request.GET["data_id"]
         get_object_or_404(Forms, pk=form_id)
         data = get_object_or_404(Data, pk=data_id)
@@ -114,13 +113,30 @@ class DataView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
-
-        answers = request.data
+        # update process
+        answers = serializer.data
+        # check for repeatable question groups
+        qids = [a.get("question") for a in answers]
+        questions = Questions.objects.filter(id__in=qids).all()
+        for question in questions:
+            if not question.question_group.repeatable:
+                continue
+            # delete old repeat value
+            Answers.objects.filter(data=data, question=question).delete()
+        # handle update/create answers
         for answer in answers:
-            question_id = answer.get("question")
-            question = Questions.objects.get(id=question_id)
+            question = Questions.objects.get(id=answer.get("question"))
+            answer.update({"question": question})
+            if question.question_group.repeatable:
+                # then add new answers
+                Answers.objects.define_answer_value(
+                    data=data,
+                    answer=answer
+                )
+                continue
+            # update answer
             form_answer = Answers.objects.filter(
-                data=data, question_id=question_id
+                data=data, question=question
             ).first()
             # define answer column
             name, value, option = define_column_from_answer_value(
