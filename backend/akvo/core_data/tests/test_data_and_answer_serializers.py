@@ -114,6 +114,14 @@ class TestDataAndAnswerSerializers(TestCase):
         }
         serializer = SubmitDataAnswerSerializer(data=post_data)
         self.assertTrue(serializer.is_valid())
+        # correct value with repeat
+        post_data = {
+            'value': 'Lorem',
+            'question': self.question.id,
+            'repeat': 1,
+        }
+        serializer = SubmitDataAnswerSerializer(data=post_data)
+        self.assertTrue(serializer.is_valid())
 
     def test_submit_form_serializer_and_get_data_answer(self):
         # submit
@@ -155,6 +163,53 @@ class TestDataAndAnswerSerializers(TestCase):
         res = serializer.data
         expected_data = {
             'question': self.question.id,
-            'value': 'Lorem'
+            'value': 'Lorem',
+            'repeat': 0,
+        }
+        self.assertEqual(res, expected_data)
+
+    def test_submit_form_serializer_and_get_data_answer_with_repeat(self):
+        # submit
+        post_data = {
+            'name': 'Datapoint name',
+            'geo': {'lat': 40.7128, 'lng': -74.0060},
+            'submitter': 'Akvo'
+        }
+        post_answer = {
+            'value': 'Lorem',
+            'question': self.question.id,
+            'repeat': 1,
+        }
+        submit_data = {
+            'data': post_data,
+            'answer': [post_answer]
+        }
+        serializer = SubmitFormSerializer(
+            data=submit_data, context={'form': self.form}
+        )
+        self.assertTrue(serializer.is_valid())
+        serializer.save()
+        # get data
+        data = Data.objects.first()
+        serializer = ListDataSerializer(instance=data)
+        res = serializer.data
+        expected_data = {
+            'id': res.get('id'),
+            'name': 'Datapoint name',
+            'form': self.form.id,
+            'geo': {'lat': 40.7128, 'lng': -74.0060},
+            'submitter': 'Akvo',
+            'created': res.get('created'),
+            'updated': None
+        }
+        self.assertEqual(res, expected_data)
+        # get answer
+        answer = Answers.objects.first()
+        serializer = ListAnswerSerializer(instance=answer)
+        res = serializer.data
+        expected_data = {
+            'question': self.question.id,
+            'value': 'Lorem',
+            'repeat': 1,
         }
         self.assertEqual(res, expected_data)
