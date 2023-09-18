@@ -9,6 +9,9 @@ jobs:
     name: apk build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: 📦 Checkout Mobile Repo
         uses: actions/checkout@v4
         with:

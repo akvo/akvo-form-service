@@ -10,7 +10,7 @@ pip -q install --upgrade pip
 pip -q install --cache-dir=.pip -r requirements.txt
 pip check
 
-# python manage.py migrate
+python manage.py migrate
 # python manage.py generate_config
 # python manage.py generate_views
 # python manage.py collectstatic --no-input

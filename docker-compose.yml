@@ -15,7 +15,7 @@ services:
       - DEBUG=True
       - DJANGO_SECRET=local-secret
       - STORAGE_PATH
-      - WEBDOMAIN=https://form-service.akvotest.org
+      - WEBDOMAIN
     depends_on:
       - db
   frontend:
