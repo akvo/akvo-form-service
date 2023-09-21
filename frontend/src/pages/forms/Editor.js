@@ -21,8 +21,11 @@ const Editor = () => {
   }, [formId, formDef]);
 
   const onSave = (data) => {
-    console.info(data);
+    api.put(`form`, data).then((res) => {
+      console.log(res.data);
+    });
   };
+
   return (
     <div>
       <h1>
