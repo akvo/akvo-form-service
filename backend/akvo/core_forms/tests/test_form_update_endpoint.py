@@ -2,7 +2,6 @@ from django.test import TestCase
 from django.test.utils import override_settings
 
 from akvo.core_forms.models import Options
-import json
 
 
 @override_settings(USE_TZ=False)
@@ -52,7 +51,6 @@ class TestFormUpdateEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
-        print(json.dumps(result, indent=2))
         self.assertEqual(result, {
             "id": 1695287858303,
             "name": "New Form",
