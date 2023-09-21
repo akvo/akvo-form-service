@@ -4,7 +4,7 @@ import WebformEditor from "akvo-react-form-editor";
 import "akvo-react-form-editor/dist/index.css"; /* REQUIRED */
 import { api } from "../../lib";
 import { GlobalStore } from "../../store";
-import { Spin } from "antd";
+import { Spin, notification } from "antd";
 
 const Editor = () => {
   const { formId } = useParams();
@@ -21,9 +21,21 @@ const Editor = () => {
   }, [formId, formDef]);
 
   const onSave = (data) => {
-    api.put(`form`, data).then((res) => {
-      console.log(res.data);
-    });
+    api
+      .put(`form`, data)
+      .then(() => {
+        notification.success({
+          message: "Success",
+          description: "Form saved successfully.",
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+        notification.error({
+          message: "Error",
+          description: "Something went wrong.",
+        });
+      });
   };
 
   return (
