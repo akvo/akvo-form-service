@@ -50,13 +50,8 @@ class AddQuestionGroupSerializer(serializers.Serializer):
     translations = CustomListField(required=False, allow_null=True)
     question = AddQuestionSerializer(many=True)
 
-    def __init__(self, *args, **kwargs):
-        # Get the value
-        form = kwargs.pop('form', None)
-        super(AddQuestionGroupSerializer, self).__init__(*args, **kwargs)
-        # Set the value
-        if form:
-            self.fields['form'].initial = form
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def validate_question(self, value):
         serializer = AddQuestionSerializer(data=value, many=True)

@@ -2,10 +2,89 @@ from django.test import TestCase
 from django.test.utils import override_settings
 
 from akvo.core_forms.models import Options
+import json
 
 
 @override_settings(USE_TZ=False)
 class TestFormUpdateEndpoint(TestCase):
+    def test_post_data(self):
+        payload = {
+            "id": 1695287858303,
+            "name": "New Form",
+            "description": "New Form Description",
+            "languages": ["en", "af"],
+            "defaultLanguage": "af",
+            "question_group": [{
+                "id": 1695287858304,
+                "name": "Eu augue consectetur",
+                "order": 1,
+                "repeatable": False,
+                "question": [{
+                    "id": 1695287858305,
+                    "order": 1,
+                    "questionGroupId": 1695287858304,
+                    "name": "Amet lorem porta at suscipit facilisis",
+                    "type": "autofield",
+                    "required": False,
+                    "meta": False,
+                    "dataApiUrl": "test.com",
+                    "fn": {
+                        "multiline": False,
+                        "fnString": "() => console.log('test')",
+                        "fnColor": {}
+                    }
+                }]
+            }]
+        }
+        # POST
+        data = self.client.post(
+            "/api/form",
+            data=payload,
+            content_type="application/json"
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        self.assertEqual(result, {"message": "ok"})
+        # GET
+        data = self.client.get(
+            "/api/form/1695287858303",
+            follow=True
+        )
+        self.assertEqual(data.status_code, 200)
+        result = data.json()
+        print(json.dumps(result, indent=2))
+        self.assertEqual(result, {
+            "id": 1695287858303,
+            "name": "New Form",
+            "description": "New Form Description",
+            "defaultLanguage": "af",
+            "languages": ["en", "af"],
+            "version": 1,
+            "translations": None,
+            "question_group": [{
+                "id": 1695287858304,
+                "name": "Eu augue consectetur",
+                "description": None,
+                "order": 1,
+                "repeatable": False,
+                "translations": None,
+                "question": [{
+                    "id": 1695287858305,
+                    "name": "Amet lorem porta at suscipit facilisis",
+                    "order": 1,
+                    "type": "autofield",
+                    "required": False,
+                    "meta": False,
+                    "fn": {
+                        "fnColor": {},
+                        "fnString": "() => console.log('test')",
+                        "multiline": False
+                    },
+                    "dataApiUrl": "test.com"
+                }]
+            }]
+        })
+
     def test_update_form_with_updated_options(self):
         payload = {
             "id": 1693992073895,
@@ -69,6 +148,7 @@ class TestFormUpdateEndpoint(TestCase):
                     "required": False,
                     "meta": False,
                     "allowOther": False,
+                    "dataApiUrl": "https://jsonplaceholder.typicode.com/todos/1",
                     "option": [{
                         "code": "NO1",
                         "name": "New Option 1",
@@ -122,6 +202,7 @@ class TestFormUpdateEndpoint(TestCase):
                     "type": "option",
                     "required": False,
                     "meta": False,
+                    "dataApiUrl": "https://jsonplaceholder.typicode.com/todos/1",
                     "option": [{
                         "id": 1693992338940,
                         "code": "NO1",

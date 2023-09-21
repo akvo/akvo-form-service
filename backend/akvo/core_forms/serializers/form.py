@@ -73,7 +73,7 @@ class AddFormSerializer(serializers.Serializer):
     id = CustomIntegerField()
     name = CustomCharField()
     description = CustomCharField(required=False, allow_null=True)
-    default_language = CustomCharField(
+    defaultLanguage = CustomCharField(
         required=False, allow_null=True, default="en")
     languages = CustomListField(
         required=False, allow_null=True, default=["en"])
@@ -82,18 +82,12 @@ class AddFormSerializer(serializers.Serializer):
     translations = CustomListField(required=False, allow_null=True)
     question_group = AddQuestionGroupSerializer(many=True, required=False)
 
-    def __init__(self, *args, **kwargs):
-        # Get the value
-        default_language = kwargs.pop('defaultLanguage', None)
-        super(AddFormSerializer, self).__init__(*args, **kwargs)
-        # Set the value
-        if default_language:
-            self.fields['default_language'].initial = default_language
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def validate_question_group(self, value):
         serializer = AddQuestionGroupSerializer(data=value, many=True)
         if not serializer.is_valid():
-            print('QG ERROR', serializer.errors)
             raise serializers.ValidationError({
                 "message": validate_serializers_message(serializer.errors),
                 "details": serializer.errors,
@@ -102,6 +96,8 @@ class AddFormSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         question_groups_data = validated_data.pop("question_group", [])
+        validated_data["default_language"] = validated_data.pop(
+            "defaultLanguage", None)
         form = Forms.objects.create(**validated_data)
         for qg in question_groups_data:
             serializer = AddQuestionGroupSerializer(data=qg)
@@ -124,7 +120,7 @@ class AddFormSerializer(serializers.Serializer):
         instance.languages = validated_data.get(
             'languages', instance.languages)
         instance.default_language = validated_data.get(
-            'default_language', instance.default_language)
+            'defaultLanguage', instance.default_language)
         instance.translations = validated_data.get(
             'translations', instance.translations)
 

@@ -180,21 +180,13 @@ class AddQuestionSerializer(serializers.Serializer):
     dependency = CustomListField(required=False, allow_null=True)
     api = CustomJSONField(required=False, allow_null=True)
     extra = CustomListField(required=False, allow_null=True)
-    autofield = CustomJSONField(required=False, allow_null=True)
-    data_api_url = CustomCharField(required=False, allow_null=True)
+    fn = CustomJSONField(required=False, allow_null=True)
+    dataApiUrl = CustomCharField(required=False, allow_null=True)
     translations = CustomListField(required=False, allow_null=True)
     option = AddOptionSerializer(many=True, required=False, allow_null=True)
 
-    def __init__(self, *args, **kwargs):
-        # Get the value
-        data_api_url = kwargs.pop('dataApiUrl', None)
-        autofield = kwargs.pop('fn', None)
-        super(AddQuestionSerializer, self).__init__(*args, **kwargs)
-        # Set the value
-        if data_api_url:
-            self.fields['data_api_url'].initial = data_api_url
-        if autofield:
-            self.fields['autofield'].initial = autofield
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def validate_type(self, value):
         qtype = getattr(QuestionTypes, value)
@@ -207,7 +199,6 @@ class AddQuestionSerializer(serializers.Serializer):
             return None
         serializer = AddOptionSerializer(data=value, many=True)
         if not serializer.is_valid():
-            print('OPT ERROR', serializer.errors)
             raise serializers.ValidationError({
                 "message": validate_serializers_message(serializer.errors),
                 "details": serializer.errors,
@@ -218,6 +209,8 @@ class AddQuestionSerializer(serializers.Serializer):
         options_data = validated_data.pop("option", [])
         qtype = validated_data.pop("type", None)
         validated_data["type"] = getattr(QuestionTypes, qtype)
+        validated_data["data_api_url"] = validated_data.pop("dataApiUrl", None)
+        validated_data["autofield"] = validated_data.pop("fn", None)
         q = Questions.objects.create(**validated_data)
         for opt in options_data:
             serializer = AddOptionSerializer(data=opt)
@@ -262,9 +255,9 @@ class AddQuestionSerializer(serializers.Serializer):
         instance.extra = validated_data.get(
             'extra', instance.extra)
         instance.autofield = validated_data.get(
-            'autofield', instance.autofield)
+            'fn', instance.autofield)
         instance.data_api_url = validated_data.get(
-            'data_api_url', instance.data_api_url)
+            'dataApiUrl', instance.data_api_url)
         instance.translations = validated_data.get(
             'translations', instance.translations)
 
