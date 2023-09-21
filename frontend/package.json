@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "akvo-react-form": "^2.2.5",
-    "akvo-react-form-editor": "^1.1.6",
+    "akvo-react-form-editor": "^1.1.7",
     "axios": "^0.25.0",
     "axios-mock-adapter": "^1.21.1",
     "buffer": "^6.0.3",
