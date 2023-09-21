@@ -6,7 +6,7 @@ class QuestionTypes:
     option = 5
     multiple_option = 6
     cascade = 7
-    photo = 8
+    image = 8
     date = 9
     autofield = 10
 
@@ -18,7 +18,7 @@ class QuestionTypes:
         option: "option",
         multiple_option: "multiple_option",
         cascade: "cascade",
-        photo: "photo",
+        image: "image",
         date: "date",
         autofield: "autofield",
     }

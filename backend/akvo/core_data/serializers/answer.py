@@ -53,7 +53,7 @@ class SubmitDataAnswerSerializer(serializers.ModelSerializer):
         elif question_type in [
             QuestionTypes.input,
             QuestionTypes.text,
-            QuestionTypes.photo,
+            QuestionTypes.image,
             QuestionTypes.date,
         ]:
             # TODO Include Question autofield here

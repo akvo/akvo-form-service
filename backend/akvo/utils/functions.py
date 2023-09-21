@@ -65,7 +65,7 @@ def define_column_from_answer_value(question: Questions, answer: dict):
     elif question.type in [
         QuestionTypes.input,
         QuestionTypes.text,
-        QuestionTypes.photo,
+        QuestionTypes.image,
         QuestionTypes.date,
     ]:
         name = answer.get("value")
