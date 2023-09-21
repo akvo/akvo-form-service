@@ -117,7 +117,17 @@ class MobileFormSubmissionSerializer(serializers.Serializer):
         answers = []
         qna = submission.get("answers")
         for q in list(qna):
-            answers.append({"question": q, "value": qna[q]})
+            qid = q
+            repeat = 0
+            if "-" in q:
+                tmp = q.split("-")
+                qid = tmp[0]
+                repeat = int(tmp[1])
+            answers.append({
+                "question": qid,
+                "value": qna[q],
+                "repeat": repeat
+            })
         submission["answer"] = answers
         submission["data"] = {
             "name": submission.get("name"),

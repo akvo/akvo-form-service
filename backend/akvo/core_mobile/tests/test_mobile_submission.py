@@ -15,6 +15,9 @@ from akvo.core_mobile.serializers.mobile_form import (
 class TestMobileFormSubmission(TestCase):
     def setUp(self):
         call_command("form_seeder", "--file=./source/forms/1693403249322.json")
+        call_command(
+            "form_seeder",
+            "--file=./source/forms/test_form_with_repeatable.json")
         self.payload = {
             "formId": "1693403249322",
             "name": "Data 1",
@@ -31,6 +34,22 @@ class TestMobileFormSubmission(TestCase):
                 "1693403947085": ["Acre"],
                 "1693404048281": 20,
                 "1693403971287": 20,
+            },
+        }
+        self.payload_repeatable = {
+            "formId": "1694745892378",
+            "name": "Data 2",
+            "duration": 10,
+            "submittedAt": "2021-06-01 00:00:00",
+            "submitter": "John Doe",
+            "geo": [0, 0],
+            "answers": {
+                "1694745892380": "Input 1",
+                "1694745902446": 10,
+                "1694745925476": "Text 1",
+                "1694746018883": 20,
+                "1694745925476-1": "Text 2",
+                "1694746018883-1": 30,
             },
         }
 
@@ -58,14 +77,14 @@ class TestMobileFormSubmission(TestCase):
         self.assertEqual(
             internal_data.get("answer"),
             [
-                {"question": "1693403277316", "value": "Farm 1"},
-                {"question": "1693403399692", "value": 20},
-                {"question": "1693403503687", "value": ["KG"]},
-                {"question": "1693403547388", "value": 20},
-                {"question": "1693403843111", "value": 20},
-                {"question": "1693403947085", "value": ["Acre"]},
-                {"question": "1693404048281", "value": 20},
-                {"question": "1693403971287", "value": 20},
+                {"question": "1693403277316", "value": "Farm 1", "repeat": 0},
+                {"question": "1693403399692", "value": 20, "repeat": 0},
+                {"question": "1693403503687", "value": ["KG"], "repeat": 0},
+                {"question": "1693403547388", "value": 20, "repeat": 0},
+                {"question": "1693403843111", "value": 20, "repeat": 0},
+                {"question": "1693403947085", "value": ["Acre"], "repeat": 0},
+                {"question": "1693404048281", "value": 20, "repeat": 0},
+                {"question": "1693403971287", "value": 20, "repeat": 0},
             ],
         )
 
@@ -83,3 +102,51 @@ class TestMobileFormSubmission(TestCase):
         self.assertEqual(data.submitter, "Jane")
         answers = Answers.objects.filter(data=data)
         self.assertEqual(answers.count(), 8)
+
+    def test_mobile_submission_serializer_with_repeat_answers(self):
+        data = MobileFormSubmissionSerializer(data=self.payload_repeatable)
+        self.assertTrue(data.is_valid())
+        internal_data = data.to_internal_value(self.payload_repeatable)
+        self.assertEqual(
+            internal_data.get("data"),
+            {
+                "name": "Data 2",
+                "geo": [0, 0],
+                "submitter": "John Doe",
+                "duration": 10,
+            },
+        )
+        self.assertEqual(internal_data.get("formId"), 1694745892378)
+        self.assertEqual(internal_data.get("name"), "Data 2")
+        self.assertEqual(internal_data.get("duration"), 10)
+        self.assertEqual(
+            internal_data.get("submittedAt"), datetime.datetime(2021, 6, 1, 0, 0)
+        )
+        self.assertEqual(internal_data.get("submitter"), "John Doe")
+        self.assertEqual(internal_data.get("geo"), [0, 0])
+        self.assertEqual(
+            internal_data.get("answer"),
+            [
+                {"question": "1694745892380", "value": "Input 1", "repeat": 0},
+                {"question": "1694745902446", "value": 10, "repeat": 0},
+                {"question": "1694745925476", "value": "Text 1", "repeat": 0},
+                {"question": "1694746018883", "value": 20, "repeat": 0},
+                {"question": "1694745925476", "value": "Text 2", "repeat": 1},
+                {"question": "1694746018883", "value": 30, "repeat": 1},
+            ],
+        )
+
+    def test_mobile_form_submission_with_repeatable_answers(self):
+        response = self.client.post(
+            "/api/device/sync",
+            self.payload_repeatable,
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json().get("message"), "ok")
+        data = Data.objects.filter(form_id=1694745892378).first()
+        self.assertEqual(data.form_id, 1694745892378)
+        self.assertEqual(data.name, "Data 2")
+        self.assertEqual(data.submitter, "John Doe")
+        answers = Answers.objects.filter(data=data)
+        self.assertEqual(answers.count(), 6)
