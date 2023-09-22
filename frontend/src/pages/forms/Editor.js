@@ -6,24 +6,30 @@ import { api } from "../../lib";
 import { GlobalStore } from "../../store";
 import { Spin, notification } from "antd";
 
-const Editor = () => {
+const Editor = ({ isAddNew }) => {
   const { formId } = useParams();
   const history = useNavigate();
   const [formDef, setFormDef] = useState({});
   const { loading, settingCascadeURL } = GlobalStore.useState((s) => s);
+  const statusText = isAddNew ? "Add New " : "Edit / ";
+  const [post, setPost] = useState(false);
 
   useEffect(() => {
-    if (!Object.keys(formDef).length) {
+    if (!Object.keys(formDef).length && !isAddNew) {
       api.get(`form/${formId}`).then((res) => {
         setFormDef(res.data);
       });
     }
-  }, [formId, formDef]);
+  }, [formId, formDef, isAddNew]);
 
   const onSave = (data) => {
-    api
-      .put(`form`, data)
+    const apiCall =
+      isAddNew && !post ? api.post("form", data) : api.put("form", data);
+    apiCall
       .then(() => {
+        if (isAddNew) {
+          setPost(true);
+        }
         notification.success({
           message: "Success",
           description: "Form saved successfully.",
@@ -49,7 +55,8 @@ const Editor = () => {
           {" "}
           Form
         </a>{" "}
-        / Edit / {formId}
+        / {statusText}
+        {formId}
       </h1>
       {loading ? (
         <div className="loading-container">

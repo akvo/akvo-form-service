@@ -33,7 +33,12 @@ const App = () => {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/form/:formId" element={<Form />} />
         <Route exact path="/forms" element={<Forms />} />
-        <Route exact path="/forms/edit/:formId" element={<Editor />} />
+        <Route exact path="/new-form" element={<Editor isAddNew={true} />} />
+        <Route
+          exact
+          path="/forms/edit/:formId"
+          element={<Editor isAddNew={false} />}
+        />
         <Route exact path="/data" element={<Data />} />
       </Routes>
     </PageLayout>
