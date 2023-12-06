@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "akvo-react-form": "^2.2.5",
-    "akvo-react-form-editor": "^1.1.7",
+    "akvo-react-form": "^2.2.7",
+    "akvo-react-form-editor": "^1.1.8",
     "axios": "^0.25.0",
     "axios-mock-adapter": "^1.21.1",
     "buffer": "^6.0.3",
@@ -52,17 +52,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
