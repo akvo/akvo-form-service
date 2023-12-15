@@ -39,6 +39,7 @@ jobs:
         run: |
           cd ./app/app
           npm install
+          npm install -g eas-cli@latest
 
       - name: 🚀 Release to Expo Dev
         id: eas_release
