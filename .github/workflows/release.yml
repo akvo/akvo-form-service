@@ -22,7 +22,7 @@ jobs:
         run: |
           rsync -av ./apk/ ./app/app/
           rm ./app/app/package-lock.json
-          sed -i 's/"name": "nmis-mobile"/"name": "akvo-data-app"/' ./app/app/package.json
+          sed -i 's/"name": "nmis-mobile"/"name": "rtmis-mobile"/' ./app/app/package.json
 
       - name: 🧰 Setup node
         uses: actions/setup-node@v3
