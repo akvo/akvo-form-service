@@ -1,7 +1,7 @@
 {
 	"expo": {
-		"name": "akvo-data-app",
-		"slug": "akvo-data-app",
+		"name": "rtmis-mobile",
+		"slug": "rtmis-mobile",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
@@ -20,14 +20,14 @@
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
-			"package": "com.akvo.ada"
+			"package": "com.akvo.rtmis"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
 		},
 		"extra": {
 			"eas": {
-				"projectId": "b217771b-b6e1-4779-9e81-799dd8287ac5"
+				"projectId": "fa1e4fb6-cc4f-4fad-8b6f-1c1189819532"
 			}
 		},
 		"owner": "akvo",
