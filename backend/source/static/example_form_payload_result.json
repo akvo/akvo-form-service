@@ -10,27 +10,29 @@
   "version": 1,
   "translations": [
     {
-      "name": "Komunitas Kuliner Survey 2021",
+      "label": "Komunitas Kuliner Survey 2021",
       "language": "id"
     }
   ],
   "question_group": [
     {
       "id": 1693886026370,
-      "name": "Registration",
+      "name": "registration",
+      "label": "Registration",
       "description": null,
       "order": 1,
       "repeatable": false,
       "translations": [
         {
-          "name": "Registrasi",
+          "label": "Registrasi",
           "language": "id"
         }
       ],
       "question": [
         {
           "id": 1,
-          "name": "Geolocation",
+          "name": "geolocation",
+          "label": "Geolocation",
           "order": 1,
           "type": "geo",
           "tooltip": {
@@ -44,6 +46,7 @@
           },
           "required": true,
           "meta": true,
+          "display_only": false,
           "extra": [
             {
               "content": "Please click on the maps or type it manually",
@@ -58,14 +61,15 @@
           ],
           "translations": [
             {
-              "name": "Geolokasi",
+              "label": "Geolokasi",
               "language": "id"
             }
           ]
         },
         {
           "id": 2,
-          "name": "Name",
+          "name": "name",
+          "label": "Name",
           "order": 2,
           "type": "input",
           "tooltip": {
@@ -78,15 +82,18 @@
             ]
           },
           "required": true,
-          "meta": true
+          "meta": true,
+          "display_only": false
         },
         {
           "id": 3,
-          "name": "Phone Number",
+          "name": "phone_number",
+          "label": "Phone Number",
           "order": 3,
           "type": "number",
           "required": true,
           "meta": true,
+          "display_only": false,
           "extra": [
             {
               "content": "We will not share your phone number to public",
@@ -101,18 +108,20 @@
           ],
           "translations": [
             {
-              "name": "Nomor Telepon",
+              "label": "Nomor Telepon",
               "language": "id"
             }
           ]
         },
         {
           "id": 4,
-          "name": "Location (Using API)",
+          "name": "location_using_api",
+          "label": "Location (Using API)",
           "order": 4,
           "type": "cascade",
           "required": true,
           "meta": true,
+          "display_only": false,
           "api": {
             "list": "children",
             "initial": 1,
@@ -132,7 +141,7 @@
           ],
           "translations": [
             {
-              "name": "Lokasi (Menggunakan API)",
+              "label": "Lokasi (Menggunakan API)",
               "language": "id"
             }
           ],
@@ -143,61 +152,68 @@
         },
         {
           "id": 5,
-          "name": "Birthdate",
+          "name": "birthdate",
+          "label": "Birthdate",
           "order": 5,
           "type": "date",
           "required": true,
           "meta": true,
+          "display_only": false,
           "translations": [
             {
-              "name": "Tanggal Lahir",
+              "label": "Tanggal Lahir",
               "language": "id"
             }
           ]
         },
         {
           "id": 6,
-          "name": "Gender",
+          "name": "gender",
+          "label": "Gender",
           "order": 6,
           "type": "option",
           "required": true,
           "meta": true,
+          "display_only": false,
           "translations": [
             {
-              "name": "Jenis Kelamin",
+              "label": "Jenis Kelamin",
               "language": "id"
             }
           ],
           "option": [
             {
               "id": 1,
-              "name": "Male",
+              "label": "Male",
+              "value": "male",
               "order": 1,
               "translations": [
                 {
-                  "name": "Laki-Laki",
+                  "label": "Laki-Laki",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 2,
-              "name": "Female",
+              "label": "Female",
+              "value": "female",
               "order": 2,
               "translations": [
                 {
-                  "name": "Perempuan",
+                  "label": "Perempuan",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 3,
-              "name": "Other",
+              "label": "Other",
+              "value": "other",
               "order": 3,
               "translations": [
                 {
-                  "name": "Lainnya",
+                  "label": "Lainnya",
                   "language": "id"
                 }
               ]
@@ -206,7 +222,8 @@
         },
         {
           "id": 7,
-          "name": "Marital Status",
+          "name": "marital_status",
+          "label": "Marital Status",
           "order": 7,
           "type": "option",
           "required": true,
@@ -214,48 +231,52 @@
             {
               "id": 6,
               "options": [
-                "Female",
-                "Male"
+                "female",
+                "male"
               ]
             }
           ],
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Status Keluarga",
+              "label": "Status Keluarga",
               "language": "id"
             }
           ],
           "option": [
             {
               "id": 4,
-              "name": "Single",
+              "label": "Single",
+              "value": "single",
               "order": 1,
               "translations": [
                 {
-                  "name": "Jomblo",
+                  "label": "Jomblo",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 5,
-              "name": "Maried",
+              "label": "Married",
+              "value": "married",
               "order": 2,
               "translations": [
                 {
-                  "name": "Menikah",
+                  "label": "Menikah",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 6,
-              "name": "Widowed",
+              "label": "Widowed",
+              "value": "widowed",
               "order": 3,
               "translations": [
                 {
-                  "name": "Janda / Duda",
+                  "label": "Janda / Duda",
                   "language": "id"
                 }
               ]
@@ -266,13 +287,14 @@
     },
     {
       "id": 1693886026375,
-      "name": "Culinary Group",
+      "name": "culinary_group",
+      "label": "Culinary Group",
       "description": "Example placeholder description text for <b>Culinary Question Group</b>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet orci in feugiat tincidunt. Donec tempor suscipit accumsan. Vestibulum orci risus, mattis vitae ex et, consectetur consequat augue. Nunc et ante vel massa sollicitudin posuere vel ornare ligula. Ut a mattis massa. Mauris pulvinar congue sem, et venenatis orci vulputate id. Praesent odio purus, ultricies non eros at, iaculis imperdiet turpis. Donec non massa ligula.",
       "order": 2,
       "repeatable": false,
       "translations": [
         {
-          "name": "Pertanyaan Tentang Kuliner",
+          "label": "Pertanyaan Tentang Kuliner",
           "language": "id",
           "description": "Contoh teks pengganti deskripsi untuk <b>Grup Pertanyaan Kuliner</b>. Demikian pula, tidak adakah orang yang mencintai atau mengejar atau ingin mengalami penderitaan, bukan semata-mata karena penderitaan itu sendiri, tetapi karena sesekali terjadi keadaan di mana susah-payah dan penderitaan dapat memberikan kepadanya kesenangan yang besar."
         }
@@ -280,35 +302,40 @@
       "question": [
         {
           "id": 8,
-          "name": "How much do you spent for meals a day?",
+          "name": "how_much_spent_for_meals_a_day",
+          "label": "How much do you spent for meals a day?",
           "order": 1,
           "type": "number",
           "required": false,
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Berapa biasanya uang yang anda habiskan per hari untuk makanan",
+              "label": "Berapa biasanya uang yang anda habiskan per hari untuk makanan",
               "language": "id"
             }
           ]
         },
         {
           "id": 9,
-          "name": "How many times do you usually eat in a day?",
+          "name": "how_many_times_usually_eat_a_day",
+          "label": "How many times do you usually eat in a day?",
           "order": 2,
           "type": "number",
           "required": false,
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Berapa kali anda biasanya makan dalam sehari",
+              "label": "Berapa kali anda biasanya makan dalam sehari",
               "language": "id"
             }
           ]
         },
         {
           "id": 11,
-          "name": "Favorite Food",
+          "name": "favorite_food",
+          "label": "Favorite Food",
           "order": 4,
           "type": "multiple_option",
           "tooltip": {
@@ -322,9 +349,10 @@
           },
           "required": false,
           "meta": true,
+          "display_only": false,
           "translations": [
             {
-              "name": "Makanan Favorit",
+              "label": "Makanan Favorit",
               "language": "id",
               "allowOtherText": "Silahkan menambahkan menu lain jika ada"
             }
@@ -332,36 +360,40 @@
           "option": [
             {
               "id": 7,
-              "name": "Asian",
+              "label": "Asian",
+              "value": "asian",
               "order": 1,
               "translations": [
                 {
-                  "name": "Asia",
+                  "label": "Asia",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 8,
-              "name": "Western",
+              "label": "Western",
+              "value": "western",
               "order": 2,
               "translations": [
                 {
-                  "name": "Barat",
+                  "label": "Barat",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 9,
-              "name": "Vegetarian",
+              "label": "Vegetarian",
+              "value": "vegetarian",
               "order": 3
             }
           ]
         },
         {
           "id": 12,
-          "name": "Please specify",
+          "name": "please_specify",
+          "label": "Please specify",
           "order": 5,
           "type": "input",
           "tooltip": {
@@ -378,29 +410,32 @@
             {
               "id": 11,
               "options": [
-                "Asian",
-                "Western"
+                "asian",
+                "western"
               ]
             }
           ],
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Tolong sebutkan",
+              "label": "Tolong sebutkan",
               "language": "id"
             }
           ]
         },
         {
           "id": 13,
-          "name": "Do you know <b>beef rendang</b>?",
+          "name": "do_you_know_beef_rendang",
+          "label": "Do you know <b>beef rendang</b>?",
           "order": 6,
           "type": "option",
           "required": false,
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Apakah anda tahu <b>Rendang Daging</b>?",
+              "label": "Apakah anda tahu <b>Rendang Daging</b>?",
               "language": "id",
               "allowOtherText": "Jawaban Lain"
             }
@@ -408,22 +443,24 @@
           "option": [
             {
               "id": 10,
-              "name": "Yes",
+              "label": "Yes",
+              "value": "yes",
               "order": 1,
               "translations": [
                 {
-                  "name": "Ya",
+                  "label": "Ya",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 11,
-              "name": "No",
+              "label": "No",
+              "value": "no",
               "order": 2,
               "translations": [
                 {
-                  "name": "Tidak",
+                  "label": "Tidak",
                   "language": "id"
                 }
               ]
@@ -432,25 +469,28 @@
         },
         {
           "id": 14,
-          "name": "Weight",
+          "name": "weight",
+          "label": "Weight",
           "order": 7,
           "type": "number",
           "required": true,
           "meta": false,
+          "display_only": false,
           "rule": {
             "max": 10,
             "min": 5
           },
           "translations": [
             {
-              "name": "Berat Badan",
+              "label": "Berat Badan",
               "language": "id"
             }
           ]
         },
         {
           "id": 15,
-          "name": "Where do you usually order Rendang from ?",
+          "name": "where_usually_order_rendang",
+          "label": "Where do you usually order Rendang from ?",
           "order": 8,
           "type": "option",
           "required": true,
@@ -458,7 +498,7 @@
             {
               "id": 13,
               "options": [
-                "Yes"
+                "yes"
               ]
             },
             {
@@ -467,25 +507,28 @@
             }
           ],
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Dimana anda biasanya membeli Rendang?",
+              "label": "Dimana anda biasanya membeli Rendang?",
               "language": "id"
             }
           ],
           "option": [
             {
               "id": 12,
-              "name": "Pagi Sore",
+              "label": "Pagi Sore",
+              "value": "pagi_sore",
               "order": 1
             },
             {
               "id": 13,
-              "name": "Any Rendang Restaurant",
+              "label": "Any Rendang Restaurant",
+              "value": "any_rendang_restaurant",
               "order": 2,
               "translations": [
                 {
-                  "name": "Restoran Rendang Manapun",
+                  "label": "Restoran Rendang Manapun",
                   "language": "id"
                 }
               ]
@@ -494,7 +537,8 @@
         },
         {
           "id": 16,
-          "name": "Do you want to order Rendang from Pagi Sore now?",
+          "name": "order_rendang_pagi_sore_now",
+          "label": "Do you want to order Rendang from Pagi Sore now?",
           "order": 9,
           "type": "option",
           "required": true,
@@ -502,36 +546,39 @@
             {
               "id": 15,
               "options": [
-                "Pagi Sore"
+                "pagi_sore"
               ]
             }
           ],
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Apakah anda ingin memesan Rendang dari Pagi Sore?",
+              "label": "Apakah anda ingin memesan Rendang dari Pagi Sore?",
               "language": "id"
             }
           ],
           "option": [
             {
               "id": 14,
-              "name": "Yes",
+              "label": "Yes",
+              "value": "yes",
               "order": 1,
               "translations": [
                 {
-                  "name": "Ya",
+                  "label": "Ya",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 15,
-              "name": "No",
+              "label": "No",
+              "value": "no",
               "order": 2,
               "translations": [
                 {
-                  "name": "Tidak",
+                  "label": "Tidak",
                   "language": "id"
                 }
               ]
@@ -542,13 +589,14 @@
     },
     {
       "id": 1693886026377,
-      "name": "Other Questions",
+      "name": "other_questions",
+      "label": "Other Questions",
       "description": "This is an example of repeat group question",
       "order": 3,
       "repeatable": true,
       "translations": [
         {
-          "name": "Pertanyaan Lain",
+          "label": "Pertanyaan Lain",
           "language": "id",
           "description": "Ini contoh dari pertanyaan berulang",
           "repeat_text": "Isi lagi"
@@ -557,11 +605,13 @@
       "question": [
         {
           "id": 18,
-          "name": "Comment",
+          "name": "comment",
+          "label": "Comment",
           "order": 1,
           "type": "text",
           "required": true,
           "meta": false,
+          "display_only": false,
           "extra": [
             {
               "content": "Please write at least 10 words",
@@ -576,54 +626,59 @@
           ],
           "translations": [
             {
-              "name": "Komentar",
+              "label": "Komentar",
               "language": "id"
             }
           ]
         },
         {
           "id": 19,
-          "name": "Job title",
+          "name": "job_title",
+          "label": "Job title",
           "order": 2,
           "type": "option",
           "required": true,
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Titel Pekerjaan",
+              "label": "Titel Pekerjaan",
               "language": "id"
             }
           ],
           "option": [
             {
               "id": 16,
-              "name": "Director",
+              "label": "Director",
+              "value": "director",
               "order": 1,
               "translations": [
                 {
-                  "name": "Direktur",
+                  "label": "Direktur",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 17,
-              "name": "Manager",
+              "label": "Manager",
+              "value": "manager",
               "order": 2,
               "translations": [
                 {
-                  "name": "Manajer",
+                  "label": "Manajer",
                   "language": "id"
                 }
               ]
             },
             {
               "id": 18,
-              "name": "Staff",
+              "label": "Staff",
+              "value": "staff",
               "order": 3,
               "translations": [
                 {
-                  "name": "Staf",
+                  "label": "Staf",
                   "language": "id"
                 }
               ]
@@ -632,7 +687,8 @@
         },
         {
           "id": 20,
-          "name": "Dependency on Gender Male/Female",
+          "name": "dependency_gender_fm",
+          "label": "Dependency on Gender Male/Female",
           "order": 3,
           "type": "input",
           "required": true,
@@ -640,16 +696,18 @@
             {
               "id": 6,
               "options": [
-                "Female",
-                "Male"
+                "female",
+                "male"
               ]
             }
           ],
-          "meta": false
+          "meta": false,
+          "display_only": false
         },
         {
           "id": 21,
-          "name": "Dependency on Job Title Staff",
+          "name": "dependency_job_title_staff",
+          "label": "Dependency on Job Title Staff",
           "order": 4,
           "type": "option",
           "required": true,
@@ -657,45 +715,52 @@
             {
               "id": 19,
               "options": [
-                "Staff"
+                "staff"
               ]
             }
           ],
           "meta": false,
+          "display_only": false,
           "option": [
             {
               "id": 19,
-              "name": "Contract",
+              "label": "Contract",
+              "value": "contract",
               "order": 1
             },
             {
               "id": 20,
-              "name": "Internship",
+              "label": "Internship",
+              "value": "internship",
               "order": 2
             }
           ]
         },
         {
           "id": 23,
-          "name": "Please input any number start from 0 (no decimal)",
+          "name": "input_any_number_no_decimal",
+          "label": "Please input any number start from 0 (no decimal)",
           "order": 6,
           "type": "number",
           "required": true,
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Masukkan angka berapapun, dimulai dari 0 (selain decimal)",
+              "label": "Masukkan angka berapapun, dimulai dari 0 (selain decimal)",
               "language": "id"
             }
           ]
         },
         {
           "id": 24,
-          "name": "Please input any number start from 0 to 10 (allow decimal)",
+          "name": "input_any_number_allow_decimal_0_10",
+          "label": "Please input any number start from 0 to 10 (allow decimal)",
           "order": 7,
           "type": "number",
           "required": true,
           "meta": false,
+          "display_only": false,
           "rule": {
             "max": 10,
             "min": 0,
@@ -703,18 +768,20 @@
           },
           "translations": [
             {
-              "name": "Masukkan angka berapapun, dimulai dari 1 sampai 10 (boleh decimal)",
+              "label": "Masukkan angka berapapun, dimulai dari 1 sampai 10 (boleh decimal)",
               "language": "id"
             }
           ]
         },
         {
           "id": 25,
-          "name": "Please input any number start from 0 to 5 (allow decimal)",
+          "name": "input_any_number_allow_decimal_0_5",
+          "label": "Please input any number start from 0 to 5 (allow decimal)",
           "order": 8,
           "type": "number",
           "required": false,
           "meta": false,
+          "display_only": false,
           "rule": {
             "max": 5,
             "min": 0,
@@ -722,7 +789,7 @@
           },
           "translations": [
             {
-              "name": "Masukkan angka berapapun, dimulai dari 0 sampai 5 (boleh decimal)",
+              "label": "Masukkan angka berapapun, dimulai dari 0 sampai 5 (boleh decimal)",
               "language": "id"
             }
           ]
@@ -731,13 +798,14 @@
     },
     {
       "id": 1693886026378,
-      "name": "Repeat Question",
+      "name": "repeat_question",
+      "label": "Repeat Question",
       "description": "This is an example of repeat group question",
       "order": 4,
       "repeatable": true,
       "translations": [
         {
-          "name": "Pertanyaan Berulang",
+          "label": "Pertanyaan Berulang",
           "language": "id",
           "repeatText": "Tambahkan Pertanyaan Berulang",
           "description": "Ini contoh dari pertanyaan berulang"
@@ -746,7 +814,8 @@
       "question": [
         {
           "id": 26,
-          "name": "Comment for Pagi Sore",
+          "name": "comment_pagi_sore",
+          "label": "Comment for Pagi Sore",
           "order": 1,
           "type": "text",
           "required": false,
@@ -754,46 +823,51 @@
             {
               "id": 15,
               "options": [
-                "Pagi Sore"
+                "pagi_sore"
               ]
             }
           ],
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Komentar",
+              "label": "Komentar",
               "language": "id"
             }
           ]
         },
         {
           "id": 27,
-          "name": "Date with Rule",
+          "name": "date_rule",
+          "label": "Date with Rule",
           "order": 2,
           "type": "date",
           "required": false,
           "meta": false,
+          "display_only": false,
           "rule": {
             "maxDate": "2022-12-31",
             "minDate": "2022-01-01"
           },
           "translations": [
             {
-              "name": "Tanggal dengan ketentuan",
+              "label": "Tanggal dengan ketentuan",
               "language": "id"
             }
           ]
         },
         {
           "id": 28,
-          "name": "Question with Custom Params",
+          "name": "question_custom_params",
+          "label": "Question with Custom Params",
           "order": 3,
           "type": "text",
           "required": false,
           "meta": false,
+          "display_only": false,
           "translations": [
             {
-              "name": "Pertanyaan dengan Parameter Khusus",
+              "label": "Pertanyaan dengan Parameter Khusus",
               "language": "id"
             }
           ]

@@ -5,7 +5,8 @@
   "question_group": [
     {
       "id": 1694745892379,
-      "name": "Group 1",
+      "name": "group_1",
+      "label": "Group 1",
       "order": 1,
       "repeatable": false,
       "question": [
@@ -13,7 +14,8 @@
           "id": 1694745892380,
           "order": 1,
           "questionGroupId": 1694745892379,
-          "name": "Input Type",
+          "name": "input_type",
+          "label": "Input Type",
           "type": "input",
           "required": true,
           "meta": false
@@ -22,7 +24,8 @@
           "id": 1694745902446,
           "order": 2,
           "questionGroupId": 1694745892379,
-          "name": "Number Type",
+          "name": "number_type",
+          "label": "Number Type",
           "type": "number",
           "required": true,
           "meta": false
@@ -31,7 +34,8 @@
     },
     {
       "id": 1694745925475,
-      "name": "Group 2 - Repeatable",
+      "name": "group_2_repeatable",
+      "label": "Group 2 - Repeatable",
       "order": 2,
       "repeatable": true,
       "question": [
@@ -39,7 +43,8 @@
           "id": 1694745925476,
           "order": 1,
           "questionGroupId": 1694745925475,
-          "name": "Text Type",
+          "name": "text_type",
+          "label": "Text Type",
           "type": "text",
           "required": false,
           "meta": false
@@ -48,7 +53,8 @@
           "id": 1694746018883,
           "order": 2,
           "questionGroupId": 1694745925475,
-          "name": "Number Type",
+          "name": "number_type",
+          "label": "Number Type",
           "type": "number",
           "required": false,
           "meta": false
