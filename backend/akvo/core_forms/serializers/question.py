@@ -146,17 +146,21 @@ class ListQuestionSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "label",
+            "short_label",
             "order",
             "type",
             "tooltip",
             "required",
             "dependency",
             "meta",
+            "display_only",
             "rule",
             "api",
             "extra",
             "translations",
             "fn",
+            "pre",
             "dataApiUrl",
             "option",
             "source",
@@ -169,12 +173,16 @@ class AddQuestionSerializer(serializers.Serializer):
     question_group = CustomIntegerField(read_only=True)
     id = CustomIntegerField()
     name = CustomCharField()
+    label = CustomCharField(required=False, allow_null=True)
+    short_label = CustomCharField(required=False, allow_null=True)
     order = CustomIntegerField()
     type = CustomCharField()
     tooltip = CustomJSONField(required=False, allow_null=True)
     required = CustomBooleanField(
         required=False, allow_null=True, default=False)
     meta = CustomBooleanField(
+        required=False, allow_null=True, default=False)
+    display_only = CustomBooleanField(
         required=False, allow_null=True, default=False)
     rule = CustomJSONField(required=False, allow_null=True)
     dependency = CustomListField(required=False, allow_null=True)
@@ -184,6 +192,7 @@ class AddQuestionSerializer(serializers.Serializer):
     dataApiUrl = CustomCharField(required=False, allow_null=True)
     translations = CustomListField(required=False, allow_null=True)
     option = AddOptionSerializer(many=True, required=False, allow_null=True)
+    pre = CustomJSONField(required=False, allow_null=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -238,6 +247,10 @@ class AddQuestionSerializer(serializers.Serializer):
         instance.type = qtype
         instance.name = validated_data.get(
             'name', instance.name)
+        instance.label = validated_data.get(
+            'label', instance.label)
+        instance.short_label = validated_data.get(
+            'short_label', instance.short_label)
         instance.order = validated_data.get(
             'order', instance.order)
         instance.tooltip = validated_data.get(
@@ -246,6 +259,8 @@ class AddQuestionSerializer(serializers.Serializer):
             'required', instance.required)
         instance.meta = validated_data.get(
             'meta', instance.meta)
+        instance.display_only = validated_data.get(
+            'display_only', instance.display_only)
         instance.rule = validated_data.get(
             'rule', instance.rule)
         instance.dependency = validated_data.get(
@@ -260,6 +275,8 @@ class AddQuestionSerializer(serializers.Serializer):
             'dataApiUrl', instance.data_api_url)
         instance.translations = validated_data.get(
             'translations', instance.translations)
+        instance.pre = validated_data.get(
+            'pre', instance.pre)
 
         # check and delete options
         current_options = Options.objects.filter(question=instance).all()

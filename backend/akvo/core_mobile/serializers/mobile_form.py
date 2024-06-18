@@ -26,6 +26,7 @@ class ListMobileQuestionGroupSerializer(serializers.ModelSerializer):
         model = QuestionGroups
         fields = [
             "name",
+            "label",
             "description",
             "order",
             "repeatable",
