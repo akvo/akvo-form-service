@@ -77,6 +77,7 @@ class Command(BaseCommand):
                         id=qg["id"],
                         form=form,
                         name=qg["name"],
+                        label=qg["label"],
                         order=qg["order"],
                         repeatable=qg.get('repeatable') or False,
                         description=qg.get("description"),
@@ -84,6 +85,7 @@ class Command(BaseCommand):
                     )
                 else:
                     qgroup.name = qg["name"],
+                    qgroup.label = qg["label"],
                     qgroup.order = qg["order"],
                     qgroup.repeatable = (
                         qg.get('repeatable')
@@ -100,9 +102,12 @@ class Command(BaseCommand):
                             question_group=qgroup,
                             id=q.get("id"),
                             name=q.get("name"),
+                            label=q.get("label"),
+                            short_label=q.get("short_label"),
                             tooltip=q.get("tooltip"),
                             order=q["order"],
                             meta=q.get("meta") or False,
+                            display_only=q.get("displayOnly") or False,
                             rule=q.get("rule"),
                             required=q.get("required") or False,
                             dependency=q.get("dependency"),
@@ -111,13 +116,17 @@ class Command(BaseCommand):
                             translations=q.get("translations"),
                             extra=q.get("extra"),
                             autofield=q.get("fn"),
+                            pre=q.get("pre"),
                             data_api_url=q.get("dataApiUrl")
                         )
                     else:
                         question.name = q.get("name")
+                        question.label = q.get("label")
+                        question.short_label = q.get("short_label")
                         question.tooltip = q.get("tooltip")
                         question.order = q["order"]
                         question.meta = q.get("meta") or False
+                        question.display_only = q.get("displayOnly") or False
                         question.rule = q.get("rule")
                         question.required = q.get("required") or False
                         question.dependency = q.get("dependency")
@@ -127,6 +136,7 @@ class Command(BaseCommand):
                         question.translations = q.get("translations")
                         question.extra = q.get("extra"),
                         question.autofield = q.get("fn")
+                        question.pre = q.get("pre")
                         question.data_api_url = q.get("dataApiUrl")
                         question.save()
                     # question options
@@ -139,7 +149,8 @@ class Command(BaseCommand):
                                 id=o.get("id"),
                                 question=question,
                                 code=o.get("code"),
-                                name=o["name"].strip(),
+                                label=o["label"].strip(),
+                                value=o["value"].strip(),
                                 order=o["order"],
                                 color=o.get("color"),
                                 translations=o.get("translations")
