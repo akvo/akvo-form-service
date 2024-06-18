@@ -24,7 +24,7 @@ const Editor = ({ isAddNew }) => {
 
   const camelToSnake = (obj) => {
     const newObj = {};
-    for (let key in obj) {
+    for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const newKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
         newObj[newKey] = obj[key];
