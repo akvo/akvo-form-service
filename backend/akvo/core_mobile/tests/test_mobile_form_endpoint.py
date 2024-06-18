@@ -38,7 +38,8 @@ class TestMobileFormEndpoint(TestCase):
             "question_group": [
                 {
                     "id": 1694489640834,
-                    "name": "Nam ante Fusce",
+                    "name": "nam_ante_fusce",
+                    "label": "Nam ante Fusce",
                     "order": 1,
                     "repeatable": False,
                     "question": [
@@ -46,7 +47,8 @@ class TestMobileFormEndpoint(TestCase):
                             "id": 1694494676197,
                             "order": 1,
                             "questionGroupId": 1694489640834,
-                            "name": "Augue mauris tincidunt at Duis interdum",
+                            "name": "augue_mauris",
+                            "label": "Augue mauris tincidunt at Duis interdum",
                             "type": "input",
                             "required": False,
                             "meta": False,
@@ -55,7 +57,8 @@ class TestMobileFormEndpoint(TestCase):
                             "id": 1694489640835,
                             "order": 2,
                             "questionGroupId": 1694489640834,
-                            "name": "Porta Lorem sed ante ac consectetur",
+                            "name": "porta_lorem_sed_ante_ac_consectetur",
+                            "label": "Porta Lorem sed ante ac consectetur",
                             "type": "cascade",
                             "required": False,
                             "meta": False,
@@ -82,6 +85,7 @@ class TestMobileFormEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
+        self.maxDiff = None
         self.assertEqual(
             result,
             {
@@ -95,7 +99,8 @@ class TestMobileFormEndpoint(TestCase):
                 "translations": None,
                 "question_group": [
                     {
-                        "name": "Nam ante Fusce",
+                        "name": "nam_ante_fusce",
+                        "label": "Nam ante Fusce",
                         "description": None,
                         "order": 1,
                         "repeatable": False,
@@ -103,19 +108,23 @@ class TestMobileFormEndpoint(TestCase):
                         "question": [
                             {
                                 "id": 1694494676197,
-                                "name": "Augue mauris tincidunt at Duis interdum",
+                                "name": "augue_mauris",
+                                "label": "Augue mauris tincidunt at Duis interdum",
                                 "order": 1,
                                 "type": "input",
                                 "required": False,
                                 "meta": False,
+                                "display_only": False,
                             },
                             {
                                 "id": 1694489640835,
-                                "name": "Porta Lorem sed ante ac consectetur",
+                                "name": "porta_lorem_sed_ante_ac_consectetur",
+                                "label": "Porta Lorem sed ante ac consectetur",
                                 "order": 2,
                                 "type": "cascade",
                                 "required": False,
                                 "meta": False,
+                                "display_only": False,
                                 "api": {
                                     "list": "children",
                                     "initial": 2,
