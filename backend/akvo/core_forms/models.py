@@ -29,6 +29,7 @@ class QuestionGroups(models.Model):
     )
     name = models.TextField()
     description = models.TextField(default=None, null=True)
+    label = models.TextField(default=None, null=True)
     order = models.BigIntegerField(null=True, default=None)
     repeatable = models.BooleanField(default=False)
     translations = models.JSONField(default=None, null=True)
@@ -52,11 +53,14 @@ class Questions(models.Model):
         related_name="question_group_questions",
     )
     name = models.TextField()
+    label = models.TextField(default=None, null=True)
+    short_label = models.TextField(default=None, null=True)
     order = models.BigIntegerField(null=True, default=None)
     type = models.IntegerField(choices=QuestionTypes.FieldStr.items())
     tooltip = models.JSONField(default=None, null=True)
     required = models.BooleanField(default=True)
     meta = models.BooleanField(default=False)
+    display_only = models.BooleanField(default=False)
     rule = models.JSONField(default=None, null=True)
     dependency = models.JSONField(default=None, null=True)
     api = models.JSONField(default=None, null=True)
@@ -64,6 +68,7 @@ class Questions(models.Model):
     autofield = models.JSONField(default=None, null=True)
     data_api_url = models.CharField(max_length=255, null=True, default=None)
     translations = models.JSONField(default=None, null=True)
+    pre = models.JSONField(default=None, null=True)
 
     def __str__(self):
         return self.name
@@ -77,10 +82,13 @@ class Questions(models.Model):
             "question_group": self.question_group.id,
             "order": self.order,
             "name": self.name,
+            "label": self.label,
+            "short_label": self.short_label,
             "type": QuestionTypes.FieldStr.get(self.type),
             "tooltip": self.tooltip,
             "required": self.required,
             "meta": self.meta,
+            "display_only": self.display_only,
             "rule": self.rule,
             "dependency": self.dependency,
             "api": self.api,
@@ -88,6 +96,7 @@ class Questions(models.Model):
             "data_api_url": self.data_api_url,
             "translations": self.translations,
             "option": options,
+            "pre": self.pre,
         }
 
     @property
@@ -105,7 +114,8 @@ class Options(models.Model):
         related_name="question_options"
     )
     code = models.CharField(max_length=255, null=True, default=None)
-    name = models.TextField()
+    label = models.TextField(default=None, null=True)
+    value = models.CharField(max_length=255, default=None, null=True)
     order = models.BigIntegerField(null=True, default=None)
     color = models.CharField(max_length=255, null=True, default=None)
     translations = models.JSONField(default=None, null=True)
