@@ -22,7 +22,26 @@ const Editor = ({ isAddNew }) => {
     }
   }, [formId, formDef, isAddNew]);
 
-  const onSave = (data) => {
+  const camelToSnake = (obj) => {
+    const newObj = {};
+    for (let key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        const newKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
+        newObj[newKey] = obj[key];
+      }
+    }
+    return newObj;
+  };
+
+  const onSave = (payload) => {
+    const data = {
+      ...payload,
+      question_group: payload?.question_group?.map((qg) => ({
+        ...qg,
+        question: qg?.question?.map((q) => camelToSnake(q)),
+      })),
+    };
+    delete data?.displayOnly;
     const apiCall =
       isAddNew && !post ? api.post("form", data) : api.put("form", data);
     apiCall
