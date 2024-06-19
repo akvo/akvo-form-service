@@ -27,7 +27,8 @@ class QuestionGroups(models.Model):
         on_delete=models.CASCADE,
         related_name="question_groups"
     )
-    name = models.TextField()
+    label = models.TextField()
+    name = models.CharField(max_length=255, default=None, null=True)
     description = models.TextField(default=None, null=True)
     label = models.TextField(default=None, null=True)
     order = models.BigIntegerField(null=True, default=None)
@@ -52,9 +53,9 @@ class Questions(models.Model):
         on_delete=models.CASCADE,
         related_name="question_group_questions",
     )
-    name = models.TextField()
-    label = models.TextField(default=None, null=True)
-    short_label = models.TextField(default=None, null=True)
+    label = models.TextField()
+    short_label = models.TextField(null=True, default=None)
+    name = models.CharField(max_length=255, default=None, null=True)
     order = models.BigIntegerField(null=True, default=None)
     type = models.IntegerField(choices=QuestionTypes.FieldStr.items())
     tooltip = models.JSONField(default=None, null=True)
@@ -113,9 +114,8 @@ class Options(models.Model):
         on_delete=models.CASCADE,
         related_name="question_options"
     )
-    code = models.CharField(max_length=255, null=True, default=None)
-    label = models.TextField(default=None, null=True)
-    value = models.CharField(max_length=255, default=None, null=True)
+    value = models.CharField(max_length=255, null=True, default=None)
+    label = models.TextField()
     order = models.BigIntegerField(null=True, default=None)
     color = models.CharField(max_length=255, null=True, default=None)
     translations = models.JSONField(default=None, null=True)
