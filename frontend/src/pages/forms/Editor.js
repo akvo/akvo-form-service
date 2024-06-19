@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import WebformEditor from "akvo-react-form-editor";
 import "akvo-react-form-editor/dist/index.css"; /* REQUIRED */
+import snakeCase from "lodash/snakeCase";
 import { api } from "../../lib";
 import { GlobalStore } from "../../store";
 import { Spin, notification } from "antd";
@@ -38,7 +39,13 @@ const Editor = ({ isAddNew }) => {
       ...payload,
       question_group: payload?.question_group?.map((qg) => ({
         ...qg,
-        question: qg?.question?.map((q) => camelToSnake(q)),
+        name: qg?.name || snakeCase(qg?.label),
+        question: qg?.question
+          ?.map((q) => camelToSnake(q))
+          .map((q) => ({
+            ...q,
+            name: q?.name || snakeCase(q?.label),
+          })),
       })),
     };
     delete data?.displayOnly;
