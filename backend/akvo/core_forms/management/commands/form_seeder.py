@@ -148,7 +148,6 @@ class Command(BaseCommand):
                             Options(
                                 id=o.get("id"),
                                 question=question,
-                                code=o.get("code"),
                                 label=o["label"].strip(),
                                 value=o["value"].strip(),
                                 order=o["order"],

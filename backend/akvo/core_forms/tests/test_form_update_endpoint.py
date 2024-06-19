@@ -110,14 +110,12 @@ class TestFormUpdateEndpoint(TestCase):
                     "meta": False,
                     "allowOther": False,
                     "option": [{
-                        "code": "NO1",
                         "label": "New Option 1",
                         "value": "new_option_1",
                         "order": 1,
                         "id": 1693992338940,
                         "color": "#803838"
                     }, {
-                        "code": "NO2",
                         "label": "New Option 2",
                         "value": "new_option_2",
                         "order": 2,
@@ -159,14 +157,12 @@ class TestFormUpdateEndpoint(TestCase):
                     "allowOther": False,
                     "dataApiUrl": "https://jsonplaceholder.typicode.com/todos/1",
                     "option": [{
-                        "code": "NO1",
                         "label": "New Option 1",
                         "value": "new_option_1",
                         "order": 1,
                         "id": 1693992338940,
                         "color": "#803838"
                     }, {
-                        "code": "NO3",
                         "label": "New Option 3",
                         "value": "new_option_3",
                         "order": 2,
@@ -219,14 +215,12 @@ class TestFormUpdateEndpoint(TestCase):
                     "dataApiUrl": "https://jsonplaceholder.typicode.com/todos/1",
                     "option": [{
                         "id": 1693992338940,
-                        "code": "NO1",
                         "label": "New Option 1",
                         "value": "new_option_1",
                         "order": 1,
                         "color": "#803838"
                     }, {
                         "id": 1693992338999,
-                        "code": "NO3",
                         "label": "New Option 3",
                         "value": "new_option_3",
                         "order": 2,
@@ -258,7 +252,6 @@ class TestFormUpdateEndpoint(TestCase):
                     "meta": False,
                     "allowOther": False,
                     "option": [{
-                        "code": "NO1",
                         "label": "New Option 1",
                         "value": "new_option_1",
                         "order": 1,

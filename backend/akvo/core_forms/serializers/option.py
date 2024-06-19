@@ -21,7 +21,6 @@ class ListOptionSerializer(serializers.ModelSerializer):
         model = Options
         fields = [
             "id",
-            "code",
             "label",
             "value",
             "order",
@@ -36,7 +35,6 @@ class AddOptionSerializer(serializers.Serializer):
     label = CustomCharField()
     value = CustomCharField()
     order = CustomIntegerField()
-    code = CustomCharField(required=False, allow_null=True)
     color = CustomCharField(required=False, allow_null=True)
     translations = CustomListField(required=False, allow_null=True)
 
@@ -54,8 +52,6 @@ class AddOptionSerializer(serializers.Serializer):
             'value', instance.value)
         instance.order = validated_data.get(
             'order', instance.order)
-        instance.code = validated_data.get(
-            'code', instance.code)
         instance.color = validated_data.get(
             'color', instance.color)
         instance.translations = validated_data.get(
