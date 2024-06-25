@@ -15,14 +15,16 @@ class TestFormUpdateEndpoint(TestCase):
             "defaultLanguage": "af",
             "question_group": [{
                 "id": 1695287858304,
-                "name": "Eu augue consectetur",
+                "name": "eu_augue_consectetur",
+                "label": "Eu augue consectetur",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 1695287858305,
                     "order": 1,
                     "questionGroupId": 1695287858304,
-                    "name": "Amet lorem porta at suscipit facilisis",
+                    "name": "amet_lorem_porta_at_suscipit_facilisis",
+                    "label": "Amet lorem porta at suscipit facilisis",
                     "type": "autofield",
                     "required": False,
                     "meta": False,
@@ -61,18 +63,21 @@ class TestFormUpdateEndpoint(TestCase):
             "translations": None,
             "question_group": [{
                 "id": 1695287858304,
-                "name": "Eu augue consectetur",
+                "name": "eu_augue_consectetur",
+                "label": "Eu augue consectetur",
                 "description": None,
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
                 "question": [{
                     "id": 1695287858305,
-                    "name": "Amet lorem porta at suscipit facilisis",
+                    "name": "amet_lorem_porta_at_suscipit_facilisis",
+                    "label": "Amet lorem porta at suscipit facilisis",
                     "order": 1,
                     "type": "autofield",
                     "required": False,
                     "meta": False,
+                    "display_only": False,
                     "fn": {
                         "fnColor": {},
                         "fnString": "() => console.log('test')",
@@ -90,27 +95,29 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "New Form Description",
             "question_group": [{
                 "id": 1693992073896,
-                "name": "Sit quis dapibus",
+                "name": "sit_quis_dapibus",
+                "label": "Sit quis dapibus",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 1693992073897,
                     "order": 1,
                     "questionGroupId": 1693992073896,
-                    "name": "Sit ornare commodo sit ante consectetur",
+                    "name": "sit_ornare_commodo_sit_ante_consectetur",
+                    "label": "Sit ornare commodo sit ante consectetur",
                     "type": "option",
                     "required": False,
                     "meta": False,
                     "allowOther": False,
                     "option": [{
-                        "code": "NO1",
-                        "name": "New Option 1",
+                        "label": "New Option 1",
+                        "value": "new_option_1",
                         "order": 1,
                         "id": 1693992338940,
                         "color": "#803838"
                     }, {
-                        "code": "NO2",
-                        "name": "New Option 2",
+                        "label": "New Option 2",
+                        "value": "new_option_2",
                         "order": 2,
                         "id": 1693992338941,
                         "color": "#5f5f5f"
@@ -134,28 +141,30 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "New Form Description",
             "question_group": [{
                 "id": 1693992073896,
-                "name": "Sit quis dapibus",
+                "name": "sit_quis_dapibus",
+                "label": "Sit quis dapibus",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 1693992073897,
                     "order": 1,
                     "questionGroupId": 1693992073896,
-                    "name": "Sit ornare commodo sit ante consectetur",
+                    "name": "sit_ornare_commodo_sit_ante_consectetur",
+                    "label": "Sit ornare commodo sit ante consectetur",
                     "type": "option",
                     "required": False,
                     "meta": False,
                     "allowOther": False,
                     "dataApiUrl": "https://jsonplaceholder.typicode.com/todos/1",
                     "option": [{
-                        "code": "NO1",
-                        "name": "New Option 1",
+                        "label": "New Option 1",
+                        "value": "new_option_1",
                         "order": 1,
                         "id": 1693992338940,
                         "color": "#803838"
                     }, {
-                        "code": "NO3",
-                        "name": "New Option 3",
+                        "label": "New Option 3",
+                        "value": "new_option_3",
                         "order": 2,
                         "id": 1693992338999,
                         "color": "#5f5f5f"
@@ -188,29 +197,32 @@ class TestFormUpdateEndpoint(TestCase):
             "translations": None,
             "question_group": [{
                 "id": 1693992073896,
-                "name": "Sit quis dapibus",
+                "name": "sit_quis_dapibus",
+                "label": "Sit quis dapibus",
                 "description": None,
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
                 "question": [{
                     "id": 1693992073897,
-                    "name": "Sit ornare commodo sit ante consectetur",
+                    "name": "sit_ornare_commodo_sit_ante_consectetur",
+                    "label": "Sit ornare commodo sit ante consectetur",
                     "order": 1,
                     "type": "option",
                     "required": False,
                     "meta": False,
+                    "display_only": False,
                     "dataApiUrl": "https://jsonplaceholder.typicode.com/todos/1",
                     "option": [{
                         "id": 1693992338940,
-                        "code": "NO1",
-                        "name": "New Option 1",
+                        "label": "New Option 1",
+                        "value": "new_option_1",
                         "order": 1,
                         "color": "#803838"
                     }, {
                         "id": 1693992338999,
-                        "code": "NO3",
-                        "name": "New Option 3",
+                        "label": "New Option 3",
+                        "value": "new_option_3",
                         "order": 2,
                         "color": "#5f5f5f"
                     }]
@@ -225,21 +237,23 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "New Form Description",
             "question_group": [{
                 "id": 456,
-                "name": "Sit quis dapibus",
+                "name": "sit_quis_dapibus",
+                "label": "Sit quis dapibus",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 789,
                     "order": 1,
                     "questionGroupId": 456,
-                    "name": "Sit ornare commodo sit ante consectetur",
+                    "name": "sit_ornare_commodo_sit_ante_consectetur",
+                    "label": "Sit ornare commodo sit ante consectetur",
                     "type": "option",
                     "required": False,
                     "meta": False,
                     "allowOther": False,
                     "option": [{
-                        "code": "NO1",
-                        "name": "New Option 1",
+                        "label": "New Option 1",
+                        "value": "new_option_1",
                         "order": 1,
                         "id": 911,
                         "color": "#803838"
@@ -263,14 +277,16 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "Lorem ipsum",
             "question_group": [{
                 "id": 456,
-                "name": "Update Question Group",
+                "name": "update_question_group",
+                "label": "Update Question Group",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 789,
                     "order": 1,
                     "questionGroupId": 456,
-                    "name": "Update to number question",
+                    "name": "update_to_number_question",
+                    "label": "Update to number question",
                     "type": "number",
                     "required": False,
                     "meta": False
@@ -302,18 +318,21 @@ class TestFormUpdateEndpoint(TestCase):
             "translations": None,
             "question_group": [{
                 "id": 456,
-                "name": "Update Question Group",
+                "name": "update_question_group",
+                "label": "Sit quis dapibus",
                 "description": None,
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
                 "question": [{
                     "id": 789,
-                    "name": "Update to number question",
+                    "name": "update_to_number_question",
+                    "label": "Update to number question",
                     "order": 1,
                     "type": "number",
                     "required": False,
-                    "meta": False
+                    "meta": False,
+                    "display_only": False,
                 }]
             }]
         })
@@ -327,14 +346,16 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "Lorem ipsum..",
             "question_group": [{
                 "id": 456,
-                "name": "Question Group 1",
+                "name": "question_group_1",
+                "label": "Question Group 1",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 789,
                     "order": 1,
                     "questionGroupId": 456,
-                    "name": "Your Name",
+                    "name": "your_name",
+                    "label": "Your Name",
                     "type": "input",
                     "required": False,
                     "meta": False,
@@ -378,14 +399,16 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "Lorem ipsum",
             "question_group": [{
                 "id": 456,
-                "name": "Update Question Group",
+                "name": "update_question_group",
+                "label": "Update Question Group",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 789,
                     "order": 1,
                     "questionGroupId": 456,
-                    "name": "Update to number question",
+                    "name": "update_to_number_question",
+                    "label": "Update to number question",
                     "type": "number",
                     "required": False,
                     "meta": False
@@ -413,14 +436,16 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "Lorem ipsum",
             "question_group": [{
                 "id": 456,
-                "name": "Update Question Group",
+                "name": "update_question_group",
+                "label": "Update Question Group",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 987,
                     "order": 1,
                     "questionGroupId": 456,
-                    "name": "New Question",
+                    "name": "new_question",
+                    "label": "New Question",
                     "type": "input",
                     "required": False,
                     "meta": False
@@ -448,14 +473,16 @@ class TestFormUpdateEndpoint(TestCase):
             "description": "Lorem ipsum",
             "question_group": [{
                 "id": 654,
-                "name": "New Question Group",
+                "name": "new_question_group",
+                "label": "New Question Group",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 999,
                     "order": 1,
                     "questionGroupId": 456,
-                    "name": "New Question",
+                    "name": "new_question",
+                    "label": "New Question",
                     "type": "input",
                     "required": False,
                     "meta": False

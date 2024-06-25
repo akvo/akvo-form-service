@@ -32,7 +32,8 @@ class TestDataAndAnswerSerializers(TestCase):
         self.form = Forms.objects.create(**form_data)
         question_group_data = {
             "form": self.form,
-            "name": "Group 1",
+            "name": "group_1",
+            "label": "Group 1",
             "description": "Lorem ipsum sit dolor",
             "order": 1,
             "repeatable": False,
@@ -44,7 +45,8 @@ class TestDataAndAnswerSerializers(TestCase):
         question_data = {
             "form": self.form,
             "question_group": self.question_group,
-            "name": "Name",
+            "name": "name",
+            "label": "Name",
             "order": 1,
             "type": QuestionTypes.input,
             "tooltip": "Lorem ipsum",

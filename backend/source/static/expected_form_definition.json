@@ -9,7 +9,8 @@
 	"question_group": [
 		{
 			"id": 1693403277315,
-			"name": "Farm Yields",
+			"name": "farm_yields",
+			"label": "Farm Yields",
 			"description": null,
 			"order": 1,
 			"repeatable": false,
@@ -17,143 +18,170 @@
 			"question": [
 				{
 					"id": 1693403277316,
-					"name": "Farm name",
+					"name": "farm_name",
+					"label": "Farm name",
 					"order": 1,
 					"type": "input",
 					"required": true,
-					"meta": true
+					"meta": true,
+					"display_only": false
 				},
 				{
 					"id": 1693403399692,
-					"name": "How much of the potatoes did you produce during this period?",
+					"name": "amount_produce",
+					"label": "How much of the potatoes did you produce during this period?",
 					"order": 2,
 					"type": "number",
 					"tooltip": {
 						"text": "Number 9999 will be treated as \"I don't know\" and 9998 as \"I prefer not to say\",\"0\" ad I didn't produce anything"
 					},
 					"required": true,
-					"meta": false
+					"meta": false,
+					"display_only": false
 				},
 				{
 					"id": 1693403503687,
-					"name": "Using what measurement unit did you measure the amount of potatoes that you produced during this period?",
+					"name": "measurement_unit",
+					"label": "Using what measurement unit did you measure the amount of potatoes that you produced during this period?",
 					"order": 3,
 					"type": "option",
 					"required": true,
 					"meta": false,
+					"display_only": false,
 					"option": [
 						{
 							"id": 1693403528554,
-							"name": "KG",
+							"label": "KG",
+							"value": "kg",
 							"order": 1
 						},
 						{
 							"id": 1693403528555,
-							"name": "Crate (30 KG)",
+							"label": "Crate (30 KG)",
+							"value": "crate_30kg",
 							"order": 2
 						},
 						{
 							"id": 1693403549824,
-							"name": "50 KG Bags",
+							"label": "50 KG Bags",
+							"value": "50_kg_bags",
 							"order": 3
 						},
 						{
 							"id": 1693403568774,
-							"name": "Wooden Box (60 KG)",
+							"label": "Wooden Box (60 KG)",
+							"value": "wooden_box_60kg",
 							"order": 4
 						},
 						{
 							"id": 1693403729858,
-							"name": "70 KG Bags",
+							"label": "70 KG Bags",
+							"value": "70_kg_bags",
 							"order": 5
 						},
 						{
 							"id": 1693403765312,
-							"name": "75 KG Bags",
+							"label": "75 KG Bags",
+							"value": "75_kg_bags",
 							"order": 6
 						},
 						{
 							"id": 1693403775705,
-							"name": "90 KG Bags",
+							"label": "90 KG Bags",
+							"value": "90_kg_bags",
 							"order": 7
 						},
 						{
 							"id": 1693403689710,
-							"name": "I don't know",
+							"label": "I don't know",
+							"value": "i_dont_know",
 							"order": 8
 						},
 						{
 							"id": 1693403697157,
-							"name": "I prefer not to say",
+							"label": "I prefer not to say",
+							"value": "prefer_not_to_say",
 							"order": 9
 						}
 					]
 				},
 				{
 					"id": 1693403547388,
-					"name": "Current Production",
+					"name": "current_production",
+					"label": "Current Production",
 					"order": 4,
 					"type": "autofield",
 					"required": false,
 					"meta": false,
+					"display_only": false,
 					"fn": {
-						"fnString": "function(){return #1693403503687 === 'KG' ? #1693403399692 : #1693403503687.replace(/[^0-9]/g, '') * #1693403399692}",
+						"fnString": "#measurement_unit# === 'KG' ? #amount_produce# : #measurement_unit#.replace(/[^0-9]/g, '') * #amount_produce#",
 						"multiline": false
 					},
 					"dataApiUrl": "/api/answer-stats/1693403547388"
 				},
 				{
 					"id": 1693403843111,
-					"name": "Yield / Land Size",
+					"name": "yield_per_land_size",
+					"label": "Yield / Land Size",
 					"order": 5,
 					"type": "number",
 					"required": true,
 					"meta": false,
+					"display_only": false,
 					"rule": {
 						"allowDecimal": true
 					}
 				},
 				{
 					"id": 1693403947085,
-					"name": "Unit of Area",
+					"name": "unit_area",
+					"label": "Unit of Area",
 					"order": 6,
 					"type": "option",
 					"required": true,
 					"meta": false,
+					"display_only": false,
 					"option": [
 						{
 							"id": 1693403957072,
-							"name": "Hectare",
+							"label": "Hectare",
+							"value": "hectare",
 							"order": 1
 						},
 						{
 							"id": 1693403957073,
-							"name": "Acre",
+							"label": "Acre",
+							"value": "acre",
 							"order": 2
 						}
 					]
 				},
 				{
 					"id": 1693404048281,
-					"name": "Total Area in Acres",
+					"name": "total_area_in_acres",
+					"label": "Total Area in Acres",
 					"order": 7,
 					"type": "autofield",
 					"required": false,
 					"meta": false,
+					"display_only": false,
 					"fn": {
-						"fnString": "function(){return #1693403947085 === \"Acre\" ? #1693403843111 : #1693403843111 * 2.47105;}",
+						"fnString": "#unit_area# === \"acre\" ? #yield_per_land_size# : #yield_per_land_size# * 2.47105",
 						"multiline": false
 					}
 				},
 				{
 					"id": 1693403971287,
 					"name": "Productivity",
+					"label": "Productivity",
 					"order": 8,
 					"type": "autofield",
 					"required": false,
 					"meta": false,
+					"display_only": false,
 					"fn": {
-						"fnString": "function(){return #1693403547388 / #1693404048281}",
+						"fnString": "#total_area_in_acres# > 0 ? #current_production# / #total_area_in_acres# : 0",
 						"multiline": false
 					}
 				}

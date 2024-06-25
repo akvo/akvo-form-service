@@ -67,7 +67,8 @@ class TestFormEndpoint(TestCase):
             "id": 1693987349172,
             "order": 1,
             "questionGroupId": 1693987349171,
-            "name": "Phasellus amet suscipit ac tristique nisl",
+            "name": "phasellus_amet_suscipit_ac_tristique_nisl",
+            "label": "Phasellus amet suscipit ac tristique nisl",
             "type": "input",
             "required": False,
             "meta": False
@@ -75,7 +76,8 @@ class TestFormEndpoint(TestCase):
             "id": 1693987361547,
             "order": 2,
             "questionGroupId": 1693987349171,
-            "name": "Tincidunt mauris tristique eu dapibus augue",
+            "name": "tincidunt_mauris_tristique_eu_dapibus_augue",
+            "label": "Tincidunt mauris tristique eu dapibus augue",
             "type": "input",
             "required": False,
             "meta": False
@@ -86,7 +88,8 @@ class TestFormEndpoint(TestCase):
             "description": "New Form Description",
             "question_group": [{
                 "id": 1693987349171,
-                "name": "Lorem lorem Nam",
+                "name": "lorem_lorem_nam",
+                "label": "Lorem lorem Nam",
                 "order": 1,
                 "repeatable": False,
                 "question": payload_question
@@ -108,14 +111,16 @@ class TestFormEndpoint(TestCase):
             "description": "New Form Description",
             "question_group": [{
                 "id": 1693987349171,
-                "name": "Lorem lorem Nam",
+                "name": "lorem_lorem_nam",
+                "label": "Lorem lorem Nam",
                 "order": 1,
                 "repeatable": False,
                 "question": [payload_question[0]] + [{
                     "id": 1693987349188,
                     "order": 2,
                     "questionGroupId": 1693987349171,
-                    "name": "Add new number question",
+                    "name": "add_new_number_question",
+                    "label": "Add new number question",
                     "type": "number",
                     "required": False,
                     "meta": False
@@ -137,6 +142,7 @@ class TestFormEndpoint(TestCase):
         )
         self.assertEqual(data.status_code, 200)
         result = data.json()
+        self.maxDiff = None
         self.assertEqual(result, {
             "id": 1693987349170,
             "name": "New Form",
@@ -147,25 +153,30 @@ class TestFormEndpoint(TestCase):
             "translations": None,
             "question_group": [{
                 "id": 1693987349171,
-                "name": "Lorem lorem Nam",
+                "name": "lorem_lorem_nam",
+                "label": "Lorem lorem Nam",
                 "description": None,
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
                 "question": [{
                     "id": 1693987349172,
-                    "name": "Phasellus amet suscipit ac tristique nisl",
+                    "name": "phasellus_amet_suscipit_ac_tristique_nisl",
+                    "label": "Phasellus amet suscipit ac tristique nisl",
                     "order": 1,
                     "type": "input",
                     "required": False,
-                    "meta": False
+                    "meta": False,
+                    "display_only": False
                 }, {
                     "id": 1693987349188,
-                    "name": "Add new number question",
+                    "name": "add_new_number_question",
+                    "label": "Add new number question",
                     "order": 2,
                     "type": "number",
                     "required": False,
-                    "meta": False
+                    "meta": False,
+                    "display_only": False
                 }]
             }]
         })
@@ -173,28 +184,32 @@ class TestFormEndpoint(TestCase):
     def test_endpoint_put_form_with_deleted_question_group(self):
         payload_question_group = [{
             "id": 1693988922938,
-            "name": "Ante aliquet lorem",
+            "name": "ante_aliquet_lorem",
+            "label": "Ante aliquet lorem",
             "order": 1,
             "repeatable": False,
             "question": [{
                 "id": 1693988922939,
                 "order": 1,
                 "questionGroupId": 1693988922938,
-                "name": "Dolor ante augue adipiscing elit amet",
+                "name": "dolor_ante_augue_adipiscing_elit_amet",
+                "label": "Dolor ante augue adipiscing elit amet",
                 "type": "input",
                 "required": False,
                 "meta": False
             }]
         }, {
             "id": 1693988928051,
-            "name": "Consequat Donec neque",
+            "name": "consequat_donec_neque",
+            "label": "Consequat Donec neque",
             "order": 2,
             "repeatable": False,
             "question": [{
                 "id": 1693988928052,
                 "order": 1,
                 "questionGroupId": 1693988928051,
-                "name": "Ornare consectetur neque Donec nisl lorem",
+                "name": "ornare_consectetur_neque_donec_nisl_lorem",
+                "label": "Ornare consectetur neque Donec nisl lorem",
                 "type": "input",
                 "required": False,
                 "meta": False
@@ -222,17 +237,19 @@ class TestFormEndpoint(TestCase):
             "description": "New Form Description",
             "question_group": [payload_question_group[0]] + [{
                 "id": 1693988922977,
-                "name": "New Question Group",
+                "name": "new_question_group",
+                "label": "New Question Group",
                 "order": 2,
                 "repeatable": False,
                 "question": [{
                     "id": 1693988922955,
                     "order": 1,
                     "questionGroupId": 1693988922977,
-                    "name": "New Question",
+                    "name": "new_question",
+                    "label": "New Question",
                     "type": "number",
                     "required": False,
-                    "meta": False
+                    "meta": False,
                 }]
             }]
         }
@@ -261,33 +278,39 @@ class TestFormEndpoint(TestCase):
             "translations": None,
             "question_group": [{
                 "id": 1693988922938,
-                "name": "Ante aliquet lorem",
+                "name": "ante_aliquet_lorem",
+                "label": "Ante aliquet lorem",
                 "description": None,
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
                 "question": [{
                     "id": 1693988922939,
-                    "name": "Dolor ante augue adipiscing elit amet",
+                    "name": "dolor_ante_augue_adipiscing_elit_amet",
+                    "label": "Dolor ante augue adipiscing elit amet",
                     "order": 1,
                     "type": "input",
                     "required": False,
-                    "meta": False
+                    "meta": False,
+                    "display_only": False
                 }]
             }, {
                 "id": 1693988922977,
-                "name": "New Question Group",
+                "name": "new_question_group",
+                "label": "New Question Group",
                 "description": None,
                 "order": 2,
                 "repeatable": False,
                 "translations": None,
                 "question": [{
                     "id": 1693988922955,
-                    "name": "New Question",
+                    "name": "new_question",
+                    "label": "New Question",
                     "order": 1,
                     "type": "number",
                     "required": False,
-                    "meta": False
+                    "meta": False,
+                    "display_only": False
                 }]
             }]
         })
@@ -299,14 +322,16 @@ class TestFormEndpoint(TestCase):
             "description": "New Form Description",
             "question_group": [{
                 "id": 1694509989312,
-                "name": "Dapibus lorem ultrices",
+                "name": "dapibus_lorem_ultrices",
+                "label": "Dapibus lorem ultrices",
                 "order": 1,
                 "repeatable": False,
                 "question": [{
                     "id": 1694509989313,
                     "order": 1,
                     "questionGroupId": 1694509989312,
-                    "name": "Augue neque sapien ultrices eu quis",
+                    "name": "augue_neque_sapien_ultrices_eu_quis",
+                    "label": "Augue neque sapien ultrices eu quis",
                     "type": "input",
                     "required": False,
                     "meta": False
@@ -359,18 +384,21 @@ class TestFormEndpoint(TestCase):
             "translations": None,
             "question_group": [{
                 "id": 1694509989312,
-                "name": "Dapibus lorem ultrices",
+                "name": "dapibus_lorem_ultrices",
+                "label": "Dapibus lorem ultrices",
                 "description": None,
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
                 "question": [{
                     "id": 1694509989313,
-                    "name": "Augue neque sapien ultrices eu quis",
+                    "name": "augue_neque_sapien_ultrices_eu_quis",
+                    "label": "Augue neque sapien ultrices eu quis",
                     "order": 1,
                     "type": "input",
                     "required": False,
                     "meta": False,
+                    "display_only": False,
                     "disableDelete": True
                 }]
             }]

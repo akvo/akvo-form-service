@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "akvo-react-form": "^2.2.7",
-    "akvo-react-form-editor": "^1.1.8",
+    "akvo-react-form": "^2.5.4",
+    "akvo-react-form-editor": "^2.0.1",
     "axios": "^0.25.0",
     "axios-mock-adapter": "^1.21.1",
     "buffer": "^6.0.3",

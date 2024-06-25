@@ -27,7 +27,8 @@ class TestQuestionGroupSerializers(TestCase):
         self.form = Forms.objects.create(**form_data)
         question_group_data = {
             "form": self.form,
-            "name": "Group 1",
+            "name": "group_1",
+            "label": "Group 1",
             "description": "Lorem ipsum sit dolor",
             "order": 1,
             "repeatable": False,
@@ -39,18 +40,21 @@ class TestQuestionGroupSerializers(TestCase):
         self.data = {
             "form": self.form,
             "question_group": self.question_group,
-            "name": "Name",
+            "name": "name",
+            "label": "Name",
             "order": 1,
             "type": QuestionTypes.input,
             "tooltip": "Lorem ipsum",
             "required": True,
             "meta": True,
+            "display_only": False,
             "rule": None,
             "dependency": None,
             "api": None,
             "extra": None,
             "autofield": None,
             "translations": None,
+            "pre": None,
         }
         self.instance = Questions.objects.create(**self.data)
         self.serializer = ListQuestionSerializer(instance=self.instance)
@@ -63,19 +67,31 @@ class TestQuestionGroupSerializers(TestCase):
         data = self.serializer.data
         self.assertEqual(
             set(data.keys()),
-            {"id", "name", "order", "type", "tooltip", "required", "meta"},
+            {
+                "id",
+                "name",
+                "label",
+                "order",
+                "type",
+                "tooltip",
+                "required",
+                "meta",
+                "display_only",
+            },
         )
 
     def test_list_question_serializer_return_expected_data(self):
         data = self.serializer.data
         expected_data = {
             "id": data.get("id"),
-            "name": "Name",
+            "name": "name",
+            "label": "Name",
             "order": 1,
             "type": QuestionTypes.FieldStr.get(QuestionTypes.input),
             "tooltip": "Lorem ipsum",
             "required": True,
             "meta": True,
+            "display_only": False,
         }
         self.assertEqual(data, expected_data)
 
@@ -84,7 +100,8 @@ class TestQuestionGroupSerializers(TestCase):
         question_group_data = self.question_group_serializer.data
         expected_data = {
             "id": question_group_data.get("id"),
-            "name": "Group 1",
+            "name": "group_1",
+            "label": "Group 1",
             "description": "Lorem ipsum sit dolor",
             "order": 1,
             "repeatable": False,

@@ -20,7 +20,8 @@ class TestQuestionGroupSerializers(TestCase):
         self.form = Forms.objects.create(**form_data)
         self.data = {
             "form": self.form,
-            "name": "Group 1",
+            "name": "group_1",
+            "label": "Group 1",
             "description": "Lorem ipsum sit dolor",
             "order": 1,
             "repeatable": False,
@@ -36,6 +37,7 @@ class TestQuestionGroupSerializers(TestCase):
             {
                 "id",
                 "name",
+                "label",
                 "description",
                 "order",
                 "repeatable",
@@ -48,7 +50,8 @@ class TestQuestionGroupSerializers(TestCase):
         data = self.serializer.data
         expected_data = {
             "id": data.get("id"),
-            "name": "Group 1",
+            "name": "group_1",
+            "label": "Group 1",
             "description": "Lorem ipsum sit dolor",
             "order": 1,
             "repeatable": False,

@@ -31,6 +31,7 @@ class ListQuestionGroupSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "label",
             "description",
             "order",
             "repeatable",
@@ -43,6 +44,7 @@ class AddQuestionGroupSerializer(serializers.Serializer):
     form = CustomIntegerField(read_only=True)
     id = CustomIntegerField()
     name = CustomCharField()
+    label = CustomCharField(required=False, allow_null=True)
     description = CustomCharField(required=False, allow_null=True)
     order = CustomIntegerField()
     repeatable = CustomBooleanField(
