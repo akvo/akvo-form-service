@@ -9,6 +9,8 @@ class QuestionTypes:
     image = 8
     date = 9
     autofield = 10
+    tree = 11
+    table = 12
 
     FieldStr = {
         input: "input",
@@ -21,4 +23,6 @@ class QuestionTypes:
         image: "image",
         date: "date",
         autofield: "autofield",
+        tree: "tree",
+        table: "table",
     }

@@ -74,6 +74,8 @@ class Questions(models.Model):
     required_double_entry = models.BooleanField(default=False)
     hidden_string = models.BooleanField(default=None, null=True)
     limit = models.IntegerField(default=None, null=True)
+    columns = models.JSONField(default=None, null=True)
+    tree_option = models.CharField(max_length=191, null=True, default=None)
 
     def __str__(self):
         return self.name
