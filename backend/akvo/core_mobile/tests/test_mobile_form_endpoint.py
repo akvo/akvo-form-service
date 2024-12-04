@@ -105,6 +105,7 @@ class TestMobileFormEndpoint(TestCase):
                         "order": 1,
                         "repeatable": False,
                         "translations": None,
+                        "repeat_text": None,
                         "question": [
                             {
                                 "id": 1694494676197,
@@ -115,6 +116,7 @@ class TestMobileFormEndpoint(TestCase):
                                 "required": False,
                                 "meta": False,
                                 "display_only": False,
+                                "required_double_entry": False,
                             },
                             {
                                 "id": 1694489640835,
@@ -131,6 +133,7 @@ class TestMobileFormEndpoint(TestCase):
                                     "endpoint": f"/api/node/{self.node.id}",
                                 },
                                 "source": {"file": "the_node.sqlite", "parent_id": 0},
+                                "required_double_entry": False,
                             },
                         ],
                     }
