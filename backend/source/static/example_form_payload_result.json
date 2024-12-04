@@ -96,6 +96,7 @@
           "required": true,
           "meta": true,
           "display_only": false,
+          "addonBefore": "+62",
           "extra": [
             {
               "content": "We will not share your phone number to public",
@@ -499,7 +500,8 @@
               "language": "id"
             }
           ],
-          "required_double_entry": false
+          "required_double_entry": false,
+          "addonAfter": "Kilograms"
         },
         {
           "id": 15,
