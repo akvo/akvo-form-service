@@ -164,7 +164,10 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "dataApiUrl",
             "option",
             "source",
-            "disableDelete"
+            "disableDelete",
+            "required_double_entry",
+            "hidden_string",
+            "limit",
         ]
 
 
@@ -193,6 +196,11 @@ class AddQuestionSerializer(serializers.Serializer):
     translations = CustomListField(required=False, allow_null=True)
     option = AddOptionSerializer(many=True, required=False, allow_null=True)
     pre = CustomJSONField(required=False, allow_null=True)
+    required_double_entry = CustomBooleanField(
+        required=False, allow_null=True, default=False)
+    hidden_string = CustomBooleanField(
+        required=False, allow_null=True, default=None)
+    limit = CustomIntegerField(required=False, allow_null=True, default=None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -277,6 +285,12 @@ class AddQuestionSerializer(serializers.Serializer):
             'translations', instance.translations)
         instance.pre = validated_data.get(
             'pre', instance.pre)
+        instance.required_double_entry = validated_data.get(
+            'required_double_entry', instance.required_double_entry)
+        instance.hidden_string = validated_data.get(
+            'hidden_string', instance.hidden_string)
+        instance.limit = validated_data.get(
+            'limit', instance.limit)
 
         # check and delete options
         current_options = Options.objects.filter(question=instance).all()

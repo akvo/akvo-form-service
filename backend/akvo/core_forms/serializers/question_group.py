@@ -37,6 +37,7 @@ class ListQuestionGroupSerializer(serializers.ModelSerializer):
             "repeatable",
             "translations",
             "question",
+            "repeat_text",
         ]
 
 
@@ -51,9 +52,16 @@ class AddQuestionGroupSerializer(serializers.Serializer):
         required=False, allow_null=True, default=False)
     translations = CustomListField(required=False, allow_null=True)
     question = AddQuestionSerializer(many=True)
+    repeat_text = CustomCharField(required=False, allow_null=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def to_internal_value(self, data):
+        data = data.copy()
+        if "repeatText" in data:
+            data["repeat_text"] = data.pop("repeatText")
+        return super().to_internal_value(data)
 
     def validate_question(self, value):
         serializer = AddQuestionSerializer(data=value, many=True)
@@ -89,6 +97,8 @@ class AddQuestionGroupSerializer(serializers.Serializer):
             'repeatable', instance.repeatable)
         instance.translations = validated_data.get(
             'translations', instance.translations)
+        instance.repeat_text = validated_data.get(
+            'repeat_text', instance.repeat_text)
 
         # check and delete question
         current_qs = Questions.objects.filter(question_group=instance).all()
