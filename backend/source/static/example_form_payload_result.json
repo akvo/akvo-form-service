@@ -817,6 +817,24 @@
             }
           ],
           "required_double_entry": false
+        },
+        {
+          "id": 29,
+          "name": "administration_tree",
+          "label": "Administration Tree",
+          "order": 9,
+          "type": "tree",
+          "required": true,
+          "meta": false,
+          "display_only": false,
+          "translations": [
+            {
+              "label": "Hirarki Administrasi",
+              "language": "id"
+            }
+          ],
+          "option": "administration",
+          "required_double_entry": false
         }
       ],
       "repeat_text": "Repeat text"
