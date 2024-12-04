@@ -171,6 +171,8 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "hidden_string",
             "limit",
             "columns",
+            "addonBefore",
+            "addonAfter",
         ]
 
 
@@ -206,6 +208,8 @@ class AddQuestionSerializer(serializers.Serializer):
     limit = CustomIntegerField(required=False, allow_null=True, default=None)
     columns = CustomJSONField(required=False, allow_null=True)
     tree_option = CustomCharField(required=False, allow_null=True)
+    addonBefore = CustomCharField(required=False, allow_null=True)
+    addonAfter = CustomCharField(required=False, allow_null=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -308,6 +312,10 @@ class AddQuestionSerializer(serializers.Serializer):
             'columns', instance.columns)
         instance.tree_option = validated_data.get(
             'tree_option', instance.tree_option)
+        instance.addonBefore = validated_data.get(
+            'addonBefore', instance.addonBefore)
+        instance.addonAfter = validated_data.get(
+            'addonAfter', instance.addonAfter)
 
         # check and delete options
         current_options = Options.objects.filter(question=instance).all()
