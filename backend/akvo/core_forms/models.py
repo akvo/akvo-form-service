@@ -76,6 +76,8 @@ class Questions(models.Model):
     limit = models.IntegerField(default=None, null=True)
     columns = models.JSONField(default=None, null=True)
     tree_option = models.CharField(max_length=191, null=True, default=None)
+    addonBefore = models.CharField(max_length=50, null=True, default=None)
+    addonAfter = models.CharField(max_length=50, null=True, default=None)
 
     def __str__(self):
         return self.name
