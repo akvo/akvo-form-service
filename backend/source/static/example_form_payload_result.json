@@ -64,7 +64,8 @@
               "label": "Geolokasi",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 2,
@@ -83,7 +84,8 @@
           },
           "required": true,
           "meta": true,
-          "display_only": false
+          "display_only": false,
+          "required_double_entry": false
         },
         {
           "id": 3,
@@ -111,7 +113,8 @@
               "label": "Nomor Telepon",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 4,
@@ -148,7 +151,8 @@
           "source": {
             "file": "administration.sqlite",
             "parent_id": 0
-          }
+          },
+          "required_double_entry": false
         },
         {
           "id": 5,
@@ -164,7 +168,8 @@
               "label": "Tanggal Lahir",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 6,
@@ -218,7 +223,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 7,
@@ -281,9 +287,11 @@
                 }
               ]
             }
-          ]
+          ],
+          "required_double_entry": false
         }
-      ]
+      ],
+      "repeat_text": null
     },
     {
       "id": 1693886026375,
@@ -314,7 +322,8 @@
               "label": "Berapa biasanya uang yang anda habiskan per hari untuk makanan",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 9,
@@ -330,7 +339,8 @@
               "label": "Berapa kali anda biasanya makan dalam sehari",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 11,
@@ -388,7 +398,8 @@
               "value": "vegetarian",
               "order": 3
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 12,
@@ -422,7 +433,8 @@
               "label": "Tolong sebutkan",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 13,
@@ -465,7 +477,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 14,
@@ -485,7 +498,8 @@
               "label": "Berat Badan",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 15,
@@ -533,7 +547,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 16,
@@ -583,9 +598,11 @@
                 }
               ]
             }
-          ]
+          ],
+          "required_double_entry": false
         }
-      ]
+      ],
+      "repeat_text": null
     },
     {
       "id": 1693886026377,
@@ -629,7 +646,8 @@
               "label": "Komentar",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 19,
@@ -683,7 +701,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 20,
@@ -702,7 +721,8 @@
             }
           ],
           "meta": false,
-          "display_only": false
+          "display_only": false,
+          "required_double_entry": false
         },
         {
           "id": 21,
@@ -734,7 +754,8 @@
               "value": "internship",
               "order": 2
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 23,
@@ -750,7 +771,8 @@
               "label": "Masukkan angka berapapun, dimulai dari 0 (selain decimal)",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 24,
@@ -771,7 +793,8 @@
               "label": "Masukkan angka berapapun, dimulai dari 1 sampai 10 (boleh decimal)",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 25,
@@ -792,9 +815,11 @@
               "label": "Masukkan angka berapapun, dimulai dari 0 sampai 5 (boleh decimal)",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         }
-      ]
+      ],
+      "repeat_text": "Repeat text"
     },
     {
       "id": 1693886026378,
@@ -834,7 +859,8 @@
               "label": "Komentar",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 27,
@@ -854,7 +880,8 @@
               "label": "Tanggal dengan ketentuan",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         },
         {
           "id": 28,
@@ -870,9 +897,11 @@
               "label": "Pertanyaan dengan Parameter Khusus",
               "language": "id"
             }
-          ]
+          ],
+          "required_double_entry": false
         }
-      ]
+      ],
+      "repeat_text": "Add another Repeat Question"
     }
   ]
 }
