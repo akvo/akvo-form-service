@@ -45,6 +45,8 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             return ListOptionSerializer(
                 instance=instance.question_options.all(), many=True
             ).data
+        if instance.type == QuestionTypes.tree:
+            return instance.tree_option
         return None
 
     @extend_schema_field(OpenApiTypes.STR)
@@ -168,6 +170,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
             "required_double_entry",
             "hidden_string",
             "limit",
+            "columns",
         ]
 
 
@@ -201,9 +204,17 @@ class AddQuestionSerializer(serializers.Serializer):
     hidden_string = CustomBooleanField(
         required=False, allow_null=True, default=None)
     limit = CustomIntegerField(required=False, allow_null=True, default=None)
+    columns = CustomJSONField(required=False, allow_null=True)
+    tree_option = CustomCharField(required=False, allow_null=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def to_internal_value(self, data):
+        if isinstance(data.get("option"), str):
+            data["tree_option"] = data["option"]
+            data["option"] = []
+        return super().to_internal_value(data)
 
     def validate_type(self, value):
         qtype = getattr(QuestionTypes, value)
@@ -224,6 +235,8 @@ class AddQuestionSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         options_data = validated_data.pop("option", [])
+        if not options_data:
+            options_data = []
         qtype = validated_data.pop("type", None)
         validated_data["type"] = getattr(QuestionTypes, qtype)
         validated_data["data_api_url"] = validated_data.pop("dataApiUrl", None)
@@ -291,12 +304,18 @@ class AddQuestionSerializer(serializers.Serializer):
             'hidden_string', instance.hidden_string)
         instance.limit = validated_data.get(
             'limit', instance.limit)
+        instance.columns = validated_data.get(
+            'columns', instance.columns)
+        instance.tree_option = validated_data.get(
+            'tree_option', instance.tree_option)
 
         # check and delete options
         current_options = Options.objects.filter(question=instance).all()
         current_opt_ids = [co.id for co in current_options]
 
         new_option_data = validated_data.get('option', [])
+        if not new_option_data:
+            new_option_data = []
         new_opt_ids = [no.get('id') for no in new_option_data]
 
         for opt in new_option_data:
