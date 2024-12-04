@@ -83,8 +83,10 @@ class TestFormUpdateEndpoint(TestCase):
                         "fnString": "() => console.log('test')",
                         "multiline": False
                     },
-                    "dataApiUrl": "test.com"
-                }]
+                    "dataApiUrl": "test.com",
+                    "required_double_entry": False,
+                }],
+                "repeat_text": None,
             }]
         })
 
@@ -225,8 +227,10 @@ class TestFormUpdateEndpoint(TestCase):
                         "value": "new_option_3",
                         "order": 2,
                         "color": "#5f5f5f"
-                    }]
-                }]
+                    }],
+                    "required_double_entry": False,
+                }],
+                "repeat_text": None,
             }]
         })
 
@@ -333,7 +337,9 @@ class TestFormUpdateEndpoint(TestCase):
                     "required": False,
                     "meta": False,
                     "display_only": False,
-                }]
+                    "required_double_entry": False,
+                }],
+                "repeat_text": None,
             }]
         })
         options = Options.objects.filter(question_id=789).all()

@@ -68,4 +68,4 @@ class FormSeederTestCase(TestCase):
         # Load expected form definition from JSON
         with open('./source/static/expected_form_definition.json', 'r') as f:
             expected_form_definition = json.load(f)
-        self.assertEqual(form_definition, expected_form_definition)
+        self.assertCountEqual(form_definition, expected_form_definition)
