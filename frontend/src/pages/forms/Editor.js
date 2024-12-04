@@ -6,6 +6,7 @@ import "akvo-react-form-editor/dist/index.css"; /* REQUIRED */
 import { api, prepareFormData, prepareFormSubmission } from "../../lib";
 import { GlobalStore } from "../../store";
 import { Spin, notification } from "antd";
+import { exampleTreeOptions, settingTreeDropdownValue } from "../../static";
 
 const Editor = ({ isAddNew }) => {
   const { formId } = useParams();
@@ -18,7 +19,10 @@ const Editor = ({ isAddNew }) => {
   useEffect(() => {
     if (!Object.keys(formDef).length && !isAddNew) {
       api.get(`form/${formId}`).then((res) => {
-        setFormDef(prepareFormData(res.data));
+        setFormDef({
+          tree: exampleTreeOptions,
+          ...prepareFormData(res.data),
+        });
       });
     }
   }, [formId, formDef, isAddNew]);
@@ -70,6 +74,7 @@ const Editor = ({ isAddNew }) => {
           initialValue={formDef}
           onSave={onSave}
           settingCascadeURL={settingCascadeURL}
+          settingTreeDropdownValue={settingTreeDropdownValue}
         />
       )}
     </div>
