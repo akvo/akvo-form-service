@@ -159,6 +159,7 @@ class TestFormEndpoint(TestCase):
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
+                "repeat_text": None,
                 "question": [{
                     "id": 1693987349172,
                     "name": "phasellus_amet_suscipit_ac_tristique_nisl",
@@ -167,7 +168,8 @@ class TestFormEndpoint(TestCase):
                     "type": "input",
                     "required": False,
                     "meta": False,
-                    "display_only": False
+                    "display_only": False,
+                    "required_double_entry": False,
                 }, {
                     "id": 1693987349188,
                     "name": "add_new_number_question",
@@ -176,7 +178,8 @@ class TestFormEndpoint(TestCase):
                     "type": "number",
                     "required": False,
                     "meta": False,
-                    "display_only": False
+                    "display_only": False,
+                    "required_double_entry": False,
                 }]
             }]
         })
@@ -284,6 +287,7 @@ class TestFormEndpoint(TestCase):
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
+                "repeat_text": None,
                 "question": [{
                     "id": 1693988922939,
                     "name": "dolor_ante_augue_adipiscing_elit_amet",
@@ -292,7 +296,8 @@ class TestFormEndpoint(TestCase):
                     "type": "input",
                     "required": False,
                     "meta": False,
-                    "display_only": False
+                    "display_only": False,
+                    "required_double_entry": False,
                 }]
             }, {
                 "id": 1693988922977,
@@ -302,6 +307,7 @@ class TestFormEndpoint(TestCase):
                 "order": 2,
                 "repeatable": False,
                 "translations": None,
+                "repeat_text": None,
                 "question": [{
                     "id": 1693988922955,
                     "name": "new_question",
@@ -310,7 +316,8 @@ class TestFormEndpoint(TestCase):
                     "type": "number",
                     "required": False,
                     "meta": False,
-                    "display_only": False
+                    "display_only": False,
+                    "required_double_entry": False,
                 }]
             }]
         })
@@ -390,6 +397,7 @@ class TestFormEndpoint(TestCase):
                 "order": 1,
                 "repeatable": False,
                 "translations": None,
+                "repeat_text": None,
                 "question": [{
                     "id": 1694509989313,
                     "name": "augue_neque_sapien_ultrices_eu_quis",
@@ -399,7 +407,8 @@ class TestFormEndpoint(TestCase):
                     "required": False,
                     "meta": False,
                     "display_only": False,
-                    "disableDelete": True
+                    "disableDelete": True,
+                    "required_double_entry": False,
                 }]
             }]
         })

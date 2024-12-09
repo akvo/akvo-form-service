@@ -34,6 +34,7 @@ class QuestionGroups(models.Model):
     order = models.BigIntegerField(null=True, default=None)
     repeatable = models.BooleanField(default=False)
     translations = models.JSONField(default=None, null=True)
+    repeat_text = models.CharField(max_length=255, default=None, null=True)
 
     def __str__(self):
         return self.name
@@ -70,6 +71,13 @@ class Questions(models.Model):
     data_api_url = models.CharField(max_length=255, null=True, default=None)
     translations = models.JSONField(default=None, null=True)
     pre = models.JSONField(default=None, null=True)
+    required_double_entry = models.BooleanField(default=False)
+    hidden_string = models.BooleanField(default=None, null=True)
+    limit = models.IntegerField(default=None, null=True)
+    columns = models.JSONField(default=None, null=True)
+    tree_option = models.CharField(max_length=191, null=True, default=None)
+    addonBefore = models.CharField(max_length=50, null=True, default=None)
+    addonAfter = models.CharField(max_length=50, null=True, default=None)
 
     def __str__(self):
         return self.name

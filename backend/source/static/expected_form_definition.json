@@ -24,7 +24,8 @@
 					"type": "input",
 					"required": true,
 					"meta": true,
-					"display_only": false
+					"display_only": false,
+					"required_double_entry": false
 				},
 				{
 					"id": 1693403399692,
@@ -37,7 +38,8 @@
 					},
 					"required": true,
 					"meta": false,
-					"display_only": false
+					"display_only": false,
+					"required_double_entry": false
 				},
 				{
 					"id": 1693403503687,
@@ -103,7 +105,8 @@
 							"value": "prefer_not_to_say",
 							"order": 9
 						}
-					]
+					],
+					"required_double_entry": false
 				},
 				{
 					"id": 1693403547388,
@@ -118,7 +121,8 @@
 						"fnString": "#measurement_unit# === 'KG' ? #amount_produce# : #measurement_unit#.replace(/[^0-9]/g, '') * #amount_produce#",
 						"multiline": false
 					},
-					"dataApiUrl": "/api/answer-stats/1693403547388"
+					"dataApiUrl": "/api/answer-stats/1693403547388",
+					"required_double_entry": false
 				},
 				{
 					"id": 1693403843111,
@@ -131,7 +135,8 @@
 					"display_only": false,
 					"rule": {
 						"allowDecimal": true
-					}
+					},
+					"required_double_entry": false
 				},
 				{
 					"id": 1693403947085,
@@ -155,7 +160,8 @@
 							"value": "acre",
 							"order": 2
 						}
-					]
+					],
+					"required_double_entry": false
 				},
 				{
 					"id": 1693404048281,
@@ -169,7 +175,8 @@
 					"fn": {
 						"fnString": "#unit_area# === \"acre\" ? #yield_per_land_size# : #yield_per_land_size# * 2.47105",
 						"multiline": false
-					}
+					},
+					"required_double_entry": false
 				},
 				{
 					"id": 1693403971287,
@@ -183,9 +190,11 @@
 					"fn": {
 						"fnString": "#total_area_in_acres# > 0 ? #current_production# / #total_area_in_acres# : 0",
 						"multiline": false
-					}
+					},
+					"required_double_entry": false
 				}
-			]
+			],
+			"repeat_text": null
 		}
 	]
 }

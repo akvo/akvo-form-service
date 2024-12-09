@@ -773,6 +773,22 @@
               }
             ],
             "questionGroupId": 1693886026377
+          },
+          {
+            "id": 29,
+            "name": "administration_tree",
+            "label": "Administration Tree",
+            "order": 9,
+            "type": "tree",
+            "required": true,
+            "translations": [
+              {
+                "label": "Hirarki Administrasi",
+                "language": "id"
+              }
+            ],
+            "option": "administration",
+            "questionGroupId": 1693886026377
           }
         ],
         "repeatText": "Repeat text",

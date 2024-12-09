@@ -32,6 +32,7 @@ class ListMobileQuestionGroupSerializer(serializers.ModelSerializer):
             "repeatable",
             "translations",
             "question",
+            "repeat_text",
         ]
 
 

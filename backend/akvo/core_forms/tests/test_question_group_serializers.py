@@ -43,6 +43,7 @@ class TestQuestionGroupSerializers(TestCase):
                 "repeatable",
                 "translations",
                 "question",
+                "repeat_text",
             },
         )
 
@@ -57,5 +58,6 @@ class TestQuestionGroupSerializers(TestCase):
             "repeatable": False,
             "translations": None,
             "question": [],
+            "repeat_text": None,
         }
         self.assertEqual(data, expected_data)

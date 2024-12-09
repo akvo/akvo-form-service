@@ -77,6 +77,7 @@ class TestQuestionGroupSerializers(TestCase):
                 "required",
                 "meta",
                 "display_only",
+                "required_double_entry",
             },
         )
 
@@ -92,6 +93,7 @@ class TestQuestionGroupSerializers(TestCase):
             "required": True,
             "meta": True,
             "display_only": False,
+            "required_double_entry": False,
         }
         self.assertEqual(data, expected_data)
 
@@ -107,6 +109,7 @@ class TestQuestionGroupSerializers(TestCase):
             "repeatable": False,
             "translations": None,
             "question": [question_data],
+            "repeat_text": None,
         }
         self.assertEqual(question_group_data, expected_data)
 

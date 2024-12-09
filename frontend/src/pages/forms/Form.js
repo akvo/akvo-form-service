@@ -3,6 +3,7 @@ import { Webform } from "akvo-react-form";
 import { api } from "../../lib";
 import { useParams, useNavigate } from "react-router-dom";
 import { Spin, notification } from "antd";
+import { exampleTreeOptions } from "../../static";
 
 const Form = () => {
   const { formId } = useParams();
@@ -12,7 +13,7 @@ const Form = () => {
   useEffect(() => {
     if (!Object.keys(formDef).length) {
       api.get(`form/${formId}`).then((res) => {
-        setFormDef(res.data);
+        setFormDef({ tree: exampleTreeOptions, ...res.data });
       });
     }
   }, [formId, formDef]);
